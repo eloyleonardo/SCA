@@ -14,6 +14,10 @@ public class Material {
     private Unidade unidade;
 
     public Material() {
+        this.nd = new Nd();
+        this.subitem = new SubItem();
+        this.unidade = new Unidade();
+        this.lote = new ArrayList<Lote>();
     }
 
     public Unidade getUnidade() {
