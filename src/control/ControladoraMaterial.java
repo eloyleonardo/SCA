@@ -8,10 +8,9 @@ import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
-public class ControladoraMaterial {
+public class ControladoraMaterial implements ControladoraClasse {
 
     private Vector<Material> materiaisAtivos;
-    private Vector<Material> materiaisInativos;
     private Vector<Material> material;
     private MaterialDao materialDao;
     private int marcador;
@@ -67,37 +66,27 @@ public class ControladoraMaterial {
         return linha;
     }
 
-    private Vector<Material> obterMateriaisAtivos(String nome) throws SQLException {
-        materiaisAtivos = materialDao.obterMateriaisAtivos(nome);
-        return materiaisAtivos;
-    }
-
-    private Vector<Material> obterMateriaisInativos(String nome) throws SQLException {
-        materiaisInativos = materialDao.obterMateriaisInativos(nome);
-        return materiaisInativos;
-    }
-
     public Vector obterMaterialAtivoCodigo(String codigo) throws SQLException {
         this.material = this.materialDao.obterMaterialAtivoCodigo(codigo);
         Vector materialAtual = criarLinhaMaterialCodigo((Material) this.material.get(0));
         return materialAtual;
     }
 
-    public Vector obterLinhasMateriaisAtivos(String nome) {
+    public Vector obterLinhas(String nome, String status) {
         Vector<Material> m = new Vector<Material>();
         try {
-            m = obterMateriaisAtivos(nome);
+            m = materialDao.obterMateriais(nome, status);
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
                     "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         Vector linhas = new Vector();
         for (int i = 0; i < m.size(); i++) {
-            Material mat = m.get(i);
-            linhas.addElement(this.criarLinhaMaterial(mat));
+            Material material = m.get(i);
+            linhas.addElement(this.criarLinhaMaterial(material));
         }
         return linhas;
-
     }
 
     private Material atualizarMaterial(Vector linha) {
@@ -122,22 +111,6 @@ public class ControladoraMaterial {
         this.materialDao.darCiencia(atualizarMaterial(material));
     }
 
-    public Vector obterLinhasMateriaisInativos(String nome) {
-        Vector<Material> m = new Vector<Material>();
-        try {
-            m = obterMateriaisInativos(nome);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
-                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        Vector linhas = new Vector();
-        for (int i = 0; i < m.size(); i++) {
-            Material mat = m.get(i);
-            linhas.addElement(this.criarLinhaMaterial(mat));
-        }
-        return linhas;
-    }
-
     private void atualizarMaterial(Material material, Vector linha) {
         material.setDescricao(linha.get(0).toString());
         material.getUnidade().setCodigo(Integer.parseInt(linha.get(1).toString()));
@@ -146,28 +119,32 @@ public class ControladoraMaterial {
         material.getSubitem().setCodigo(Integer.parseInt(linha.get(4).toString()));
     }
 
-    public void inserirNovoMaterial(Vector linha) {
-        Material mat = new Material();
-        this.atualizarMaterial(mat, linha);
+    public boolean inserir(Vector linha) {
+        Material material = new Material();
+        this.atualizarMaterial(material, linha);
         try {
-            materialDao.inserirMaterial(mat);
+            materialDao.inserirMaterial(material);
+            return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
                     "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 
-    public void alterarMaterial(Vector linha, int Id) {
-        Material mat = new Material();
-        this.atualizarMaterial(mat, linha);
+    public boolean alterar(Vector linha, String status) {
+        Material material = new Material();
+        this.atualizarMaterial(material, linha);
         try {
-            materialDao.alterarMaterial(mat, Id);
+            materialDao.alterarMaterial(material, material.getCodigo());
+            return true;
 
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
                     "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 
@@ -179,5 +156,23 @@ public class ControladoraMaterial {
             }
         }
         return new Vector();
+    }
+
+    public Vector pesquisar(String nome, String status) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean alterarStatus(String motivo, Vector responsavel, Vector linha, String acao) {
+        Material m = new Material();
+        atualizarMaterial(m, linha);
+        try {
+            materialDao.alterarStatusMaterial(m, motivo, acao, responsavel);
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
     }
 }

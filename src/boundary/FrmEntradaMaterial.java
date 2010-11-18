@@ -105,7 +105,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
 
     private void preencherTabela() throws Exception {
         Vector linhas;
-        linhas = this.controladoraMaterial.obterLinhasMateriaisAtivos("" + this.tfPesquisar.getText());
+        linhas = this.controladoraMaterial.obterLinhas(this.tfPesquisar.getText(),"Ativo");
 
         DefaultTableModel modelo = (DefaultTableModel) this.tbMaterial_01.getModel();
         int numLinhas = linhas.size();

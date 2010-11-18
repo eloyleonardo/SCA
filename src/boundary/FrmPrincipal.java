@@ -290,6 +290,11 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         jmCadastros.add(jMenuItem3);
 
         jMenuItem11.setText("Material");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jmCadastros.add(jMenuItem11);
 
         jMenuItem4.setText("Setor");
@@ -575,6 +580,12 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         this.visualizarEntradas();
     }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        JFrame janela = new FrmPrincipalMaterial(usuario);
+        janela.addWindowListener(this);
+        janela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBoletim;

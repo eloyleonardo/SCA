@@ -47,7 +47,7 @@ public class FrmSaidaMaterialOutros extends javax.swing.JFrame {
 
     private void preencherTabela() {
         Vector linhas;
-        linhas = controladoraMaterial.obterLinhasMateriaisAtivos(this.tfPesquisar.getText());
+        linhas = controladoraMaterial.obterLinhas(this.tfPesquisar.getText(),"Ativo");
         DefaultTableModel modelo = (DefaultTableModel) this.jtMateriais.getModel();
         int numLinhas = linhas.size();
         for (int i = 0; i < numLinhas; i++) {
