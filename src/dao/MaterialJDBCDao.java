@@ -126,7 +126,7 @@ public class MaterialJDBCDao implements MaterialDao {
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
             conexao = FabricaConexao.obterConexao("JDBC");
             conexao.setAutoCommit(false);
-            String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,usuario,data_modificacao,motivo,acao)" +
+            String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" +
                     "VALUES (?,?,?,?,?,?);";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, "material");

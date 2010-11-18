@@ -112,11 +112,12 @@ public class ControladoraMaterial implements ControladoraClasse {
     }
 
     private void atualizarMaterial(Material material, Vector linha) {
-        material.setDescricao(linha.get(0).toString());
-        material.getUnidade().setCodigo(Integer.parseInt(linha.get(1).toString()));
+        material.setCodigo(Integer.parseInt(linha.get(0).toString()));
+        material.setDescricao(linha.get(1).toString());
         material.setQntMinima(Double.parseDouble(linha.get(2).toString()));
         material.getNd().setCodigo(Integer.parseInt(linha.get(3).toString()));
         material.getSubitem().setCodigo(Integer.parseInt(linha.get(4).toString()));
+        material.getUnidade().setCodigo(Integer.parseInt(linha.get(5).toString()));
     }
 
     public boolean inserir(Vector linha) {
