@@ -1,4 +1,0 @@
-Permissões serão em maiúsculo, mudado na FrmLogin();
-
-Inicializar objetos e ArrayLists em Solicitacao;
-
