@@ -1,0 +1,71 @@
+package domain;
+
+public class Lote {
+
+    private int codigo;
+    private Material material;
+    private int codigoDem;
+    private double quantidadeTotal;
+    private double valorUnidade;
+    private double estoque;
+    private String validade;
+
+    public Lote() {
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public int getCodigoDem() {
+        return codigoDem;
+    }
+
+    public void setCodigoDem(int codigoDem) {
+        this.codigoDem = codigoDem;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material codigoMaterial) {
+        this.material = codigoMaterial;
+    }
+
+    public double getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(double estoque) {
+        this.estoque = estoque;
+    }
+
+    public double getQuantidadeTotal() {
+        return quantidadeTotal;
+    }
+
+    public void setQuantidadeTotal(double quantidadeTotal) {
+        this.quantidadeTotal = quantidadeTotal;
+    }
+
+    public String getValidade() {
+        return validade;
+    }
+
+    public void setValidade(String validade) {
+        this.validade = validade;
+    }
+
+    public double getValorUnidade() {
+        return valorUnidade;
+    }
+
+    public void setValorUnidade(double valorUnidade) {
+        this.valorUnidade = valorUnidade;
+    }
+}
