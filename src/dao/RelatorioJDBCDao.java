@@ -1,5 +1,6 @@
 package dao;
 
+import domain.Entrada;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
 
     private String getLocal() {
         return System.getProperty("user.dir") + "/report/";
-        //getClass().getResourceAsStream();
+    //getClass().getResourceAsStream();
     }
 
     public void getBoletim(Date dataInicio, Date dataFim) {
@@ -67,22 +68,22 @@ public class RelatorioJDBCDao implements RelatorioDao {
         }
     }
 
-//    public void getRSM(Date dataInicio, Date dataFim) {
-//        try {
-//            conexao = FabricaConexao.obterConexao("JDBC");
-//            String arquivo = getLocal();
-//            arquivo += "Saidas/RptSM.jasper";
-//            HashMap parametro = new HashMap();
-//            parametro.put("dataInicio", dataInicio);
-//            parametro.put("dataFim", dataFim);
-//            gerarRelatorio(parametro, arquivo);
-//            conexao.close();
-//        } catch (JRException ex) {
-//            ex.printStackTrace();
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+    public void getDEM(Entrada dem) {
+        try {
+            this.conexao = FabricaConexao.obterConexao("JDBC");
+            String arquivo = getLocal();
+            arquivo += "DEM/DEM.jasper";
+            HashMap parametro = new HashMap();
+            parametro.put("codigo_dem", dem.getCodigo());
+            gerarRelatorio(parametro, arquivo);
+            this.conexao.close();
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void getRCM(Date dataI, Date dataF, int codigoSetor) {
         try {
             conexao = FabricaConexao.obterConexao("JDBC");

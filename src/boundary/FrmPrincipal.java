@@ -240,7 +240,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7)
-                .addContainerGap(1079, Short.MAX_VALUE))
+                .addContainerGap(919, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,6 +381,11 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         jmEntrada.add(jMenuItem16);
 
         jMenuItem17.setText("Visualizar");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
         jmEntrada.add(jMenuItem17);
 
         jMenuBar1.add(jmEntrada);
@@ -388,11 +393,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         jmSaida.setText("Saída");
 
         jMenuItem18.setText("Realizar");
-        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem18ActionPerformed(evt);
-            }
-        });
         jmSaida.add(jMenuItem18);
 
         jMenuItem19.setText("Visualizar");
@@ -572,6 +572,10 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         j.setVisible(true);
     }//GEN-LAST:event_jmiUsuarioActionPerformed
 
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        this.visualizarEntradas();
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBoletim;
     private javax.swing.JButton btCadastrarFornecedor;
@@ -707,5 +711,11 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         this.dataI = e.getDataI();
         this.dataF = e.getDataF();
         this.classe = e.getNome();
+    }
+
+    private void visualizarEntradas() {
+        JFrame j = new FrmVisuzalizarEntrada();
+        j.addWindowListener(this);
+        j.setVisible(true);
     }
 }

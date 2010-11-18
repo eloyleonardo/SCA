@@ -2,6 +2,7 @@ package control;
 
 import dao.RelatorioDao;
 import dao.RelatorioJDBCDao;
+import domain.Entrada;
 import java.util.Date;
 
 public class ControladoraRelatorios {
@@ -30,5 +31,11 @@ public class ControladoraRelatorios {
 
     public void getRMM(Date dataInicio, Date dataFim) {
         dao.getRMM(dataInicio, dataFim);
+    }
+
+    public void getDEM(int codigo) {
+        Entrada dem = new Entrada();
+        dem.setCodigo(codigo);
+        this.dao.getDEM(dem);
     }
 }

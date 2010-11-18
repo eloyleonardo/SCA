@@ -1,4 +1,7 @@
+
 package domain;
+
+import java.util.Date;
 
 public class Lote {
 
@@ -8,7 +11,7 @@ public class Lote {
     private double quantidadeTotal;
     private double valorUnidade;
     private double estoque;
-    private String validade;
+    private Date validade;
 
     public Lote() {
     }
@@ -53,11 +56,11 @@ public class Lote {
         this.quantidadeTotal = quantidadeTotal;
     }
 
-    public String getValidade() {
+    public Date getValidade() {
         return validade;
     }
 
-    public void setValidade(String validade) {
+    public void setValidade(Date validade) {
         this.validade = validade;
     }
 
@@ -68,4 +71,5 @@ public class Lote {
     public void setValorUnidade(double valorUnidade) {
         this.valorUnidade = valorUnidade;
     }
+
 }

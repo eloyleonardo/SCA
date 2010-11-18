@@ -1,4 +1,7 @@
-Este programa é distribuido na esperança que possa ser  util, mas SEM NENHUMA GARANTIA; em uma garantia implicita de ADEQUAÇÂO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja abaixo a Licença Pública Geral GNU para maiores detalhes.
+Este programa é distribuido na esperança que possa ser  util, mas SEM NENHUMA GARANTIA;
+Sem uma garantia implicita de ADEQUAÇÂO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR.
+Veja abaixo a Licença Pública Geral GNU para maiores detalhes.
+Caso deseje o código fonte da aplicação esta disponivel em: https://github.com/eloyleonardo/SCA
 
 
 

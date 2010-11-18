@@ -1,3 +1,5 @@
+
+
 package boundary;
 
 import control.ControladoraMaterial;
@@ -32,13 +34,13 @@ public class FrmEstoqueAbaixoMinimo extends javax.swing.JFrame {
     }
 
     private void preencherTabela() {
-
+        
         try {
             this.materiais = this.controladoraMaterial.obterMaterialAbaixoEstoque();
             DefaultTableModel modelo = (DefaultTableModel) this.tbMateriais.getModel();
             int numLinhas = this.materiais.size();
             for (int i = 0; i < numLinhas; i++) {
-                modelo.insertRow(modelo.getRowCount(), (Vector) this.materiais.get(i));
+                modelo.insertRow(modelo.getRowCount(), (Vector)this.materiais.get(i));
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao obter os Materiais \n\t Contate o suporte!", "Atenção", JOptionPane.OK_OPTION);
@@ -50,7 +52,7 @@ public class FrmEstoqueAbaixoMinimo extends javax.swing.JFrame {
     private Vector criarLinhaTabela() {
         Vector linha = new Vector();
         for (int i = 0; i < 4; i++) {
-            linha.add(this.tbMateriais.getModel().getValueAt(this.tbMateriais.getSelectedRow(), i));
+                linha.add(this.tbMateriais.getModel().getValueAt(this.tbMateriais.getSelectedRow(), i));
         }
         return linha;
     }
@@ -153,9 +155,10 @@ public class FrmEstoqueAbaixoMinimo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCienteMouseClicked
-        if (this.tbMateriais.getSelectedRow() == -1) {
+        if(this.tbMateriais.getSelectedRow() == -1){
             JOptionPane.showMessageDialog(null, "Você deve Selecionar um Material!", "Atenção", JOptionPane.WARNING_MESSAGE);
-        } else {
+        }
+        else{
             try {
                 this.controladoraMaterial.darCienciaMaterial(criarLinhaTabela());
                 removerLinhaTabela();
@@ -166,11 +169,21 @@ public class FrmEstoqueAbaixoMinimo extends javax.swing.JFrame {
     }//GEN-LAST:event_btCienteMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         this.dispose();
     }//GEN-LAST:event_jButton1MouseClicked
+
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FrmEstoqueAbaixoMinimo().setVisible(true);
+//            }
+//        });
+//    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCiente;
     private javax.swing.JButton jButton1;
@@ -178,4 +191,7 @@ public class FrmEstoqueAbaixoMinimo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbMateriais;
     // End of variables declaration//GEN-END:variables
+
+
+
 }

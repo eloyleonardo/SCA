@@ -1,13 +1,16 @@
 package boundary;
 
-import control.ControladoraEntrada;
+import control.ControladoraEntradaMaterial;
 import control.ControladoraFornecedor;
 import control.ControladoraMaterial;
+import control.ControladoraRelatorios;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -17,31 +20,37 @@ import util.ActionFechar;
 
 public class FrmEntradaMaterial extends javax.swing.JFrame {
 
-    private ControladoraEntrada controladoraEntrada;
+    private ControladoraEntradaMaterial controladoraEntrada;
     private ControladoraFornecedor controladoraFornecedor;
     private ControladoraMaterial controladoraMaterial;
+    private ControladoraRelatorios controladoraRelatorio;
     private Vector tiposEntrada;
     private Vector fornecedores;
     private Vector entrada;
     private Vector lote;
     private Vector documento;
-    private Vector materiais;
     private SimpleDateFormat data;
-    private int itemDem;
+    private int codigo_Entrada;
+    private int itemEntrada;
 
     public FrmEntradaMaterial() {
         super();
         initComponents();
         Vector controle;
         this.setLocationRelativeTo(null);
-        this.controladoraEntrada = new ControladoraEntrada();
+
+        this.controladoraEntrada = new ControladoraEntradaMaterial();
         this.controladoraFornecedor = new ControladoraFornecedor();
         this.controladoraMaterial = new ControladoraMaterial();
+        this.controladoraRelatorio = new ControladoraRelatorios();
 
         this.data = new SimpleDateFormat("dd/MM/yyyy");
         this.lbData.setText(this.data.format(new Date()));
-
-        this.tiposEntrada = this.controladoraEntrada.listarTodosTipoEntrada();
+        try {
+            this.tiposEntrada = this.controladoraEntrada.ListarTodosTipoEntrada();
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmEntradaMaterial.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         int cont = this.tiposEntrada.size();
         for (int i = 0; i < cont; i++) {
@@ -56,7 +65,8 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
             this.cbFornecedor.addItem(controle.get(1).toString());
         }
 
-        this.itemDem = 0;
+        this.itemEntrada = 0;
+
         this.tbMaterial_01.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.tbMaterial_02.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -93,7 +103,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         return linhaFinal;
     }
 
-    private void preencherTabela() {
+    private void preencherTabela() throws Exception {
         Vector linhas;
         linhas = this.controladoraMaterial.obterLinhasMateriaisAtivos("" + this.tfPesquisar.getText());
 
@@ -114,6 +124,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     }
 
     private boolean montarEntrada() {
+        //this.entrada.add(new Date());
         if (validarCampos()) {
             this.entrada = new Vector();
             this.lote = new Vector();
@@ -129,6 +140,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
             this.entrada.add(this.tfDataNota.getText().toString());
             this.entrada.add(this.tfValorNota.getText().toString());
             this.entrada.add(this.tfNumeroEmpenho.getText().toString());
+            //Usuario
             this.entrada.add(1);
 
             this.entrada.add(tipoAtual.get(3));
@@ -139,6 +151,8 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     }
 
     private boolean verificaLinha(Vector linha) {
+//        Vector linha = new Vector();
+//        linha = criarLinhaTabela01(linhaTabela01);
         String codigo = linha.get(0).toString();
         for (int i = 0; i < this.tbMaterial_02.getModel().getRowCount(); i++) {
             if (codigo.equals(this.tbMaterial_02.getModel().getValueAt(i, 0).toString())) {
@@ -174,7 +188,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         linha.add(null);
         linha.add(null);
         linha.add(null);
-        linha.add(this.itemDem);
+        linha.add(this.itemEntrada);
         return linha;
     }
 
@@ -186,7 +200,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         linha.add(null);
         linha.add(null);
         linha.add(null);
-        linha.add(this.itemDem);
+        linha.add(this.itemEntrada);
         return linha;
     }
 
@@ -199,7 +213,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     }
 
     private boolean validarNota() {
-        if (!(this.tfNumeroNota.getText().equals(""))) {
+        if (!(this.tfNumeroNota.getText().equals("")) && (!this.cbTipoDem.getSelectedItem().equals("Doação"))) {
             return true;
         } else {
             Vector nomeDoc = (Vector) this.tiposEntrada.get(this.cbTipoDem.getSelectedIndex());
@@ -209,7 +223,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     }
 
     private boolean validarNotaEmpenho() {
-        if (!(this.tfNumeroEmpenho.getText().equals(""))) {
+        if (!(this.tfNumeroEmpenho.getText().equals("") && (!this.cbTipoDem.getSelectedItem().equals("Doação")))) {
             return true;
         } else {
             JOptionPane.showMessageDialog(null, "Preencha o Número de Empenho", "Atenção", JOptionPane.OK_OPTION);
@@ -218,7 +232,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     }
 
     private boolean validarValorNota() {
-        if (!(this.tfValorNota.getText().equals(""))) {
+        if (!(this.tfValorNota.getText().equals("") && (!this.cbTipoDem.getSelectedItem().equals("Doação")))) {
             return true;
         } else {
             Vector nomeDoc = (Vector) this.tiposEntrada.get(this.cbTipoDem.getSelectedIndex());
@@ -322,7 +336,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SCA - Registrar Entrada de Material");
         setBackground(new java.awt.Color(0, 0, 0));
         setResizable(false);
@@ -445,6 +459,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setBackground(new java.awt.Color(0, 0, 255));
         jLabel10.setText("Data:");
 
         tfNumeroNota.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -502,7 +517,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
                                     .addComponent(tfValorNota)
                                     .addComponent(tfNumeroNota)
                                     .addComponent(cbTipoDem, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel1)
@@ -513,8 +528,8 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
                                     .addComponent(cbFornecedor, 0, 156, Short.MAX_VALUE)
                                     .addComponent(tfNumeroEmpenho, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(50, 50, 50))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(233, 233, 233)
                         .addComponent(jLabel9)
@@ -523,20 +538,19 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btAdicionarMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(743, Short.MAX_VALUE)
+                        .addContainerGap(654, Short.MAX_VALUE)
                         .addComponent(btCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bcConfirmar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(808, Short.MAX_VALUE)
+                        .addContainerGap(746, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbData)))
+                        .addComponent(lbData))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(347, 347, 347)
+                        .addComponent(btRemoverMaterial)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(427, Short.MAX_VALUE)
-                .addComponent(btRemoverMaterial)
-                .addGap(338, 338, 338))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -600,7 +614,11 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
 
     private void btPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btPesquisarMouseClicked
         this.limparTabela();
-        this.preencherTabela();
+        try {
+            this.preencherTabela();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um Erro ao obter os Materiais!", "Erro", JOptionPane.WARNING_MESSAGE);
+        }
 
     }//GEN-LAST:event_btPesquisarMouseClicked
 
@@ -615,17 +633,24 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
             try {
                 codigo = Integer.parseInt(this.tfCodigoMaterial.getText().toString());
                 try {
-                    this.itemDem++;
-                    DefaultTableModel modelo = (DefaultTableModel) this.tbMaterial_02.getModel();
-                    Vector linha = criarLinha(this.controladoraMaterial.obterMaterialAtivoCodigo(codigo + ""));
-                    if (verificaLinha(linha)) {
-                        modelo.insertRow(modelo.getRowCount(), linha);
-                        this.tbMaterial_02.clearSelection();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Você deve selecionar um outro Material !", "Atenção", JOptionPane.OK_OPTION);
+                    try {
+                        this.itemEntrada++;
+                        DefaultTableModel modelo = (DefaultTableModel) this.tbMaterial_02.getModel();
+                        Vector linha;
+
+                        linha = criarLinha(this.controladoraMaterial.obterMaterialAtivoCodigo(codigo + ""));
+
+                        if (verificaLinha(linha)) {
+                            modelo.insertRow(modelo.getRowCount(), linha);
+                            this.tbMaterial_02.clearSelection();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Você deve selecionar um outro Material !", "Atenção", JOptionPane.OK_OPTION);
+                        }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Ocorreu um Erro ao Obter o Material!", "Erro", JOptionPane.WARNING_MESSAGE);
                     }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um Erro ao Adicionar o DEM!", "Erro", JOptionPane.WARNING_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Ocorreu um erro ao acesso o banco!", "Erro", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Digite um Número ou Selecione um material!", "Erro", JOptionPane.WARNING_MESSAGE);
@@ -634,7 +659,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
             if (!verificaLinha(criarLinhaTabela01(linhaSelecionada))) {
                 JOptionPane.showMessageDialog(null, "Você deve selecionar um outro Material !", "Atenção", JOptionPane.OK_OPTION);
             } else {
-                this.itemDem++;
+                this.itemEntrada++;
                 DefaultTableModel modelo = (DefaultTableModel) this.tbMaterial_02.getModel();
                 modelo.insertRow(modelo.getRowCount(), criarLinhaAdicionar());
                 this.tbMaterial_01.clearSelection();
@@ -657,14 +682,16 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     private void bcConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bcConfirmarMouseClicked
         try {
             if (montarEntrada()) {
-                this.controladoraEntrada.inserirEntrada(this.entrada, this.lote, this.documento);
-                JOptionPane.showMessageDialog(null, "O Dem foi inserido com Sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                this.codigo_Entrada = this.controladoraEntrada.inserirEntrada(this.entrada, this.lote, this.documento);
+                int opcao = JOptionPane.showConfirmDialog(null, "O Entrada " + this.codigo_Entrada + " foi inserido com Sucesso!", "Inserção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (opcao == 0) {
+                    this.controladoraRelatorio.getDEM(this.codigo_Entrada);
+                }
                 this.dispose();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um Erro ao Adicionar o DEM!", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ocorreu um Erro ao Adicionar o Entrada!", "Erro", JOptionPane.WARNING_MESSAGE);
         }
-
     }//GEN-LAST:event_bcConfirmarMouseClicked
 
     private void cbTipoDemItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTipoDemItemStateChanged

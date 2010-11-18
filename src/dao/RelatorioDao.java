@@ -1,5 +1,6 @@
 package dao;
 
+import domain.Entrada;
 import java.util.Date;
 
 public interface RelatorioDao {
@@ -13,4 +14,6 @@ public interface RelatorioDao {
     public void getRME();
 
     public void getRMM(Date dataInicio, Date dataFim);
+
+    public void getDEM(Entrada dem);
 }

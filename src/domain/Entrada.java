@@ -1,5 +1,6 @@
 package domain;
 
+import domain.Lote;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,8 +15,8 @@ public class Entrada {
     private TipoEntrada tipoEntrada;
     private ArrayList<Material> Material;
     private Fornecedor Fornecedor;
-    private ArrayList<Lote> Lote;
     private Usuario reponsavel;
+    private Documento documento;
 
     public Entrada() {
     }
@@ -28,12 +29,12 @@ public class Entrada {
         this.Fornecedor = val;
     }
 
-    public ArrayList<Lote> getLote() {
-        return Lote;
+    public Documento getDocumento() {
+        return documento;
     }
 
-    public void setLote(ArrayList<Lote> val) {
-        this.Lote = val;
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
     }
 
     public ArrayList<Material> getMaterial() {
