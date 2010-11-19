@@ -1,6 +1,8 @@
 package dao;
 
 import domain.Saida;
+import domain.TipoSaida;
+import domain.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -229,6 +231,49 @@ public class SaidaJDBCDao implements SaidaDao {
                     n++;
                 }
             }
+        }
+    }
+
+    public Vector<Saida> obterTodasSaidasEntre(Date dataInicial, Date dataFinal) throws SQLException {
+        try {
+            Date dataUtil = dataInicial;
+            dataUtil = new java.sql.Date(dataUtil.getTime());
+            java.sql.Date dataInicioSql = (java.sql.Date) dataUtil;
+
+            dataUtil = dataFinal;
+            dataUtil = new java.sql.Date(dataUtil.getTime());
+            java.sql.Date dataFinalSql = (java.sql.Date) dataUtil;
+
+            this.conexao = FabricaConexao.obterConexao("JDBC");
+            String sql;
+            PreparedStatement ps;
+            sql = "SELECT d.cod_dsm, u.nome_usuario, ts.nome_tipo_saida,d.data_saida " +
+                    "FROM dsm d, usuario u, tipo_saida ts " +
+                    "WHERE d.cod_tipo_saida = ts.cod_tipo_saida AND " +
+                    "u.cod_usuario = d.cod_usuario AND " +
+                    " d.data_saida BETWEEN '" + dataInicioSql + "' AND '" + dataFinalSql + "'" +
+                    " ORDER BY d.cod_dsm ASC";
+            ps = this.conexao.prepareStatement(sql);
+            ResultSet res = ps.executeQuery();
+            Vector<Saida> saidas;
+            saidas = new Vector<Saida>();
+            //this.loteDao = new LoteJDBCDao();
+            while (res.next()) {
+                Saida saida = new Saida();
+                Usuario usuario = new Usuario();
+                TipoSaida tipoSaida = new TipoSaida();
+                saida.setCodigo(res.getInt("cod_dsm"));
+                usuario.setNome(res.getString("nome_usuario"));
+                tipoSaida.setNome(res.getString("nome_tipo_saida"));
+                saida.setResponsavel(usuario);
+                saida.setTipoSaida(tipoSaida);
+                saida.setDataSaida(res.getDate("data_saida"));
+                saidas.add(saida);
+            }
+            return saidas;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException();
         }
     }
 }

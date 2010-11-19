@@ -240,7 +240,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7)
-                .addContainerGap(919, Short.MAX_VALUE))
+                .addContainerGap(933, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -398,9 +398,19 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         jmSaida.setText("Saída");
 
         jMenuItem18.setText("Realizar");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
         jmSaida.add(jMenuItem18);
 
         jMenuItem19.setText("Visualizar");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
         jmSaida.add(jMenuItem19);
 
         jMenuBar1.add(jmSaida);
@@ -586,6 +596,12 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         janela.addWindowListener(this);
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        JFrame j = new FrmVisuzalizarSaida();
+        j.addWindowListener(this);
+        j.setVisible(true);
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBoletim;

@@ -58,7 +58,7 @@
     </Container>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="SCA - Registrar Entrada de Material"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="0" green="0" red="0" type="rgb"/>
@@ -136,7 +136,7 @@
                       <Component id="btAdicionarMaterial" min="-2" pref="143" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="654" max="32767" attributes="0"/>
+                      <EmptySpace pref="658" max="32767" attributes="0"/>
                       <Component id="btCancelar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bcConfirmar" min="-2" max="-2" attributes="0"/>

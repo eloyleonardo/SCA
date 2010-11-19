@@ -2,6 +2,8 @@ package dao;
 
 import domain.Saida;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.Vector;
 
 public interface SaidaDao {
 
@@ -12,4 +14,6 @@ public interface SaidaDao {
     public void registrarSaida(Saida saida, int numLinhas) throws SQLException;
 
     public void registrarSaidaOutrosMotivos(Saida saida) throws SQLException;
+
+    public Vector<Saida> obterTodasSaidasEntre(Date dataInicial, Date dataFinal) throws SQLException;
 }

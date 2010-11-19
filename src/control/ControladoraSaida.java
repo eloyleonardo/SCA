@@ -1,19 +1,25 @@
 package control;
 
+import dao.LoteDao;
+import dao.LoteJDBCDao;
 import dao.SaidaDao;
 import dao.SaidaJDBCDao;
+import domain.Lote;
 import domain.Material;
 import domain.Saida;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
 public class ControladoraSaida {
 
     private SaidaDao saidaDao;
+    private LoteDao loteDao;
 
     public ControladoraSaida() {
         this.saidaDao = new SaidaJDBCDao();
+        this.loteDao = new LoteJDBCDao();
     }
 
     public void inserirNovaDSM(int codUsuario, int codSaida, int codSolicitacao) {
@@ -87,5 +93,44 @@ public class ControladoraSaida {
             JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
                     "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public Vector obterSaidaEntre(Date dataInicial, Date dataFinal) throws SQLException {
+        Vector<Saida> saidas = this.saidaDao.obterTodasSaidasEntre(dataInicial, dataFinal);
+        Vector linhas = new Vector();
+        for (int i = 0; i < saidas.size(); i++) {
+            Saida saida = saidas.get(i);
+            linhas.addElement(this.criarLinhaSaida(saida));
+        }
+        return linhas;
+    }
+
+    public Vector obterLotesPor(int cod) throws SQLException {
+        Saida saida = new Saida();
+        saida.setCodigo(cod);
+        return criarLinhaLote(this.loteDao.obterLotesSaida(saida));
+    }
+
+    private Vector criarLinhaLote(Vector<Lote> lotes) {
+        Vector loteFinal = new Vector();
+        for (int i = 0; i < lotes.size(); i++) {
+            Vector linha = new Vector();
+            Lote loteAtual = lotes.get(i);
+            linha.add(loteAtual.getMaterial().getCodigo());
+            linha.add(loteAtual.getMaterial().getDescricao());
+            linha.add(loteAtual.getQuantidadeTotal());
+            linha.add(loteAtual.getValorUnidade());
+            loteFinal.add(linha);
+        }
+        return loteFinal;
+    }
+
+    private Vector criarLinhaSaida(Saida saida) {
+        Vector linha = new Vector();
+        linha.addElement(saida.getCodigo());
+        linha.addElement(saida.getResponsavel().getNome());
+        linha.addElement(saida.getTipoSaida().getNome());
+        linha.addElement(saida.getDataSaida());
+        return linha;
     }
 }

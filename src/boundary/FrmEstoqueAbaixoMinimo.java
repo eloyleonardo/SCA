@@ -71,7 +71,7 @@ public class FrmEstoqueAbaixoMinimo extends javax.swing.JFrame {
         tbMateriais = new javax.swing.JTable();
         btCiente = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SCA-Estoque Abaixo do Minimo");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

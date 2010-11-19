@@ -1,6 +1,7 @@
 package dao;
 
 import domain.Entrada;
+import domain.Saida;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -123,6 +124,22 @@ public class RelatorioJDBCDao implements RelatorioDao {
             arquivo += "Logs/RptLOG" + classe + ".jasper";
             gerarRelatorio(new HashMap(), arquivo);
             conexao.close();
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void getDsm(Saida saida) {
+        try {
+            this.conexao = FabricaConexao.obterConexao("JDBC");
+            String arquivo = getLocal();
+            arquivo += "DSM/DSM.jasper";
+            HashMap parametro = new HashMap();
+            parametro.put("codigo_dsm", saida.getCodigo());
+            gerarRelatorio(parametro, arquivo);
+            this.conexao.close();
         } catch (JRException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
