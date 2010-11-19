@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Date;
@@ -7,7 +6,7 @@ public class Lote {
 
     private int codigo;
     private Material material;
-    private int codigoDem;
+    private Entrada entrada;
     private double quantidadeTotal;
     private double valorUnidade;
     private double estoque;
@@ -24,12 +23,12 @@ public class Lote {
         this.codigo = codigo;
     }
 
-    public int getCodigoDem() {
-        return codigoDem;
+    public Entrada getEntrada() {
+        return entrada;
     }
 
-    public void setCodigoDem(int codigoDem) {
-        this.codigoDem = codigoDem;
+    public void setEntrada(Entrada entrada) {
+        this.entrada = entrada;
     }
 
     public Material getMaterial() {
@@ -71,5 +70,4 @@ public class Lote {
     public void setValorUnidade(double valorUnidade) {
         this.valorUnidade = valorUnidade;
     }
-
 }

@@ -43,7 +43,9 @@ public class DemJDBCDao implements DemDao {
             ps.executeUpdate();
 
             for (int i = 0; i < lotes.size(); i++) {
-                lotes.get(i).setCodigoDem(codigo);
+                Entrada e = new Entrada();
+                e.setCodigo(codigo);
+                lotes.get(i).setEntrada(e);
             }
 
             this.loteDao = new LoteJDBCDao();

@@ -26,7 +26,7 @@ public class LoteJDBCDao implements LoteDao {
             String sql = "INSERT INTO lote( cod_material, codigo_dem, valor_material_lote, validade_lote, qnt_entrada, data_entrada)" + "VALUES(?,?,?,?,?,now());";
             PreparedStatement ps = this.conexao.prepareStatement(sql);
             ps.setInt(1, lote.getMaterial().getCodigo());
-            ps.setInt(2, lote.getCodigoDem());
+            ps.setInt(2, lote.getEntrada().getCodigo());
             ps.setDouble(3, lote.getValorUnidade());
             ps.setDate(4, dataSql);
             ps.setDouble(5, lote.getQuantidadeTotal());
