@@ -646,7 +646,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     // End of variables declaration//GEN-END:variables
 
     private void registrarEntrada() {
-        JFrame janela = new FrmEntradaMaterial();
+        JFrame janela = new FrmEntradaMaterial(usuario);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }

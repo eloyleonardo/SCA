@@ -26,6 +26,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     private ControladoraRelatorios controladoraRelatorio;
     private Vector tiposEntrada;
     private Vector fornecedores;
+    private Vector usuario;
     private Vector entrada;
     private Vector lote;
     private Vector documento;
@@ -33,8 +34,9 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     private int codigo_Entrada;
     private int itemEntrada;
 
-    public FrmEntradaMaterial() {
+    public FrmEntradaMaterial(Vector usuario) {
         super();
+        this.usuario = usuario;
         initComponents();
         Vector controle;
         this.setLocationRelativeTo(null);
@@ -137,11 +139,10 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
             this.entrada.add(fornecedorCodigo.get(0));
 
             this.entrada.add(this.tfNumeroNota.getText().toString());
-            this.entrada.add(this.tfDataNota.getText().toString());
+            this.entrada.add(this.data.format(this.jcDataNota.getDate()));
             this.entrada.add(this.tfValorNota.getText().toString());
             this.entrada.add(this.tfNumeroEmpenho.getText().toString());
-            //Usuario
-            this.entrada.add(1);
+            this.entrada.add(Integer.parseInt(this.usuario.get(0).toString()));
 
             this.entrada.add(tipoAtual.get(3));
             this.lote = montarLote();
@@ -205,7 +206,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     }
 
     private boolean validarCampos() {
-        if ((validarDataTabela()) && (validarTabela()) && validarNota() && validarNotaEmpenho() && validarValorNota() && validarData()) {
+        if ( validarNota() && validarData() && validarValorNota() && validarNotaEmpenho() && validarTabela() && validarDataTabela()) {
             return true;
         } else {
             return false;
@@ -243,8 +244,10 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
 
     private boolean validarData() {
         try {
-            Date dataa = new Date(this.tfDataNota.getText());
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            String dataTeste = formato.format(this.jcDataNota.getDate());
         } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Você deve digitar uma Data valida(DD/MM/AAAA) para a Entrada!", "Atenção", JOptionPane.OK_OPTION);
             return false;
         }
@@ -259,15 +262,22 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
             linhaAtual = criarLinhaTabela02(i);
             try {
                 dataLinha = new Date(linhaAtual.get(4).toString());
-                if (dataAtual.after(dataLinha)) {
+                if (dataAtual.after(dataLinha)){
                     JOptionPane.showMessageDialog(null, "Digite uma Data que seja após o dia de hoje para o material: " + linhaAtual.get(1) + "!", "Atenção", JOptionPane.OK_OPTION);
                     return false;
+                }
+                else {
+                    try {
+                        Double.parseDouble(linhaAtual.get(5).toString().replace(',', '.'));
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Digite um valor valido para o material: " + linhaAtual.get(1) + "!", "Atenção", JOptionPane.OK_OPTION);
+                        return false;
+                    }
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Você deve digitar uma Data valida(DD/MM/AAAA) para o material: " + linhaAtual.get(1) + "!", "Atenção", JOptionPane.OK_OPTION);
                 return false;
             }
-
         }
         return true;
     }
@@ -320,11 +330,11 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         tfNumeroNota = new javax.swing.JFormattedTextField();
         tfValorNota = new javax.swing.JFormattedTextField();
-        tfDataNota = new javax.swing.JFormattedTextField();
         tfNumeroEmpenho = new javax.swing.JFormattedTextField();
         lbData = new javax.swing.JLabel();
         tfCodigoMaterial = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jcDataNota = new com.toedter.calendar.JDateChooser();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -336,7 +346,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SCA - Registrar Entrada de Material");
         setBackground(new java.awt.Color(0, 0, 0));
         setResizable(false);
@@ -391,8 +401,8 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         tbMaterial_02.getColumnModel().getColumn(3).setMaxWidth(75);
         tbMaterial_02.getColumnModel().getColumn(4).setMinWidth(75);
         tbMaterial_02.getColumnModel().getColumn(4).setMaxWidth(75);
-        tbMaterial_02.getColumnModel().getColumn(5).setMinWidth(75);
-        tbMaterial_02.getColumnModel().getColumn(5).setMaxWidth(75);
+        tbMaterial_02.getColumnModel().getColumn(5).setMinWidth(80);
+        tbMaterial_02.getColumnModel().getColumn(5).setMaxWidth(80);
         tbMaterial_02.getColumnModel().getColumn(6).setMinWidth(75);
         tbMaterial_02.getColumnModel().getColumn(6).setMaxWidth(75);
 
@@ -438,8 +448,8 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tbMaterial_01);
         tbMaterial_01.getColumnModel().getColumn(0).setMinWidth(50);
         tbMaterial_01.getColumnModel().getColumn(0).setMaxWidth(50);
-        tbMaterial_01.getColumnModel().getColumn(2).setMinWidth(50);
-        tbMaterial_01.getColumnModel().getColumn(2).setMaxWidth(50);
+        tbMaterial_01.getColumnModel().getColumn(2).setMinWidth(80);
+        tbMaterial_01.getColumnModel().getColumn(2).setMaxWidth(80);
         tbMaterial_01.getColumnModel().getColumn(3).setMinWidth(75);
         tbMaterial_01.getColumnModel().getColumn(3).setMaxWidth(75);
         tbMaterial_01.getColumnModel().getColumn(4).setMinWidth(80);
@@ -462,23 +472,9 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         jLabel10.setBackground(new java.awt.Color(0, 0, 255));
         jLabel10.setText("Data:");
 
-        tfNumeroNota.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tfNumeroNotaFocusLost(evt);
-            }
-        });
-
         tfValorNota.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tfValorNotaFocusLost(evt);
-            }
-        });
-
-        tfDataNota.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-
-        tfNumeroEmpenho.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tfNumeroEmpenhoFocusLost(evt);
             }
         });
 
@@ -519,10 +515,11 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
                                     .addComponent(jLabel1)
                                     .addComponent(lbDataDoc))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfDataNota)
-                                    .addComponent(cbFornecedor, 0, 156, Short.MAX_VALUE)
-                                    .addComponent(tfNumeroEmpenho, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(cbFornecedor, 0, 156, Short.MAX_VALUE)
+                                        .addComponent(tfNumeroEmpenho, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(jcDataNota, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(50, 50, 50))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE)))
@@ -571,9 +568,9 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
                             .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfDataNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbDataDoc))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbDataDoc)
+                            .addComponent(jcDataNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfNumeroEmpenho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -613,7 +610,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         try {
             this.preencherTabela();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um Erro ao obter os Materiais!", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao obter os Materiais!", "Erro", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_btPesquisarMouseClicked
@@ -643,10 +640,10 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Você deve selecionar um outro Material !", "Atenção", JOptionPane.OK_OPTION);
                         }
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Ocorreu um Erro ao Obter o Material!", "Erro", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Ocorreu um erro ao Obter o Material!", "Erro", JOptionPane.WARNING_MESSAGE);
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro ao acesso o banco!", "Erro", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Código incorreto, material não encontrado!", "Erro", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Digite um Número ou Selecione um material!", "Erro", JOptionPane.WARNING_MESSAGE);
@@ -679,7 +676,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         try {
             if (montarEntrada()) {
                 this.codigo_Entrada = this.controladoraEntrada.inserirEntrada(this.entrada, this.lote, this.documento);
-                int opcao = JOptionPane.showConfirmDialog(null, "O Entrada " + this.codigo_Entrada + " foi inserido com Sucesso!", "Inserção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int opcao = JOptionPane.showConfirmDialog(null, "O Entrada " + this.codigo_Entrada + " foi inserido com Sucesso! \n Deseja o imprimir o Comprovante?", "Inserção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (opcao == 0) {
                     this.controladoraRelatorio.getDEM(this.codigo_Entrada);
                 }
@@ -696,28 +693,6 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         this.lbValorDoc.setText("Valor total da " + nomeDoc.get(2) + " R$:");
         this.lbDataDoc.setText("Data da " + nomeDoc.get(2) + " :");
     }//GEN-LAST:event_cbTipoDemItemStateChanged
-
-    private void tfNumeroNotaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfNumeroNotaFocusLost
-        if (!(this.tfNumeroNota.getText().equals(""))) {
-            try {
-                Integer.parseInt(this.tfNumeroNota.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Digite um Número Valido!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-                this.tfNumeroNota.setText("");
-            }
-        }
-    }//GEN-LAST:event_tfNumeroNotaFocusLost
-
-    private void tfNumeroEmpenhoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfNumeroEmpenhoFocusLost
-        if (!(this.tfNumeroEmpenho.getText().equals(""))) {
-            try {
-                Integer.parseInt(this.tfNumeroEmpenho.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Digite um Número Valido!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-                this.tfNumeroEmpenho.setText("");
-            }
-        }
-    }//GEN-LAST:event_tfNumeroEmpenhoFocusLost
 
     private void tfValorNotaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfValorNotaFocusLost
         if (!(this.tfValorNota.getText().equals(""))) {
@@ -748,6 +723,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable2;
+    private com.toedter.calendar.JDateChooser jcDataNota;
     private javax.swing.JLabel lbData;
     private javax.swing.JLabel lbDataDoc;
     private javax.swing.JLabel lbNumeroDoc;
@@ -755,7 +731,6 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     private javax.swing.JTable tbMaterial_01;
     private javax.swing.JTable tbMaterial_02;
     private javax.swing.JTextField tfCodigoMaterial;
-    private javax.swing.JFormattedTextField tfDataNota;
     private javax.swing.JFormattedTextField tfNumeroEmpenho;
     private javax.swing.JFormattedTextField tfNumeroNota;
     private javax.swing.JTextField tfPesquisar;
