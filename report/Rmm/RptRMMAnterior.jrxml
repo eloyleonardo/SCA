@@ -28,7 +28,7 @@
 	<variable name="total_1" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{total}.equals(null) ? 0.0 :$F{total}]]></variableExpression>
 	</variable>
-	<variable name="valor" class="java.lang.String">
+	<variable name="valor" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[$F{total}.equals(null) ? 0.0 : $F{total}]]></variableExpression>
 	</variable>
 	<columnHeader>
@@ -70,10 +70,10 @@
 					<reportElement x="0" y="0" width="1" height="20"/>
 				</line>
 			</elementGroup>
-			<textField>
-				<reportElement x="1" y="0" width="139" height="20"/>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00">
+				<reportElement x="1" y="0" width="140" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{valor}.equals(null) ? 0.0 :$V{valor}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{valor}.equals(null) ? 0.0 :$V{valor}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -90,7 +90,7 @@
 					<reportElement x="0" y="0" width="1" height="19"/>
 				</line>
 			</elementGroup>
-			<textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00">
 				<reportElement x="1" y="0" width="140" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total_1}.equals(null) ? 0.0 :$V{total_1}]]></textFieldExpression>

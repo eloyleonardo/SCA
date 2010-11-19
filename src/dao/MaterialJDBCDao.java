@@ -78,21 +78,21 @@ public class MaterialJDBCDao implements MaterialDao {
             PreparedStatement ps;
             if (status.equals("Ativo")) {
                 if (nome.equals("")) {
-                    sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade " +
+                    sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade, ma.estoque " +
                             " FROM material ma, unidade un WHERE ma.cod_unidade = un.cod_unidade AND ma.estado = 'a' ORDER BY ma.cod_material";
 
                 } else {
-                    sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade " +
+                    sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade, ma.estoque " +
                             " FROM material ma, unidade un WHERE ma.cod_unidade = un.cod_unidade AND ma.estado = 'a' AND descricao_material LIKE '" + nome + "%' ORDER BY ma.cod_material";
 
                 }
             } else {
                 if (nome.equals("")) {
-                    sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade " +
+                    sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade,ma.estoque " +
                             " FROM material ma, unidade un WHERE ma.cod_unidade = un.cod_unidade AND ma.estado = 'i' ORDER BY ma.cod_material";
 
                 } else {
-                    sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade " +
+                    sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade,ma.estoque " +
                             " FROM material ma, unidade un WHERE ma.cod_unidade = un.cod_unidade AND ma.estado = 'i' AND descricao_material LIKE '" + nome + "%' ORDER BY ma.cod_material";
 
                 }
@@ -109,6 +109,7 @@ public class MaterialJDBCDao implements MaterialDao {
                 material.getNd().setCodigo(res.getInt("cod_nd"));
                 material.getSubitem().setCodigo(res.getInt("cod_subitem"));
                 material.getUnidade().setNome(res.getString("descricao_unidade"));
+                material.setEstoqueAtual((res.getDouble("estoque")));
                 materiais.addElement(material);
             }
             conexao.close();
@@ -367,7 +368,7 @@ public class MaterialJDBCDao implements MaterialDao {
                 sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade,ma.estoque " + " FROM material ma, unidade un WHERE ma.cod_unidade = un.cod_unidade AND ma.estado = 'a'";
                 ps = conexao.prepareStatement(sql);
             } else {
-                sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade,ma.estoque " + " FROM material ma, unidade un WHERE ma.cod_unidade = un.cod_unidade AND ma.estado = 'a' AND descricao_material LIKE '" + nome + "%'";
+                sql = "SELECT ma.cod_material, ma.descricao_material, ma.cod_nd, ma.quant_minima, ma.cod_subitem, un.descricao_unidade,ma.estoque " + " FROM material ma, unidade un WHERE ma.cod_unidade = un.cod_unidade AND ma.estado = 'a' AND descricao_material ILIKE '" + nome + "%'";
                 ps = conexao.prepareStatement(sql);
             }
             ResultSet res = ps.executeQuery();
@@ -387,7 +388,7 @@ public class MaterialJDBCDao implements MaterialDao {
                 Unidade u = new Unidade();
                 u.setNome(res.getString("descricao_unidade"));
                 material.setUnidade(u);
-                material.setEstoqueAtual(res.getDouble("estoque"));
+                material.setEstoqueAtual(res.getDouble("ma.estoque"));
                 materiais.addElement(material);
             }
             conexao.close();

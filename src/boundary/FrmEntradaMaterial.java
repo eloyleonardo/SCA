@@ -346,7 +346,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SCA - Registrar Entrada de Material");
         setBackground(new java.awt.Color(0, 0, 0));
         setResizable(false);

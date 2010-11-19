@@ -15,7 +15,7 @@
            GROUP BY si.cod_subitem
            ORDER BY si.cod_subitem) entrada,
        (SELECT si.cod_subitem,
-               sum(lo.valor_material_lote*sm.qnt_saida) as val_saida
+               COALESCE (sum(lo.valor_material_lote*sm.qnt_saida),0) as val_saida
            FROM saida_material sm
            INNER JOIN lote lo ON sm.cod_lote = lo.cod_lote  AND data_saida BETWEEN $P{dataInicioSistema} AND $P{dataFim}
            INNER JOIN material ma ON lo.cod_material = ma.cod_material

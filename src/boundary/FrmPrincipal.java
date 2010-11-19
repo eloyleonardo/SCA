@@ -16,7 +16,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     private Vector usuario;
     private int janelasAbertas;
     private ControladoraRelatorios controladoraRelatorios;
-    private Date dataI, dataF;
+    private Date dataI,  dataF;
     private int codSetor;
     private String classe;
 
@@ -27,6 +27,12 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         janelasAbertas = 0;
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         controladoraRelatorios = new ControladoraRelatorios();
+        FrmEstoqueAbaixoMinimo j = new FrmEstoqueAbaixoMinimo();
+        if (j.getMateriais().size() == 0) {
+            j.dispose();
+        }else {
+            j.setVisible(true);
+        }
     }
 
     private void exibirBoletim() {
@@ -150,6 +156,9 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         jmSaida = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jmSolicitacoes = new javax.swing.JMenu();
         jmiAprovarSolicitacao = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
@@ -415,6 +424,26 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
 
         jMenuBar1.add(jmSaida);
 
+        jMenu1.setText("Estoque");
+
+        jMenuItem1.setText("Relatorio de Materiais em Estoque");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Visualizar Materiais abaixo do estoque");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
         jmSolicitacoes.setText("Solicitações");
 
         jmiAprovarSolicitacao.setText("Aprovar");
@@ -603,6 +632,15 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         j.setVisible(true);
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.exibirRME();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JFrame j = new FrmEstoqueAbaixoMinimo();
+        j.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBoletim;
     private javax.swing.JButton btCadastrarFornecedor;
@@ -612,8 +650,10 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem15;
@@ -621,6 +661,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem3;
