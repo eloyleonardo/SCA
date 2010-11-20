@@ -35,10 +35,9 @@ public class MaterialJDBCDao implements MaterialDao {
             JOptionPane.showMessageDialog(null, "Material inserido com sucesso!!", "Material cadastrado", JOptionPane.INFORMATION_MESSAGE);
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -64,10 +63,9 @@ public class MaterialJDBCDao implements MaterialDao {
             JOptionPane.showMessageDialog(null, "Material alterado com sucesso!!", "Material alterado", JOptionPane.INFORMATION_MESSAGE);
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -115,8 +113,7 @@ public class MaterialJDBCDao implements MaterialDao {
             conexao.close();
             return materiais;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -153,15 +150,13 @@ public class MaterialJDBCDao implements MaterialDao {
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
     public java.sql.Date converteDataUtilToSql(Date data) {
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date dataUtil = data;
         java.sql.Date dataSql = null;
         dataUtil = new java.sql.Date(dataUtil.getTime());
@@ -215,10 +210,9 @@ public class MaterialJDBCDao implements MaterialDao {
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -233,10 +227,9 @@ public class MaterialJDBCDao implements MaterialDao {
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -249,10 +242,9 @@ public class MaterialJDBCDao implements MaterialDao {
             ps.setInt(2, (material.getCodigo()));
             ps.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -394,8 +386,7 @@ public class MaterialJDBCDao implements MaterialDao {
             conexao.close();
             return materiais;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -427,8 +418,7 @@ public class MaterialJDBCDao implements MaterialDao {
             conexao.close();
             return materiais;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -452,8 +442,7 @@ public class MaterialJDBCDao implements MaterialDao {
             this.conexao.close();
             return materiais;
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -473,10 +462,9 @@ public class MaterialJDBCDao implements MaterialDao {
             JOptionPane.showMessageDialog(null, "Material alterado com sucesso!!", "Material alterado", JOptionPane.INFORMATION_MESSAGE);
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

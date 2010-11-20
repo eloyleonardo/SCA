@@ -26,7 +26,7 @@ public class SetorJDBCDao implements SetorDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -56,10 +56,9 @@ public class SetorJDBCDao implements SetorDao {
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -98,7 +97,7 @@ public class SetorJDBCDao implements SetorDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -134,7 +133,7 @@ public class SetorJDBCDao implements SetorDao {
             conexao.close();
             return setors;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

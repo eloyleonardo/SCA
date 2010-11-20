@@ -28,7 +28,7 @@ public class TipoEnderecoJDBCDao implements TipoEnderecoDao {
             conexao.close();
             return tipoEnderecos;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

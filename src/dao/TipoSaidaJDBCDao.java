@@ -30,8 +30,7 @@ public class TipoSaidaJDBCDao implements TipoSaidaDao {
             conexao.close();
             return tiposSaida;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

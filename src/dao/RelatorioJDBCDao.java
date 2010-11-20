@@ -22,10 +22,9 @@ public class RelatorioJDBCDao implements RelatorioDao {
 
     private String getLocal() {
         return System.getProperty("user.dir") + "/report/";
-    //getClass().getResourceAsStream();
     }
 
-    public void getBoletim(Date dataInicio, Date dataFim) {
+    public void getBoletim(Date dataInicio, Date dataFim) throws SQLException, JRException {
         Date dataInicioAno = new Date(dataInicio.getYear(), 0, 1);
         try {
             conexao = FabricaConexao.obterConexao("JDBC");
@@ -38,13 +37,13 @@ public class RelatorioJDBCDao implements RelatorioDao {
             gerarRelatorio(parametro, arquivo);
             conexao.close();
         } catch (JRException ex) {
-            ex.printStackTrace();
+            throw new JRException(ex.getCause());
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new SQLException(ex.getCause());
         }
     }
 
-    public void getRMM(Date dataInicio, Date dataFim) {
+    public void getRMM(Date dataInicio, Date dataFim) throws SQLException, JRException {
         Date dataInicioAno = new Date(dataInicio.getYear(), 0, 1);
         Date dataFimAnoAnterior = new Date(dataInicio.getYear() - 1, 11, 31);
         Date dataInicioMes = new Date(dataInicio.getYear(), dataInicio.getMonth() - 1, 1);
@@ -60,18 +59,18 @@ public class RelatorioJDBCDao implements RelatorioDao {
             parametro.put("dataFimAnoAnterior", dataFimAnoAnterior);
             parametro.put("dataInicioMes", dataInicioMes);
             parametro.put("dataInicioSistema", dataInicioSistema);
-            Date d = new Date(dataInicioMes.getYear(),dataInicioMes.getMonth()+1,dataInicioMes.getDate()-1);
+            Date d = new Date(dataInicioMes.getYear(), dataInicioMes.getMonth() + 1, dataInicioMes.getDate() - 1);
             parametro.put("dataFimMesAnterior", d);
             gerarRelatorio(parametro, arquivo);
             conexao.close();
         } catch (JRException ex) {
-            ex.printStackTrace();
+            throw new JRException(ex.getCause());
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new SQLException(ex.getCause());
         }
     }
 
-    public void getDEM(Entrada dem) {
+    public void getDEM(Entrada dem) throws SQLException, JRException {
         try {
             this.conexao = FabricaConexao.obterConexao("JDBC");
             String arquivo = getLocal();
@@ -81,13 +80,13 @@ public class RelatorioJDBCDao implements RelatorioDao {
             gerarRelatorio(parametro, arquivo);
             this.conexao.close();
         } catch (JRException ex) {
-            ex.printStackTrace();
+            throw new JRException(ex.getCause());
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new SQLException(ex.getCause());
         }
     }
 
-    public void getRCM(Date dataI, Date dataF, int codigoSetor) {
+    public void getRCM(Date dataI, Date dataF, int codigoSetor) throws SQLException, JRException {
         try {
             conexao = FabricaConexao.obterConexao("JDBC");
             String arquivo = getLocal();
@@ -99,13 +98,13 @@ public class RelatorioJDBCDao implements RelatorioDao {
             gerarRelatorio(parametro, arquivo);
             conexao.close();
         } catch (JRException ex) {
-            ex.printStackTrace();
+            throw new JRException(ex.getCause());
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new SQLException(ex.getCause());
         }
     }
 
-    public void getRME() {
+    public void getRME() throws SQLException, JRException {
         try {
             conexao = FabricaConexao.obterConexao("JDBC");
             String arquivo = getLocal();
@@ -113,13 +112,13 @@ public class RelatorioJDBCDao implements RelatorioDao {
             gerarRelatorio(new HashMap(), arquivo);
             conexao.close();
         } catch (JRException ex) {
-            ex.printStackTrace();
+            throw new JRException(ex.getCause());
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new SQLException(ex.getCause());
         }
     }
 
-    public void getLog(String classe) {
+    public void getLog(String classe) throws SQLException, JRException {
         try {
             conexao = FabricaConexao.obterConexao("JDBC");
             String arquivo = getLocal();
@@ -127,13 +126,13 @@ public class RelatorioJDBCDao implements RelatorioDao {
             gerarRelatorio(new HashMap(), arquivo);
             conexao.close();
         } catch (JRException ex) {
-            ex.printStackTrace();
+            throw new JRException(ex.getCause());
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new SQLException(ex.getCause());
         }
     }
 
-    public void getDsm(Saida saida) {
+    public void getDsm(Saida saida) throws SQLException, JRException {
         try {
             this.conexao = FabricaConexao.obterConexao("JDBC");
             String arquivo = getLocal();
@@ -143,9 +142,9 @@ public class RelatorioJDBCDao implements RelatorioDao {
             gerarRelatorio(parametro, arquivo);
             this.conexao.close();
         } catch (JRException ex) {
-            ex.printStackTrace();
+            throw new JRException(ex.getCause());
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new SQLException(ex.getCause());
         }
     }
 }

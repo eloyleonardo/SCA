@@ -30,10 +30,9 @@ public class CargoJDBCDao implements CargoDao {
             conexao.close();
             return obterIdCargo(cargo);
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -71,7 +70,7 @@ public class CargoJDBCDao implements CargoDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -108,10 +107,9 @@ public class CargoJDBCDao implements CargoDao {
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -152,7 +150,7 @@ public class CargoJDBCDao implements CargoDao {
             conexao.close();
             return cargos;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

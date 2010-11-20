@@ -15,7 +15,6 @@ public class FrmAlterarMaterial extends FrmFormularioMaterial implements ActionL
     private String ndInserida;
     private String subitemInserido;
     private String unidadeInserida;
-    private Vector linha;
     private String status;
     private int ID;
 
@@ -49,9 +48,6 @@ public class FrmAlterarMaterial extends FrmFormularioMaterial implements ActionL
         this.ID = (Integer.parseInt(linhaSelecionada.get(0).toString()));
         this.tfNome.setText(linhaSelecionada.get(1).toString());
         this.tfQtdMinimo.setText(linhaSelecionada.get(2).toString());
-        //this.tfnd.setText(linha.get(3).toString());
-        //this.tfsub.setText(linha.get(4).toString());
-        //this.tfUnidade.setText(linha.get(5).toString());
         btOk.addActionListener(this);
     }
 

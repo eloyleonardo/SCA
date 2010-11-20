@@ -28,7 +28,7 @@ public class UfJDBCDao implements UfDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -49,7 +49,7 @@ public class UfJDBCDao implements UfDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -89,7 +89,7 @@ public class UfJDBCDao implements UfDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -125,7 +125,7 @@ public class UfJDBCDao implements UfDao {
             conexao.close();
             return ufs;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -145,7 +145,7 @@ public class UfJDBCDao implements UfDao {
             conexao.close();
             return uf;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

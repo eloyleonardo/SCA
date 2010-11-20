@@ -20,7 +20,6 @@ public class NdJDBCDao implements NdDao {
             sql = "SELECT * from nd";
             ps = conexao.prepareStatement(sql);
             ResultSet res = ps.executeQuery();
-            Vector<Material> materiais = new Vector<Material>();
 
             while (res.next()) {
                 Nd nd = new Nd();
@@ -31,8 +30,7 @@ public class NdJDBCDao implements NdDao {
             conexao.close();
             return Nds;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

@@ -28,7 +28,7 @@ public class UnidadeJDBCDao implements UnidadeDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -60,7 +60,7 @@ public class UnidadeJDBCDao implements UnidadeDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -99,7 +99,7 @@ public class UnidadeJDBCDao implements UnidadeDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -135,7 +135,7 @@ public class UnidadeJDBCDao implements UnidadeDao {
             conexao.close();
             return unidades;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

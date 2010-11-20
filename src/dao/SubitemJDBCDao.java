@@ -21,7 +21,6 @@ public class SubitemJDBCDao implements SubitemDao {
             sql = "SELECT * from subitem";
             ps = conexao.prepareStatement(sql);
             ResultSet res = ps.executeQuery();
-            Vector<Material> materiais = new Vector<Material>();
 
             while (res.next()) {
                 SubItem subitem = new SubItem();
@@ -32,8 +31,7 @@ public class SubitemJDBCDao implements SubitemDao {
             conexao.close();
             return subitens;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

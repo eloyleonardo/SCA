@@ -57,9 +57,8 @@ public class DemJDBCDao implements DemDao {
             conexao2.commit();
             conexao2.close();
         } catch (SQLException ex) {
-            conexao2.rollback();
             conexao2.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -125,7 +124,7 @@ public class DemJDBCDao implements DemDao {
             }
             return dems;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -144,7 +143,7 @@ public class DemJDBCDao implements DemDao {
             }
             return dem;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

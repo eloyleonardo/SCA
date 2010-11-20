@@ -4,7 +4,10 @@ import dao.RelatorioDao;
 import dao.RelatorioJDBCDao;
 import domain.Entrada;
 import domain.Saida;
+import java.sql.SQLException;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
 
 public class ControladoraRelatorios {
 
@@ -15,34 +18,90 @@ public class ControladoraRelatorios {
     }
 
     public void getBoletim(Date dataInicio, Date dataFim) {
-        dao.getBoletim(dataInicio, dataFim);
+        try {
+            dao.getBoletim(dataInicio, dataFim);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void getLog(String classe) {
-        dao.getLog(classe);
+        try {
+            dao.getLog(classe);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void getRCM(Date dataI, Date dataF, int codigoSetor) {
-        dao.getRCM(dataI, dataF, codigoSetor);
+        try {
+            dao.getRCM(dataI, dataF, codigoSetor);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void getRME() {
-        dao.getRME();
+        try {
+            dao.getRME();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void getRMM(Date dataInicio, Date dataFim) {
-        dao.getRMM(dataInicio, dataFim);
+        try {
+            dao.getRMM(dataInicio, dataFim);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void getDsm(int codSaida) {
         Saida saida = new Saida();
         saida.setCodigo(codSaida);
-        this.dao.getDsm(saida);
+        try {
+            this.dao.getDsm(saida);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void getDEM(int codigo) {
         Entrada dem = new Entrada();
         dem.setCodigo(codigo);
-        this.dao.getDEM(dem);
+        try {
+            this.dao.getDEM(dem);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório,\n" +
+                    "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

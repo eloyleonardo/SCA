@@ -12,10 +12,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Vector;
 
-/**
- *
- * @author Leonardo
- */
 public class FornecedorJDBCDao implements FornecedorDao {
 
     private Connection conexao;
@@ -24,8 +20,7 @@ public class FornecedorJDBCDao implements FornecedorDao {
         try {
             conexao = FabricaConexao.obterConexao("JDBC");
             conexao.setAutoCommit(false);
-            String sql = "INSERT INTO fornecedor (id_fornecedor,cod_cidade,cod_tipo_endereco,nome_fornecedor,nome_fantasia,endereco,complemento,bairro,estado,telefone1,telefone2,fax,email,cep)"
-                    + "VALUES ('" + fornecedor.getId() + "'," + fornecedor.getCidade().getCodigo() + "," + fornecedor.getTipoEndereco().getCodigo() + ",'" + fornecedor.getNome() + "','" + fornecedor.getNomeFantasia() + "','" + fornecedor.getEndereco() + "','" + fornecedor.getComplemento() + "','" + fornecedor.getBairro() + "','a','" + fornecedor.getTelefone1() + "','" + fornecedor.getTelefone2() + "','" + fornecedor.getFax() + "','" + fornecedor.getEmail() + "','" + fornecedor.getCep() + "');";
+            String sql = "INSERT INTO fornecedor (id_fornecedor,cod_cidade,cod_tipo_endereco,nome_fornecedor,nome_fantasia,endereco,complemento,bairro,estado,telefone1,telefone2,fax,email,cep)" + "VALUES ('" + fornecedor.getId() + "'," + fornecedor.getCidade().getCodigo() + "," + fornecedor.getTipoEndereco().getCodigo() + ",'" + fornecedor.getNome() + "','" + fornecedor.getNomeFantasia() + "','" + fornecedor.getEndereco() + "','" + fornecedor.getComplemento() + "','" + fornecedor.getBairro() + "','a','" + fornecedor.getTelefone1() + "','" + fornecedor.getTelefone2() + "','" + fornecedor.getFax() + "','" + fornecedor.getEmail() + "','" + fornecedor.getCep() + "');";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.executeUpdate();
             conexao.commit();
@@ -33,7 +28,7 @@ public class FornecedorJDBCDao implements FornecedorDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -41,22 +36,7 @@ public class FornecedorJDBCDao implements FornecedorDao {
         try {
             conexao = FabricaConexao.obterConexao("JDBC");
             conexao.setAutoCommit(false);
-            String sql = "UPDATE fornecedor SET "
-                    + "id_fornecedor     = '" + fornecedor.getId() + "',"
-                    + "cod_cidade        = " + fornecedor.getCidade().getCodigo() + ","
-                    + "cod_tipo_endereco = " + fornecedor.getTipoEndereco().getCodigo() + ","
-                    + "nome_fornecedor   = '" + fornecedor.getNome() + "',"
-                    + "nome_fantasia     = '" + fornecedor.getNomeFantasia() + "',"
-                    + "endereco          = '" + fornecedor.getEndereco() + "',"
-                    + "complemento       = '" + fornecedor.getComplemento() + "',"
-                    + "bairro            = '" + fornecedor.getBairro() + "',"
-                    + "estado            = '" + fornecedor.getStatus() + "',"
-                    + "telefone1         = '" + fornecedor.getTelefone1() + "',"
-                    + "telefone2         = '" + fornecedor.getTelefone2() + "',"
-                    + "fax               = '" + fornecedor.getFax() + "',"
-                    + "email             = '" + fornecedor.getEmail() + "',"
-                    + "cep               = '" + fornecedor.getCep() + "'"
-                    + "WHERE id_fornecedor = '" + fornecedor.getId() + "';";
+            String sql = "UPDATE fornecedor SET " + "id_fornecedor     = '" + fornecedor.getId() + "'," + "cod_cidade        = " + fornecedor.getCidade().getCodigo() + "," + "cod_tipo_endereco = " + fornecedor.getTipoEndereco().getCodigo() + "," + "nome_fornecedor   = '" + fornecedor.getNome() + "'," + "nome_fantasia     = '" + fornecedor.getNomeFantasia() + "'," + "endereco          = '" + fornecedor.getEndereco() + "'," + "complemento       = '" + fornecedor.getComplemento() + "'," + "bairro            = '" + fornecedor.getBairro() + "'," + "estado            = '" + fornecedor.getStatus() + "'," + "telefone1         = '" + fornecedor.getTelefone1() + "'," + "telefone2         = '" + fornecedor.getTelefone2() + "'," + "fax               = '" + fornecedor.getFax() + "'," + "email             = '" + fornecedor.getEmail() + "'," + "cep               = '" + fornecedor.getCep() + "'" + "WHERE id_fornecedor = '" + fornecedor.getId() + "';";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.executeUpdate();
             conexao.commit();
@@ -64,7 +44,7 @@ public class FornecedorJDBCDao implements FornecedorDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -75,8 +55,7 @@ public class FornecedorJDBCDao implements FornecedorDao {
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
             conexao = FabricaConexao.obterConexao("JDBC");
             conexao.setAutoCommit(false);
-            String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)"
-                    + "VALUES (?,?,?,?,?,?);";
+            String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" + "VALUES (?,?,?,?,?,?);";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, "fornecedor");
             ps.setString(2, id);
@@ -86,25 +65,20 @@ public class FornecedorJDBCDao implements FornecedorDao {
             if (acao.equals("Desativar")) {
                 ps.setString(6, "d");
                 ps.executeUpdate();
-                sql = "UPDATE fornecedor SET "
-                        + "estado = 'i' "
-                        + "WHERE id_fornecedor = '" + id + "'";
+                sql = "UPDATE fornecedor SET " + "estado = 'i' " + "WHERE id_fornecedor = '" + id + "'";
             } else {
                 ps.setString(6, "a");
                 ps.executeUpdate();
-                sql = "UPDATE fornecedor SET "
-                        + "estado = 'a' "
-                        + "WHERE id_fornecedor = '" + id + "'";
+                sql = "UPDATE fornecedor SET " + "estado = 'a' " + "WHERE id_fornecedor = '" + id + "'";
             }
             ps = conexao.prepareStatement(sql);
             ps.executeUpdate();
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -119,62 +93,9 @@ public class FornecedorJDBCDao implements FornecedorDao {
                 status = "i";
             }
             if (nome.equals("")) {
-                sql = "SELECT f.id_fornecedor, "
-                        + "f.cod_cidade, "
-                        + "c.nome_cidade, "
-                        + "c.sigla_uf, "
-                        + "u.descricao_uf, "
-                        + "f.cod_tipo_endereco, "
-                        + "te.nome_tipo_endereco, "
-                        + "f.nome_fornecedor, "
-                        + "f.telefone1, "
-                        + "f.telefone2, "
-                        + "f.nome_fantasia, "
-                        + "f.endereco, "
-                        + "f.complemento, "
-                        + "f.bairro, "
-                        + "f.fax, "
-                        + "f.email, "
-                        + "f.estado, "
-                        + "f.cep "
-                        + "FROM fornecedor f, "
-                        + "cidade c, "
-                        + "uf u, "
-                        + "tipo_endereco te "
-                        + "WHERE f.cod_cidade = c.cod_cidade AND "
-                        + "c.sigla_uf = u.sigla_uf     AND "
-                        + "f.cod_tipo_endereco = te.cod_tipo_endereco AND "
-                        + "f.estado = '" + status + "' "
-                        + "ORDER BY f.id_fornecedor;";
+                sql = "SELECT f.id_fornecedor, " + "f.cod_cidade, " + "c.nome_cidade, " + "c.sigla_uf, " + "u.descricao_uf, " + "f.cod_tipo_endereco, " + "te.nome_tipo_endereco, " + "f.nome_fornecedor, " + "f.telefone1, " + "f.telefone2, " + "f.nome_fantasia, " + "f.endereco, " + "f.complemento, " + "f.bairro, " + "f.fax, " + "f.email, " + "f.estado, " + "f.cep " + "FROM fornecedor f, " + "cidade c, " + "uf u, " + "tipo_endereco te " + "WHERE f.cod_cidade = c.cod_cidade AND " + "c.sigla_uf = u.sigla_uf     AND " + "f.cod_tipo_endereco = te.cod_tipo_endereco AND " + "f.estado = '" + status + "' " + "ORDER BY f.id_fornecedor;";
             } else {
-                sql = "SELECT f.id_fornecedor,"
-                        + "f.cod_cidade,"
-                        + "c.nome_cidade,"
-                        + "c.sigla_uf,"
-                        + "u.descricao_uf,"
-                        + "f.cod_tipo_endereco,"
-                        + "te.nome_tipo_endereco,"
-                        + "f.nome_fornecedor,"
-                        + "f.telefone1,"
-                        + "f.telefone2,"
-                        + "f.nome_fantasia,"
-                        + "f.endereco,"
-                        + "f.complemento,"
-                        + "f.bairro,"
-                        + "f.fax,"
-                        + "f.email,"
-                        + "f.estado, "
-                        + "f.cep "
-                        + "FROM fornecedor f,"
-                        + "cidade c,"
-                        + "uf u,"
-                        + "tipo_endereco te"
-                        + "WHERE f.cod_cidade = c.cod_cidade AND"
-                        + "c.sigla_uf = u.sigla_uf     AND"
-                        + "f.cod_tipo_endereco = te.cod_tipo_endereco AND"
-                        + "f.nome_fantasia LIKE '" + nome + "%' AND "
-                        + "f.estado = '" + status + "' "
-                        + "ORDER BY f.id_fornecedor;";
+                sql = "SELECT f.id_fornecedor," + "f.cod_cidade," + "c.nome_cidade," + "c.sigla_uf," + "u.descricao_uf," + "f.cod_tipo_endereco," + "te.nome_tipo_endereco," + "f.nome_fornecedor," + "f.telefone1," + "f.telefone2," + "f.nome_fantasia," + "f.endereco," + "f.complemento," + "f.bairro," + "f.fax," + "f.email," + "f.estado, " + "f.cep " + "FROM fornecedor f," + "cidade c," + "uf u," + "tipo_endereco te" + "WHERE f.cod_cidade = c.cod_cidade AND" + "c.sigla_uf = u.sigla_uf     AND" + "f.cod_tipo_endereco = te.cod_tipo_endereco AND" + "f.nome_fantasia LIKE '" + nome + "%' AND " + "f.estado = '" + status + "' " + "ORDER BY f.id_fornecedor;";
             }
             ps = conexao.prepareStatement(sql);
             ResultSet res = ps.executeQuery();
@@ -211,7 +132,7 @@ public class FornecedorJDBCDao implements FornecedorDao {
             conexao.close();
             return fornecedores;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

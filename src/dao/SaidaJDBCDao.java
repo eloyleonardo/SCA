@@ -31,10 +31,9 @@ public class SaidaJDBCDao implements SaidaDao {
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -95,8 +94,7 @@ public class SaidaJDBCDao implements SaidaDao {
                     }
                     JOptionPane.showMessageDialog(null, "Saída Registrada!!", "Saída Registrada!!", JOptionPane.INFORMATION_MESSAGE);
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    throw new SQLException();
+                    throw new SQLException(ex.getCause());
                 }
                 saidaOk = true;
             } else {
@@ -117,8 +115,7 @@ public class SaidaJDBCDao implements SaidaDao {
                     conexao.close();
                     soma = soma + Double.parseDouble(((Vector) linhaRecebida.get(n)).get(1).toString());
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    throw new SQLException();
+                    throw new SQLException(ex.getCause());
                 }
                 n++;
             }
@@ -134,8 +131,7 @@ public class SaidaJDBCDao implements SaidaDao {
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -203,8 +199,7 @@ public class SaidaJDBCDao implements SaidaDao {
                             materialDao.MaterialAbaixo(codMaterial);
                         }
                     } catch (SQLException ex) {
-                        ex.printStackTrace();
-                        throw new SQLException();
+                        throw new SQLException(ex.getCause());
                     }
                     saidaOk = true;
                 } else {
@@ -225,8 +220,7 @@ public class SaidaJDBCDao implements SaidaDao {
                         conexao.commit();
                         soma = soma + Double.parseDouble(((Vector) linhaRecebida.get(n)).get(1).toString());
                     } catch (SQLException ex) {
-                        ex.printStackTrace();
-                        throw new SQLException();
+                        throw new SQLException(ex.getCause());
                     }
                     n++;
                 }
@@ -257,7 +251,6 @@ public class SaidaJDBCDao implements SaidaDao {
             ResultSet res = ps.executeQuery();
             Vector<Saida> saidas;
             saidas = new Vector<Saida>();
-            //this.loteDao = new LoteJDBCDao();
             while (res.next()) {
                 Saida saida = new Saida();
                 Usuario usuario = new Usuario();
@@ -272,8 +265,7 @@ public class SaidaJDBCDao implements SaidaDao {
             }
             return saidas;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

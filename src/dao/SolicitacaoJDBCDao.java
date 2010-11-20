@@ -47,10 +47,9 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
             }
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -94,8 +93,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
             conexao.close();
             return linhaInserida;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -134,7 +132,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
             conexao.close();
             return solicitacoes;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -182,7 +180,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
             conexao.close();
             return materiais;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -212,7 +210,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
             conexao.commit();
         } catch (SQLException ex) {
             conexao.rollback();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -226,7 +224,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
             ps = conexao.prepareStatement(sql);
             ps.executeUpdate();
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -283,15 +281,13 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
                 s.setResponsavel(u);
                 s.setDataRequisicao(res.getDate("data_solicitacao"));
                 s.setDataAprovacao(res.getDate("data_aprovacao"));
-                //s.setMaterial(obterMateriaisPorSolicitacao(res.getInt("cod_solicitacao"), qnt));
                 s.setQuantidade(qnt);
                 solicitacoesAprovadas.addElement(s);
             }
             conexao.close();
             return solicitacoesAprovadas;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

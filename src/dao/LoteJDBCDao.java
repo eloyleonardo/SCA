@@ -34,7 +34,7 @@ public class LoteJDBCDao implements LoteDao {
         } catch (SQLException ex) {
             this.conexao.rollback();
             this.conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -51,6 +51,7 @@ public class LoteJDBCDao implements LoteDao {
             } catch (SQLException ex) {
                 this.conexao.rollback();
                 this.conexao.close();
+                throw new SQLException(ex.getCause());
             }
         }
     }
@@ -86,8 +87,7 @@ public class LoteJDBCDao implements LoteDao {
             this.conexao.close();
             return lotes;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -116,8 +116,7 @@ public class LoteJDBCDao implements LoteDao {
             conexao.close();
             return lotes;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

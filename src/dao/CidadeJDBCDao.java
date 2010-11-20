@@ -26,10 +26,9 @@ public class CidadeJDBCDao implements CidadeDao {
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -37,20 +36,15 @@ public class CidadeJDBCDao implements CidadeDao {
         try {
             conexao = FabricaConexao.obterConexao("JDBC");
             conexao.setAutoCommit(false);
-            String sql = " UPDATE cidade SET "
-                    + " sigla_uf = '" + cidade.getUf().getSigla() + "', "
-                    + " nome_cidade = '" + cidade.getNome() + "',"
-                    + " estado = '" + cidade.getStatus() + "'"
-                    + " WHERE cod_cidade = " + cidade.getCodigo();
+            String sql = " UPDATE cidade SET " + " sigla_uf = '" + cidade.getUf().getSigla() + "', " + " nome_cidade = '" + cidade.getNome() + "'," + " estado = '" + cidade.getStatus() + "'" + " WHERE cod_cidade = " + cidade.getCodigo();
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.executeUpdate();
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -61,33 +55,15 @@ public class CidadeJDBCDao implements CidadeDao {
             PreparedStatement ps;
             if (status.equals("Ativo")) {
                 if (nome.equals("")) {
-                    sql = "SELECT c.cod_cidade, c.nome_cidade, u.descricao_uf, c.estado "
-                            + "FROM cidade c, uf u "
-                            + "WHERE c.sigla_uf = u.sigla_uf AND "
-                            + "c.estado = 'a' "
-                            + "ORDER BY c.cod_cidade";
+                    sql = "SELECT c.cod_cidade, c.nome_cidade, u.descricao_uf, c.estado " + "FROM cidade c, uf u " + "WHERE c.sigla_uf = u.sigla_uf AND " + "c.estado = 'a' " + "ORDER BY c.cod_cidade";
                 } else {
-                    sql = "SELECT c.cod_cidade, c.nome_cidade, u.descricao_uf, c.estado "
-                            + "FROM cidade c, uf u "
-                            + "WHERE c.sigla_uf = u.sigla_uf AND "
-                            + "c.estado = 'a' AND "
-                            + "c.nome_cidade LIKE '" + nome + "%' "
-                            + "ORDER BY c.cod_cidade";
+                    sql = "SELECT c.cod_cidade, c.nome_cidade, u.descricao_uf, c.estado " + "FROM cidade c, uf u " + "WHERE c.sigla_uf = u.sigla_uf AND " + "c.estado = 'a' AND " + "c.nome_cidade LIKE '" + nome + "%' " + "ORDER BY c.cod_cidade";
                 }
             } else {
                 if (nome.equals("")) {
-                    sql = "SELECT c.cod_cidade, c.nome_cidade, u.descricao_uf, c.estado "
-                            + "FROM cidade c, uf u "
-                            + "WHERE c.sigla_uf = u.sigla_uf AND "
-                            + "c.estado = 'i' "
-                            + "ORDER BY c.cod_cidade";
+                    sql = "SELECT c.cod_cidade, c.nome_cidade, u.descricao_uf, c.estado " + "FROM cidade c, uf u " + "WHERE c.sigla_uf = u.sigla_uf AND " + "c.estado = 'i' " + "ORDER BY c.cod_cidade";
                 } else {
-                    sql = "SELECT c.cod_cidade, c.nome_cidade, u.descricao_uf, c.estado "
-                            + "FROM cidade c, uf u "
-                            + "WHERE c.sigla_uf = u.sigla_uf AND "
-                            + "c.estado = 'i' AND "
-                            + "c.nome_cidade LIKE '" + nome + "%' "
-                            + "ORDER BY c.cod_cidade";
+                    sql = "SELECT c.cod_cidade, c.nome_cidade, u.descricao_uf, c.estado " + "FROM cidade c, uf u " + "WHERE c.sigla_uf = u.sigla_uf AND " + "c.estado = 'i' AND " + "c.nome_cidade LIKE '" + nome + "%' " + "ORDER BY c.cod_cidade";
                 }
             }
             ps = conexao.prepareStatement(sql);
@@ -105,7 +81,7 @@ public class CidadeJDBCDao implements CidadeDao {
             conexao.close();
             return cidades;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -116,8 +92,7 @@ public class CidadeJDBCDao implements CidadeDao {
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
             conexao = FabricaConexao.obterConexao("JDBC");
             conexao.setAutoCommit(false);
-            String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)"
-                    + "VALUES (?,?,?,?,?,?);";
+            String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" + "VALUES (?,?,?,?,?,?);";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, "cidade");
             ps.setInt(2, cidade.getCodigo());
@@ -127,25 +102,20 @@ public class CidadeJDBCDao implements CidadeDao {
             if (acao.equals("Ativar")) {
                 ps.setString(6, "a");
                 ps.executeUpdate();
-                sql = "UPDATE cidade SET "
-                        + "estado = 'a' "
-                        + "WHERE cod_cidade = " + cidade.getCodigo();
+                sql = "UPDATE cidade SET " + "estado = 'a' " + "WHERE cod_cidade = " + cidade.getCodigo();
             } else {
                 ps.setString(6, "i");
                 ps.executeUpdate();
-                sql = "UPDATE cidade SET "
-                        + "estado = 'i' "
-                        + "WHERE cod_cidade = " + cidade.getCodigo();
+                sql = "UPDATE cidade SET " + "estado = 'i' " + "WHERE cod_cidade = " + cidade.getCodigo();
             }
             ps = conexao.prepareStatement(sql);
             ps.executeUpdate();
             conexao.commit();
             conexao.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             conexao.rollback();
             conexao.close();
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 
@@ -170,7 +140,7 @@ public class CidadeJDBCDao implements CidadeDao {
             conexao.close();
             return cidades;
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }
