@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.Formatter;
 import java.util.Scanner;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -17,6 +18,7 @@ public class FrmLogin extends javax.swing.JFrame {
         initComponents();
         this.tfServidor.setText(lerArquivo());
         this.setLocationRelativeTo(null);
+        this.setIconImage(new ImageIcon("C:/Users/Adm/Desktop/SCA-Logo CDR13.png").getImage());
     }
 
     private String lerArquivo() {
