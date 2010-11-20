@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DEM.jrxml" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="107"/>
+	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Fri Nov 12 14:09:42 BRST 2010"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -254,47 +254,47 @@
 	<detail>
 		<band height="20">
 			<textField>
-				<reportElement x="3" y="0" width="150" height="20"/>
+				<reportElement x="2" y="0" width="150" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome_material}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="243" y="1" width="96" height="19"/>
+				<reportElement x="242" y="1" width="96" height="19"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{quantidade_entrada} + " " + $F{unidade}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="447" y="0" width="1" height="20"/>
+				<reportElement x="446" y="0" width="1" height="20"/>
 			</line>
 			<line>
-				<reportElement x="1" y="0" width="1" height="20"/>
+				<reportElement x="0" y="0" width="1" height="20"/>
 			</line>
 			<line>
-				<reportElement x="153" y="0" width="1" height="20"/>
+				<reportElement x="152" y="0" width="1" height="20"/>
 			</line>
 			<line>
-				<reportElement x="338" y="0" width="1" height="20"/>
+				<reportElement x="337" y="0" width="1" height="20"/>
 			</line>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="154" y="1" width="88" height="19"/>
+				<reportElement x="153" y="1" width="88" height="19"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{validade}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00">
-				<reportElement x="354" y="0" width="94" height="19"/>
+				<reportElement x="353" y="0" width="94" height="19"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{valor_material}.toString()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="242" y="1" width="1" height="19"/>
+				<reportElement x="241" y="1" width="1" height="19"/>
 			</line>
 			<line>
 				<reportElement x="2" y="0" width="552" height="1"/>
@@ -303,20 +303,20 @@
 				<reportElement x="1" y="19" width="553" height="1"/>
 			</line>
 			<line>
-				<reportElement x="553" y="0" width="1" height="19"/>
+				<reportElement x="552" y="0" width="1" height="19"/>
 			</line>
 			<staticText>
-				<reportElement x="448" y="1" width="13" height="18"/>
+				<reportElement x="447" y="1" width="13" height="18"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[R$]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="339" y="1" width="15" height="19"/>
+				<reportElement x="338" y="1" width="15" height="19"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[R$]]></text>
 			</staticText>
 			<textField pattern="###0.00;-###0.00" isBlankWhenNull="false">
-				<reportElement x="463" y="1" width="90" height="18"/>
+				<reportElement x="462" y="1" width="90" height="18"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{valor_total}]]></textFieldExpression>
 			</textField>
@@ -328,7 +328,7 @@
 	<pageFooter>
 		<band height="25">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="25" forecolor="#D0B48E" backcolor="#7FC41C"/>
+				<reportElement mode="Opaque" x="1" y="0" width="553" height="25" forecolor="#D0B48E" backcolor="#7FC41C"/>
 				<textField evaluationTime="Report">
 					<reportElement x="504" y="0" width="45" height="23" forecolor="#FFFFFF"/>
 					<textElement verticalAlignment="Middle">
@@ -357,6 +357,10 @@
 					</textElement>
 					<text><![CDATA[GERADO POR   ]]></text>
 				</staticText>
+				<image>
+					<reportElement x="74" y="2" width="54" height="23"/>
+					<imageExpression class="java.lang.String"><![CDATA["..\\Img\\sca.jpg"]]></imageExpression>
+				</image>
 				<staticText>
 					<reportElement x="129" y="2" width="23" height="22" forecolor="#FFFFFF"/>
 					<textElement verticalAlignment="Middle">
@@ -364,10 +368,6 @@
 					</textElement>
 					<text><![CDATA[EM]]></text>
 				</staticText>
-				<image>
-					<reportElement x="77" y="4" width="53" height="20"/>
-					<imageExpression class="java.lang.String"><![CDATA["..\\Img\\sca.jpg"]]></imageExpression>
-				</image>
 			</frame>
 		</band>
 	</pageFooter>

@@ -92,9 +92,9 @@ public class FrmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btEntrarMouseClicked
-//        this.tfLogin.setText("almoxarife");
+        this.tfLogin.setText("almoxarife");
 //        this.tfLogin.setText("verson");
-//        this.tfSenha.setText("1234");
+        this.tfSenha.setText("1234");
         Vector usuario = this.controladora.logar(this.tfLogin.getText(), new String(this.tfSenha.getPassword()));
         if (usuario.size() == 13 && (!usuario.get(0).equals("0"))) {
             JFrame janela = new FrmPrincipal(usuario);

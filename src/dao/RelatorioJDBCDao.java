@@ -21,7 +21,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
     }
 
     private String getLocal() {
-        return System.getProperty("user.dir") + "/SCA/report/";
+        return System.getProperty("user.dir") + "/report/";
     //getClass().getResourceAsStream();
     }
 

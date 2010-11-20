@@ -95,8 +95,13 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
 
     private Vector attLinha(Vector linha) {
         Vector linhaFinal = new Vector();
-        String siafi = linha.get(4).toString() + linha.get(3).toString();
-
+        String s;
+        if (linha.get(4).toString().length() == 1) {
+            s = "0" + linha.get(4).toString();
+        } else {
+            s = linha.get(4).toString();
+        }
+        String siafi = linha.get(3).toString() + s;
         linhaFinal.add(linha.get(0));
         linhaFinal.add(linha.get(1));
         linhaFinal.add(linha.get(5));
@@ -107,7 +112,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
 
     private void preencherTabela() throws Exception {
         Vector linhas;
-        linhas = this.controladoraMaterial.obterLinhas(this.tfPesquisar.getText(),"Ativo");
+        linhas = this.controladoraMaterial.obterLinhas(this.tfPesquisar.getText(), "Ativo");
 
         DefaultTableModel modelo = (DefaultTableModel) this.tbMaterial_01.getModel();
         int numLinhas = linhas.size();
@@ -206,7 +211,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     }
 
     private boolean validarCampos() {
-        if ( validarNota() && validarData() && validarValorNota() && validarNotaEmpenho() && validarTabela() && validarDataTabela()) {
+        if (validarNota() && validarData() && validarValorNota() && validarNotaEmpenho() && validarTabela() && validarDataTabela()) {
             return true;
         } else {
             return false;
@@ -261,12 +266,13 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         for (int i = 0; i < this.tbMaterial_02.getRowCount(); i++) {
             linhaAtual = criarLinhaTabela02(i);
             try {
-                dataLinha = new Date(linhaAtual.get(4).toString());
-                if (dataAtual.after(dataLinha)){
+                String[] data = linhaAtual.get(4).toString().split("/");
+
+                dataLinha = new Date(data[2]+"/"+data[1]+"/"+data[0]);
+                if (dataAtual.after(dataLinha)) {
                     JOptionPane.showMessageDialog(null, "Digite uma Data que seja após o dia de hoje para o material: " + linhaAtual.get(1) + "!", "Atenção", JOptionPane.OK_OPTION);
                     return false;
-                }
-                else {
+                } else {
                     try {
                         Double.parseDouble(linhaAtual.get(5).toString().replace(',', '.'));
                     } catch (NumberFormatException ex) {

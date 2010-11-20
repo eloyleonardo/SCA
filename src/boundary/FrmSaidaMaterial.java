@@ -20,7 +20,6 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
     private ControladoraSetor controladoraSetor = new ControladoraSetor();
     private ControladoraSaida controladoraSaida = new ControladoraSaida();
     private Vector linhasSetor;
-    private Vector linhasSolicitacao;
     private int req;
     private Vector usuario;
 

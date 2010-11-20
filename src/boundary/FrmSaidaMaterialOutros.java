@@ -53,9 +53,16 @@ public class FrmSaidaMaterialOutros extends javax.swing.JFrame {
         int numLinhas = linhas.size();
         for (int i = 0; i < numLinhas; i++) {
             Vector linha = new Vector();
+            String s;
+            if(((Vector)linhas.get(i)).get(4).toString().length()==1){
+                s="0"+((Vector)linhas.get(i)).get(4).toString();
+            }else{
+                s = ((Vector)linhas.get(i)).get(4).toString();
+            }
+            String siafi = ((Vector)linhas.get(i)).get(3).toString() + s;
             linha.add(((Vector) linhas.get(i)).get(0));
             linha.add(((Vector) linhas.get(i)).get(1));
-            linha.add(((Vector) linhas.get(i)).get(4));
+            linha.add(siafi);
             linha.add(((Vector) linhas.get(i)).get(5));
             linha.add(((Vector) linhas.get(i)).get(6));
             linha.add(((Vector) linhas.get(i)).get(2));

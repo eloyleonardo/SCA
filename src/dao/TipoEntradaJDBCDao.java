@@ -22,7 +22,7 @@ public class TipoEntradaJDBCDao implements TipoEntradaDao {
                     "FROM tipo_dem td, " +
                     "tipo_documento tdoc " +
                     "WHERE td.estado               = 'A' OR " +
-                    "td.estado               = 'a' AND " +
+//                    "td.estado               = 'a' AND " +
                     "td.sigla_tipo_documento = tdoc.sigla_tipo_documento ORDER BY cod_tipo";
 
             PreparedStatement ps = this.conexao.prepareStatement(sql);
