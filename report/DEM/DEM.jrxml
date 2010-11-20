@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DEM.jrxml" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="610"/>
+	<property name="ireport.y" value="349"/>
+	<property name="ireport.callouts" value="##Fri Nov 12 14:09:42 BRST 2010"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Thiago\\Desktop\\DEM\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_dem" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT d.codigo_dem as codigo_entrada,
+       d.data_dem as data_entrada,
+       d.valor_nota as valor_total,
+       d.numero_ne as numero_nota_empenho,
+       f.nome_fornecedor as nome_fornecedor,
+       td.nome_tipo as tipo_entrada,
+       doc.id_documento as numero_doc,
+       doc.data_documento as data_doc,
+       tdoc.nome_tipo_documento as nome_tipo_doc,
+       m.descricao_material as nome_material,
+       l.valor_material_lote as valor_material,
+       l.validade_lote as validade,
+       l.qnt_entrada as quantidade_entrada,
+       u.descricao_unidade as unidade
+   FROM dem d,
+	fornecedor f,
+        documento doc,
+        tipo_dem td,
+	tipo_documento tdoc,
+        material m,
+        lote l,
+	unidade u
+   WHERE   $P{codigo_dem}  = d.codigo_dem     AND
+ 	 d.codigo_dem    = l.codigo_dem     AND
+	 l.cod_material  = m.cod_material   AND
+	 d.id_fornecedor = f.id_fornecedor  AND
+	 d.cod_tipo      = td.cod_tipo      AND
+	 d.id_documento  = doc.id_documento AND
+	 m.cod_unidade   = u.cod_unidade
+   ORDER BY d.codigo_dem ASC]]>
+	</queryString>
+	<field name="codigo_entrada" class="java.lang.Integer"/>
+	<field name="data_entrada" class="java.sql.Date"/>
+	<field name="valor_total" class="java.math.BigDecimal"/>
+	<field name="numero_nota_empenho" class="java.lang.String"/>
+	<field name="nome_fornecedor" class="java.lang.String"/>
+	<field name="tipo_entrada" class="java.lang.String"/>
+	<field name="numero_doc" class="java.lang.String"/>
+	<field name="data_doc" class="java.sql.Date"/>
+	<field name="nome_tipo_doc" class="java.lang.String"/>
+	<field name="nome_material" class="java.lang.String"/>
+	<field name="valor_material" class="java.math.BigDecimal"/>
+	<field name="validade" class="java.sql.Date"/>
+	<field name="quantidade_entrada" class="java.math.BigDecimal"/>
+	<field name="unidade" class="java.lang.String"/>
+	<variable name="valor_total" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{valor_material}.multiply( $F{quantidade_entrada})]]></variableExpression>
+	</variable>
+	<group name="numero">
+		<groupExpression><![CDATA[$F{codigo_entrada}]]></groupExpression>
+		<groupHeader>
+			<band height="62">
+				<staticText>
+					<reportElement mode="Opaque" x="-1" y="1" width="79" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Número DEM:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="317" y="34" width="89" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Tipo de Entrada:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="408" y="34" width="124" height="17" forecolor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{tipo_entrada}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="316" y="0" width="97" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Valor da Nota: R$]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="413" y="0" width="81" height="19" forecolor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{valor_total}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="435" y="18" width="119" height="17" forecolor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nome_fornecedor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="316" y="17" width="117" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Nome do Fornecedor:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="-1" y="33" width="148" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Número Nota de Empenho:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="-2" y="17" width="52" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Número		]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="147" y="33" width="153" height="16" forecolor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{numero_nota_empenho}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="77" y="1" width="125" height="16" forecolor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$F{codigo_entrada}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="109" y="17" width="124" height="16" forecolor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{numero_doc}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="43" y="17" width="61" height="16"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nome_tipo_doc}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="104" y="19" width="4" height="16"/>
+					<textElement/>
+					<text><![CDATA[:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="ne">
+		<groupExpression><![CDATA[$F{numero_nota_empenho}]]></groupExpression>
+		<groupHeader>
+			<band height="18">
+				<staticText>
+					<reportElement mode="Opaque" x="338" y="1" width="110" height="17" forecolor="#FFFFFF" backcolor="#7FC41C"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Valor Unitario]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="153" y="1" width="90" height="17" forecolor="#FFFFFF" backcolor="#7FC41C"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Validade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="242" y="1" width="97" height="17" forecolor="#FFFFFF" backcolor="#7FC41C"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Quantidade]]></text>
+				</staticText>
+				<line>
+					<reportElement x="153" y="0" width="1" height="18"/>
+				</line>
+				<line>
+					<reportElement x="1" y="0" width="1" height="18"/>
+				</line>
+				<staticText>
+					<reportElement mode="Opaque" x="2" y="0" width="151" height="18" forecolor="#FFFFFF" backcolor="#7FC41C"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Nome do Material]]></text>
+				</staticText>
+				<line>
+					<reportElement x="242" y="1" width="1" height="17"/>
+				</line>
+				<line>
+					<reportElement x="447" y="0" width="1" height="18"/>
+				</line>
+				<line>
+					<reportElement x="338" y="1" width="1" height="17"/>
+				</line>
+				<line>
+					<reportElement x="553" y="1" width="1" height="17"/>
+				</line>
+				<line>
+					<reportElement x="2" y="0" width="552" height="1"/>
+				</line>
+				<staticText>
+					<reportElement mode="Opaque" x="448" y="1" width="105" height="17" forecolor="#FFFFFF" backcolor="#7FC41C"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Valor Total]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="data">
+		<groupExpression><![CDATA[$F{data_entrada}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="110">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="109"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<text><![CDATA[Documento de Entrada de Materiais - DEM]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="89" width="463" height="20" forecolor="#000000" backcolor="#7FC41C"/>
+				<staticText>
+					<reportElement mode="Transparent" x="2" y="0" width="75" height="18" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Data Entrada:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="78" y="1" width="52" height="18" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{data_entrada}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<image>
+				<reportElement x="461" y="0" width="94" height="110"/>
+				<imageExpression class="java.lang.String"><![CDATA["..\\Img\\ifes.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="3" y="0" width="150" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome_material}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="243" y="1" width="96" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{quantidade_entrada} + " " + $F{unidade}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="447" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="1" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="153" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="338" y="0" width="1" height="20"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="154" y="1" width="88" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{validade}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="354" y="0" width="94" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[ $F{valor_material}.toString()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="242" y="1" width="1" height="19"/>
+			</line>
+			<line>
+				<reportElement x="2" y="0" width="552" height="1"/>
+			</line>
+			<line>
+				<reportElement x="1" y="19" width="553" height="1"/>
+			</line>
+			<line>
+				<reportElement x="553" y="0" width="1" height="19"/>
+			</line>
+			<staticText>
+				<reportElement x="448" y="1" width="13" height="18"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="339" y="1" width="15" height="19"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="false">
+				<reportElement x="463" y="1" width="90" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{valor_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="103">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="77" width="555" height="25" forecolor="#D0B48E" backcolor="#7FC41C"/>
+				<textField evaluationTime="Report">
+					<reportElement x="504" y="0" width="45" height="23" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["   DE   " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="431" y="0" width="73" height="23" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["PÁGINA   "+$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="152" y="2" width="197" height="22" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="1" width="72" height="24" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[GERADO POR   ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="129" y="2" width="23" height="22" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[EM]]></text>
+				</staticText>
+				<image>
+					<reportElement x="77" y="4" width="53" height="20"/>
+					<imageExpression class="java.lang.String"><![CDATA["..\\Img\\sca.jpg"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="50">
+			<line>
+				<reportElement x="6" y="33" width="251" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="6" y="34" width="251" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Servidor Responsável]]></text>
+			</staticText>
+			<line>
+				<reportElement x="293" y="32" width="251" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="386" y="33" width="77" height="16"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Responsável]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
