@@ -11,8 +11,8 @@ public class FrmAlterarFornecedor extends FrmFormularioFornecedor implements Act
 
     String status;
 
-    public FrmAlterarFornecedor(ControladoraFornecedor controladora, Vector linha, String status) {
-        super();
+    public FrmAlterarFornecedor(ControladoraFornecedor controladora, Vector linha, String status, String servidor) {
+        super(servidor);
         this.controladora = controladora;
         this.setTitle("SCA-Alterar Fornecedor");
         this.btOk.addActionListener(this);

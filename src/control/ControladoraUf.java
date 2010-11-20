@@ -15,8 +15,8 @@ public class ControladoraUf implements ControladoraClasse {
     private Vector<Uf> ufsInativas;
     private UfDao ufDao;
 
-    public ControladoraUf() {
-        this.ufDao = new UfJDBCDao();
+    public ControladoraUf(String servidor) {
+        this.ufDao = new UfJDBCDao(servidor);
         ufsAtivas = new Vector<Uf>();
         ufsInativas = new Vector<Uf>();
     }

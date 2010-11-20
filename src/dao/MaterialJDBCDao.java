@@ -10,17 +10,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
 public class MaterialJDBCDao implements MaterialDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public MaterialJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public void inserirMaterial(Material material) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO material (descricao_material, quant_minima, cod_nd , cod_subitem,cod_unidade,estado ) values (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -43,7 +47,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public void alterarMaterial(Material material) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = " UPDATE material SET " +
                     " descricao_material = ?, " +
@@ -71,7 +75,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public Vector<Material> obterMateriais(String nome, String status) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql = "";
             PreparedStatement ps;
             if (status.equals("Ativo")) {
@@ -122,7 +126,7 @@ public class MaterialJDBCDao implements MaterialDao {
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" +
                     "VALUES (?,?,?,?,?,?);";
@@ -165,7 +169,7 @@ public class MaterialJDBCDao implements MaterialDao {
     }
 
     public Vector carregarLotesMaterial(int codMaterial) throws SQLException {
-        conexao = FabricaConexao.obterConexao("JDBC");
+        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
         String sql;
         PreparedStatement ps;
         sql = "SELECT entrada.cod_lote,  COALESCE(entrada.val_entrada - saida.val_saida,0) AS total " +
@@ -199,7 +203,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public void alterarEstoqueMaterial(int id, Double soma) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = " UPDATE material SET " +
                     " estoque = estoque - ? " +
@@ -218,7 +222,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public void MaterialAbaixo(int codMaterial) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO estoque_baixo (cod_material) values (?)";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -269,7 +273,7 @@ public class MaterialJDBCDao implements MaterialDao {
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" + "VALUES (?,?,?,?,?,?);";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -302,7 +306,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public void darCiencia(Material material) throws SQLException {
         try {
-            this.conexao = FabricaConexao.obterConexao("JDBC");
+            this.conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             this.conexao.setAutoCommit(false);
             String sql = " UPDATE material_estoque_baixo " +
                     "SET ciente = 'c' " +
@@ -320,7 +324,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public Vector<Material> obterMateriaisAbaixoEstoque() throws SQLException {
         try {
-            this.conexao = FabricaConexao.obterConexao("JDBC");
+            this.conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT mae.cod_material AS codigo," +
@@ -353,7 +357,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public Vector<Material> obterMateriaisAtivos(String nome) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             if (nome.equals("")) {
@@ -392,7 +396,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public Vector<Material> obterMateriaisInativos(String nome) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             if (nome.equals("")) {
@@ -424,7 +428,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public Vector<Material> obterMaterialAtivoCodigo(String codigo) throws SQLException {
         try {
-            this.conexao = FabricaConexao.obterConexao("JDBC");
+            this.conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT ma.cod_material, ma.descricao_material,ma.estoque" + " FROM material ma WHERE ma.estado = 'a' AND ma.cod_material = " + codigo + "";
@@ -448,7 +452,7 @@ public class MaterialJDBCDao implements MaterialDao {
 
     public void alterarMaterial(Material material, int Id) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = " UPDATE material SET " + " descricao_material = ?, " + " quant_minima = ?, " + " cod_nd = ?, " + " cod_subitem = ?, " + " cod_unidade = ? " + " WHERE cod_material = " + Id;
             PreparedStatement ps = conexao.prepareStatement(sql);

@@ -18,7 +18,8 @@ public class FrmInserirUsuario extends FrmFormularioUsuario implements ActionLis
     String cargoInserido;
     String setorInserido;
 
-    public FrmInserirUsuario(ControladoraUsuario controladora) {
+    public FrmInserirUsuario(ControladoraUsuario controladora,String servidor) {
+        super(servidor);
         this.setTitle("Inserir Novo Usuário");
         this.adicionarMap();
         linhasCargo = controladoraCargo.obterLinhas("", "Ativo");
@@ -31,6 +32,7 @@ public class FrmInserirUsuario extends FrmFormularioUsuario implements ActionLis
         }
         this.cbCargo.setSelectedIndex(-1);
         this.cbSetor.setSelectedIndex(-1);
+        this.controladora = controladora;
     }
 
     private void adicionarMap() {

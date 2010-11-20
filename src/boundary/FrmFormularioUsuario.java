@@ -17,12 +17,12 @@ public abstract class FrmFormularioUsuario extends JDialog implements ActionList
     protected ControladoraCargo controladoraCargo;
     protected ControladoraSetor controladoraSetor;
 
-    public FrmFormularioUsuario() {
+    public FrmFormularioUsuario(String servidor) {
         initComponents();
         this.adicionarMap();
-        this.controladora = new ControladoraUsuario();
-        this.controladoraCargo = new ControladoraCargo();
-        this.controladoraSetor = new ControladoraSetor();
+        this.controladora = new ControladoraUsuario(servidor);
+        this.controladoraCargo = new ControladoraCargo(servidor);
+        this.controladoraSetor = new ControladoraSetor(servidor);
         btOk.addActionListener(this);
         this.setResizable(false);
     }

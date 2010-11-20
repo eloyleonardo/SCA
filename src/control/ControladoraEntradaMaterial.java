@@ -22,24 +22,22 @@ public class ControladoraEntradaMaterial {
     private Vector<TipoEntrada> tipoEntradas;
     private Vector<Lote> lotes;
     private Vector tiposEntrada;
-
     private TipoEntradaDao tipoEntradaDao;
     private TipoEntrada tipoEntrada;
     private TipoDocumento tipoDoc;
     private Usuario usuario;
     private Fornecedor fornecedor;
     private Entrada entrada;
-
     private DemDao demDao;
     private LoteDao loteDao;
 
-    public ControladoraEntradaMaterial(){
-        this.tipoEntradaDao = new TipoEntradaJDBCDao();
-        this.loteDao = new LoteJDBCDao();
-        this.demDao = new DemJDBCDao();
+    public ControladoraEntradaMaterial(String servidor) {
+        this.tipoEntradaDao = new TipoEntradaJDBCDao(servidor);
+        this.loteDao = new LoteJDBCDao(servidor);
+        this.demDao = new DemJDBCDao(servidor);
         this.lotes = new Vector<Lote>();
         this.entrada = new Entrada();
-        
+
     }
 
     private void attEntrada(Vector entrada) {
@@ -81,7 +79,7 @@ public class ControladoraEntradaMaterial {
         for (int i = 0; i < materiais.size(); i++) {
             materialAtual = (Vector) materiais.get(i);
 
-            Material material =  new Material();
+            Material material = new Material();
             material.setCodigo(Integer.parseInt(materialAtual.get(0).toString()));
             material.setEstoqueAtual(Double.parseDouble(materialAtual.get(3).toString()));
 
@@ -103,9 +101,9 @@ public class ControladoraEntradaMaterial {
         }
     }
 
-    private Vector criarLinhaDem(Vector<Entrada> dem){
+    private Vector criarLinhaDem(Vector<Entrada> dem) {
         Vector demFinal = new Vector();
-        for(int i = 0; i < dem.size(); i++ ){
+        for (int i = 0; i < dem.size(); i++) {
             Entrada demAtual = new Entrada();
             Vector linha = new Vector();
             demAtual = dem.get(i);
@@ -121,9 +119,9 @@ public class ControladoraEntradaMaterial {
         return demFinal;
     }
 
-    private Vector criarLinhaLote(Vector<Lote> lotes){
+    private Vector criarLinhaLote(Vector<Lote> lotes) {
         Vector loteFinal = new Vector();
-        for(int i = 0 ; i < lotes.size() ; i++){
+        for (int i = 0; i < lotes.size(); i++) {
             Vector linha = new Vector();
             Lote loteAtual = lotes.get(i);
             linha.add(loteAtual.getCodigo());
@@ -136,14 +134,14 @@ public class ControladoraEntradaMaterial {
         return loteFinal;
     }
 
-    public Vector obterLotesPor(int cod) throws SQLException{
+    public Vector obterLotesPor(int cod) throws SQLException {
         Entrada dem = new Entrada();
         dem.setCodigo(cod);
         return criarLinhaLote(this.loteDao.obterLotesDem(dem));
     }
 
-    public Vector obterDemEntre(Date dataInicial, Date dataFinal) throws SQLException{
-        Vector<Entrada> dems = this.demDao.obterTodosDemEntre(dataInicial,dataFinal);
+    public Vector obterDemEntre(Date dataInicial, Date dataFinal) throws SQLException {
+        Vector<Entrada> dems = this.demDao.obterTodosDemEntre(dataInicial, dataFinal);
         return criarLinhaDem(dems);
     }
 

@@ -17,9 +17,9 @@ class FrmDesativarMaterial extends FrmAlterarStatus implements ActionListener {
     Date data = new Date();
     Vector linhasUnidade = new Vector();
 
-    public FrmDesativarMaterial(ControladoraMaterial controladora, Vector responsavel, Vector linha) {
+    public FrmDesativarMaterial(ControladoraMaterial controladora, Vector responsavel, Vector linha,String servidor) {
         super();
-        ControladoraClasse controladoraUnidade = new ControladoraUnidade();
+        ControladoraClasse controladoraUnidade = new ControladoraUnidade(servidor);
         this.controladora = controladora;
         linhasUnidade = controladoraUnidade.obterLinhas("", "Ativo");
         this.linha = linha;

@@ -17,9 +17,9 @@ public class ControladoraSaida {
     private SaidaDao saidaDao;
     private LoteDao loteDao;
 
-    public ControladoraSaida() {
-        this.saidaDao = new SaidaJDBCDao();
-        this.loteDao = new LoteJDBCDao();
+    public ControladoraSaida(String servidor) {
+        this.saidaDao = new SaidaJDBCDao(servidor);
+        this.loteDao = new LoteJDBCDao(servidor);
     }
 
     public void inserirNovaDSM(int codUsuario, int codSaida, int codSolicitacao) {

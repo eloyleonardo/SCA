@@ -11,10 +11,15 @@ import java.util.Vector;
 public class TipoEntradaJDBCDao implements TipoEntradaDao {
 
     private Connection conexao = null;
+    private String servidor;
+
+    public TipoEntradaJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public Vector<TipoEntrada> obterTipoEntrada() throws SQLException {
         try {
-            this.conexao = FabricaConexao.obterConexao("JDBC");
+            this.conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             String sql = "SELECT td.cod_tipo AS codigo, " +
                     "td.nome_tipo              AS nome, " +
                     " td.sigla_tipo_documento   AS sigla_tipo_doc, " +

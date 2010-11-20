@@ -20,12 +20,12 @@ public class FrmSelecionarDataESetor extends javax.swing.JDialog {
     private int codSetor;
     private Set<ObterDadosListener> listeners = new HashSet<ObterDadosListener>();
 
-    public FrmSelecionarDataESetor() {
+    public FrmSelecionarDataESetor(String servidor) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.adicionarMap();
         this.setModal(true);
-        this.controladora = new ControladoraSetor();
+        this.controladora = new ControladoraSetor(servidor);
         this.obterSetores();
     }
 

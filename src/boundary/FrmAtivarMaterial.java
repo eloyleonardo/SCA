@@ -16,9 +16,9 @@ class FrmAtivarMaterial extends FrmAlterarStatus implements ActionListener {
     Date data = new Date();
     Vector linhasUnidade = new Vector();
 
-    public FrmAtivarMaterial(ControladoraMaterial controladora, Vector responsavel, Vector linha) {
+    public FrmAtivarMaterial(ControladoraMaterial controladora, Vector responsavel, Vector linha, String servidor) {
         super();
-        ControladoraClasse controladoraUnidade = new ControladoraUnidade();
+        ControladoraClasse controladoraUnidade = new ControladoraUnidade(servidor);
         this.controladora = controladora;
         linhasUnidade = controladoraUnidade.obterLinhas("", "Ativo");
         this.linha = linha;
@@ -35,7 +35,7 @@ class FrmAtivarMaterial extends FrmAlterarStatus implements ActionListener {
     private void ativarMaterial() {
         for (int i = 0; i < linhasUnidade.size(); i++) {
             if (linha.get(5).toString().equals(((Vector) linhasUnidade.get(i)).get(1).toString())) {
-                linha.set(5,((Vector) linhasUnidade.get(i)).get(0).toString());
+                linha.set(5, ((Vector) linhasUnidade.get(i)).get(0).toString());
             }
         }
         if (this.taMotivo.getText().equals("")) {

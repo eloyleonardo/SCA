@@ -33,13 +33,13 @@ public class ControladoraFornecedor implements ControladoraClasse {
     /**
      * Construtor
      */
-    public ControladoraFornecedor() {
+    public ControladoraFornecedor(String servidor) {
         this.teDao = new TipoEnderecoJDBCDao();
-        this.ufDao = new UfJDBCDao();
-        this.controladoraCidade = new CidadeJDBCDao();
+        this.ufDao = new UfJDBCDao(servidor);
+        this.controladoraCidade = new CidadeJDBCDao(servidor);
         this.fornecedoresAtivos = new Vector<Fornecedor>();
         this.fornecedoresInativos = new Vector<Fornecedor>();
-        this.fornecedorDao = new FornecedorJDBCDao();
+        this.fornecedorDao = new FornecedorJDBCDao(servidor);
         this.cidades = new Vector();
         this.obterUfs();
         this.obterTipoEndereco();

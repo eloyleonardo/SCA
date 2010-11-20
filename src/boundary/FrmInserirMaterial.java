@@ -16,8 +16,8 @@ class FrmInserirMaterial extends FrmFormularioMaterial implements ActionListener
     String UnidadeInserida;
     int i;
 
-    public FrmInserirMaterial(ControladoraMaterial controladora) {
-        super();
+    public FrmInserirMaterial(ControladoraMaterial controladora,String servidor) {
+        super(servidor);
         this.setTitle("Inserir Novo Material");
         this.controladora = controladora;
         linhasNd = controladoraNd.obterLinhasND();

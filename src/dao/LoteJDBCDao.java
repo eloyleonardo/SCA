@@ -14,7 +14,11 @@ import java.util.Vector;
 public class LoteJDBCDao implements LoteDao {
 
     private Connection conexao;
-    private MaterialJDBCDao materialDao;
+    private String servidor;
+
+    public LoteJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     private void inserirLote(Lote lote) throws SQLException {
         try {
@@ -40,14 +44,15 @@ public class LoteJDBCDao implements LoteDao {
 
     public void inserirLotes(Vector<Lote> lote, Connection conexao) throws SQLException {
         this.conexao = conexao;
-        this.materialDao = new MaterialJDBCDao();
+        MaterialJDBCDao materialDao;
+        materialDao = new MaterialJDBCDao(this.servidor);
 
         Lote loteAtual = new Lote();
         for (int i = 0; i < lote.size(); i++) {
             loteAtual = (Lote) lote.get(i);
             try {
                 this.inserirLote(loteAtual);
-                this.materialDao.alterarQuantidadeMaterial(loteAtual.getMaterial(), this.conexao);
+                materialDao.alterarQuantidadeMaterial(loteAtual.getMaterial(), this.conexao);
             } catch (SQLException ex) {
                 this.conexao.rollback();
                 this.conexao.close();
@@ -58,7 +63,7 @@ public class LoteJDBCDao implements LoteDao {
 
     public Vector<Lote> obterLotesDem(Entrada dem) throws SQLException {
         try {
-            this.conexao = FabricaConexao.obterConexao("JDBC");
+            this.conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT l.cod_lote as codigo," +
@@ -95,7 +100,7 @@ public class LoteJDBCDao implements LoteDao {
         Vector<Lote> lotes;
         lotes = new Vector<Lote>();
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT ma.cod_material, ma.descricao_material, sm.qnt_saida, sm.qnt_saida*lo.valor_material_lote as valor " +

@@ -14,30 +14,32 @@ import java.util.Vector;
 
 public class DemJDBCDao implements DemDao {
 
-    private LoteDao loteDao;
-    private MaterialDao materialBEDao;
+    private String servidor;
+
+    public DemJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public void inserirDem(Entrada dem, Vector<Lote> lotes) throws SQLException {
         Connection conexao2 = null;
+        MaterialDao materialBEDao;
         try {
             Entrada demm = this.obterCodigoUltimo();
 
-            conexao2 = FabricaConexao.obterConexao("JDBC");
+            conexao2 = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao2.setAutoCommit(false);
 
             Date dataUtil = dem.getDataNota();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
 
-            String sql = "INSERT INTO documento(id_documento,data_documento,sigla_tipo_documento)"
-                    + "VALUES('" + dem.getNumNota() + "','" + dataSql + "','" + dem.getTipoEntrada().getTipoDoc().getSiglaTipoDoc() + "')";
+            String sql = "INSERT INTO documento(id_documento,data_documento,sigla_tipo_documento)" + "VALUES('" + dem.getNumNota() + "','" + dataSql + "','" + dem.getTipoEntrada().getTipoDoc().getSiglaTipoDoc() + "')";
 
             PreparedStatement ps = conexao2.prepareStatement(sql);
             ps.executeUpdate();
 
             int codigo = demm.getCodigo() + 1;
-            sql = "INSERT INTO dem(codigo_dem,cod_usuario,id_documento,id_fornecedor,cod_tipo,numero_ne,data_dem,valor_nota)"
-                    + "VALUES(" + codigo + ",'" + dem.getReponsavel().getCodigo() + "','" + dem.getNumNota() + "'," + dem.getFornecedor().getId() + "," + dem.getTipoEntrada().getCodigo() + "," + dem.getNumNE() + ",now()," + dem.getValorNota() + ")";
+            sql = "INSERT INTO dem(codigo_dem,cod_usuario,id_documento,id_fornecedor,cod_tipo,numero_ne,data_dem,valor_nota)" + "VALUES(" + codigo + ",'" + dem.getReponsavel().getCodigo() + "','" + dem.getNumNota() + "'," + dem.getFornecedor().getId() + "," + dem.getTipoEntrada().getCodigo() + "," + dem.getNumNE() + ",now()," + dem.getValorNota() + ")";
 
             ps = conexao2.prepareStatement(sql);
             ps.executeUpdate();
@@ -47,12 +49,12 @@ public class DemJDBCDao implements DemDao {
                 e.setCodigo(codigo);
                 lotes.get(i).setEntrada(e);
             }
+            LoteDao loteDao;
+            loteDao = new LoteJDBCDao(this.servidor);
+            loteDao.inserirLotes(lotes, conexao2);
 
-            this.loteDao = new LoteJDBCDao();
-            this.loteDao.inserirLotes(lotes, conexao2);
-
-            this.materialBEDao = new MaterialJDBCDao();
-            this.materialBEDao.excluirMaterial(conexao2);
+            materialBEDao = new MaterialJDBCDao(this.servidor);
+            materialBEDao.excluirMaterial(conexao2);
 
             conexao2.commit();
             conexao2.close();
@@ -73,33 +75,14 @@ public class DemJDBCDao implements DemDao {
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataFinalSql = (java.sql.Date) dataUtil;
 
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
-            sql = "SELECT d.codigo_dem as codigo_entrada,"
-                    + " d.data_dem as data_entrada,"
-                    + " d.valor_nota as valor_total,"
-                    + " d.numero_ne as numero_nota_empenho,"
-                    + " f.nome_fornecedor as nome_fornecedor,"
-                    + " td.nome_tipo as tipo_entrada,"
-                    + " doc.id_documento as numero_doc,"
-                    + " doc.data_documento as data_doc,"
-                    + " tdoc.nome_tipo_documento as nome_tipo_doc"
-                    + " FROM dem d,"
-                    + " fornecedor f,"
-                    + " documento doc,"
-                    + " tipo_dem td,"
-                    + " tipo_documento tdoc"
-                    + " WHERE d.id_fornecedor = f.id_fornecedor  AND"
-                    + " d.cod_tipo      = td.cod_tipo      AND"
-                    + " d.id_documento  = doc.id_documento AND"
-                    + " d.data_dem BETWEEN '" + dataInicioSql + "' AND '" + dataFinalSql + "'"
-                    + " ORDER BY d.codigo_dem ASC";
+            sql = "SELECT d.codigo_dem as codigo_entrada," + " d.data_dem as data_entrada," + " d.valor_nota as valor_total," + " d.numero_ne as numero_nota_empenho," + " f.nome_fornecedor as nome_fornecedor," + " td.nome_tipo as tipo_entrada," + " doc.id_documento as numero_doc," + " doc.data_documento as data_doc," + " tdoc.nome_tipo_documento as nome_tipo_doc" + " FROM dem d," + " fornecedor f," + " documento doc," + " tipo_dem td," + " tipo_documento tdoc" + " WHERE d.id_fornecedor = f.id_fornecedor  AND" + " d.cod_tipo      = td.cod_tipo      AND" + " d.id_documento  = doc.id_documento AND" + " d.data_dem BETWEEN '" + dataInicioSql + "' AND '" + dataFinalSql + "'" + " ORDER BY d.codigo_dem ASC";
             ps = conexao.prepareStatement(sql);
             ResultSet res = ps.executeQuery();
             Vector<Entrada> dems;
             dems = new Vector<Entrada>();
-            this.loteDao = new LoteJDBCDao();
             while (res.next()) {
                 Entrada dem = new Entrada();
                 TipoEntrada tipoDem = new TipoEntrada();
@@ -131,7 +114,7 @@ public class DemJDBCDao implements DemDao {
     public Entrada obterCodigoUltimo() throws SQLException {
         Connection conexao;
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT MAX(d.codigo_dem) as codigo FROM dem d";

@@ -18,16 +18,17 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     private ControladoraRelatorios controladoraRelatorios;
     private Date dataI,  dataF;
     private int codSetor;
-    private String classe;
+    private String classe,  servidor;
 
-    public FrmPrincipal(Vector usuario) {
+    public FrmPrincipal(Vector usuario, String servidor) {
         initComponents();
+        this.servidor = servidor;
         this.usuario = usuario;
         this.setarPermissoes();
         janelasAbertas = 0;
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        controladoraRelatorios = new ControladoraRelatorios();
-        FrmEstoqueAbaixoMinimo j = new FrmEstoqueAbaixoMinimo();
+        controladoraRelatorios = new ControladoraRelatorios(servidor);
+        FrmEstoqueAbaixoMinimo j = new FrmEstoqueAbaixoMinimo(servidor);
         if (j.getMateriais().size() == 0) {
             j.dispose();
         } else {
@@ -76,7 +77,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }
 
     private void registrarSaida() {
-        JFrame janela = new FrmSaidaPrincipal(usuario);
+        JFrame janela = new FrmSaidaPrincipal(usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }
@@ -95,7 +96,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }
 
     private void selecionarDataESetor() {
-        FrmSelecionarDataESetor j = new FrmSelecionarDataESetor();
+        FrmSelecionarDataESetor j = new FrmSelecionarDataESetor(servidor);
         j.addListener(this);
         j.setVisible(true);
     }
@@ -505,19 +506,19 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }//GEN-LAST:event_jmiSairActionPerformed
 
     private void jmiCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCargoActionPerformed
-        JFrame janela = new FrmPrincipalCargo(usuario);
+        JFrame janela = new FrmPrincipalCargo(usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }//GEN-LAST:event_jmiCargoActionPerformed
 
     private void jmiUnidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiUnidadeActionPerformed
-        JFrame janela = new FrmPrincipalUnidade(this.usuario);
+        JFrame janela = new FrmPrincipalUnidade(this.usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }//GEN-LAST:event_jmiUnidadeActionPerformed
 
     private void jmiUfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiUfActionPerformed
-        JFrame janela = new FrmPrincipalUf(this.usuario);
+        JFrame janela = new FrmPrincipalUf(this.usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }//GEN-LAST:event_jmiUfActionPerformed
@@ -531,13 +532,13 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }//GEN-LAST:event_btCadastrarFornecedorMouseClicked
 
     private void jmiAprovarSolicitacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAprovarSolicitacaoActionPerformed
-        JFrame janela = new FrmAprovarSolicitacao(usuario);
+        JFrame janela = new FrmAprovarSolicitacao(usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }//GEN-LAST:event_jmiAprovarSolicitacaoActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        JFrame janela = new FrmPrincipalSetor(usuario);
+        JFrame janela = new FrmPrincipalSetor(usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
@@ -559,7 +560,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-        JFrame janela = new FrmSolicitarMaterial(usuario);
+        JFrame janela = new FrmSolicitarMaterial(usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
@@ -581,7 +582,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }//GEN-LAST:event_btRmmActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        JFrame janela = new FrmPrincipalCidade(usuario);
+        JFrame janela = new FrmPrincipalCidade(usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
@@ -603,7 +604,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jmiUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiUsuarioActionPerformed
-        JFrame j = new FrmPrincipalUsuario(usuario);
+        JFrame j = new FrmPrincipalUsuario(usuario, servidor);
         j.addWindowListener(this);
         j.setVisible(true);
     }//GEN-LAST:event_jmiUsuarioActionPerformed
@@ -613,13 +614,13 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        JFrame janela = new FrmPrincipalMaterial(usuario);
+        JFrame janela = new FrmPrincipalMaterial(usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
-        JFrame j = new FrmVisuzalizarSaida();
+        JFrame j = new FrmVisuzalizarSaida(servidor);
         j.addWindowListener(this);
         j.setVisible(true);
     }//GEN-LAST:event_jMenuItem19ActionPerformed
@@ -629,7 +630,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        JFrame j = new FrmEstoqueAbaixoMinimo();
+        JFrame j = new FrmEstoqueAbaixoMinimo(servidor);
         j.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -677,7 +678,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     // End of variables declaration//GEN-END:variables
 
     private void registrarEntrada() {
-        JFrame janela = new FrmEntradaMaterial(usuario);
+        JFrame janela = new FrmEntradaMaterial(usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }
@@ -759,7 +760,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }
 
     private void cadastrarFornecedor() {
-        JFrame janela = new FrmPrincipalFornecedor(this.usuario);
+        JFrame janela = new FrmPrincipalFornecedor(this.usuario, servidor);
         janela.addWindowListener(this);
         janela.setVisible(true);
     }
@@ -772,7 +773,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }
 
     private void visualizarEntradas() {
-        JFrame j = new FrmVisuzalizarEntrada();
+        JFrame j = new FrmVisuzalizarEntrada(servidor);
         j.addWindowListener(this);
         j.setVisible(true);
     }

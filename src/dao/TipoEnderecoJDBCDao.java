@@ -9,12 +9,13 @@ import java.util.Vector;
 
 public class TipoEnderecoJDBCDao implements TipoEnderecoDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
 
     @Override
     public Vector<TipoEndereco> obterTiposEndereco() throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql = "SELECT * FROM tipo_endereco WHERE estado = 'a' ORDER BY cod_tipo_endereco";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ResultSet res = ps.executeQuery();

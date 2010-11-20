@@ -7,7 +7,10 @@ import javax.swing.JOptionPane;
 
 public class FabricaConexao {
 
-    public static Connection obterConexao(String tipo) throws SQLException {
+    public static Connection obterConexao(String tipo, String servidor) throws SQLException {
+        if (servidor.equals("")) {
+            servidor = "localhost";
+        }
         try {
             if (tipo.equals("JDBC")) {
                 try {
@@ -15,13 +18,13 @@ public class FabricaConexao {
                 } catch (ClassNotFoundException e) {
                     JOptionPane.showMessageDialog(null, "Driver JDBC-ODBC não encontrado");
                 }
-                Connection conexao = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sca", "postgres", "Postgre2010");
+                Connection conexao = DriverManager.getConnection("jdbc:postgresql://"+servidor+":5432/sca", "postgres", "Postgre2010");
                 return conexao;
             } else {
                 return null;
             }
         } catch (SQLException ex) {
-            throw new SQLException();
+            throw new SQLException(ex.getCause());
         }
     }
 }

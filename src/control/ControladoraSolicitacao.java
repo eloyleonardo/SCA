@@ -5,7 +5,6 @@ import dao.SolicitacaoJDBCDao;
 import domain.Material;
 import domain.Setor;
 import domain.Solicitacao;
-import domain.Usuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -13,11 +12,12 @@ import javax.swing.JOptionPane;
 
 public class ControladoraSolicitacao {
 
-    SolicitacaoDao solicitacaoDao = new SolicitacaoJDBCDao();
+    SolicitacaoDao solicitacaoDao;
     Vector<Solicitacao> solicitacoes;
     int marcador;
 
-    public ControladoraSolicitacao() {
+    public ControladoraSolicitacao(String servidor) {
+        this.solicitacaoDao = new SolicitacaoJDBCDao(servidor);
         this.marcador = -1;
     }
 
@@ -52,7 +52,6 @@ public class ControladoraSolicitacao {
         linha.addElement(s.getCodigo());
         linha.addElement(s.getResponsavel().getNome());
         linha.addElement(s.getDataRequisicao());
-        ////
         linha.addElement(s.getResponsavel().getSetor().getNome());
         linha.addElement(s.getDataAprovacao());
 
@@ -134,7 +133,6 @@ public class ControladoraSolicitacao {
     }
 
     public Vector obterSolicitacoesAprovadas(String nome) throws SQLException {
-//        Vector solicitacoesAprovadas = new Vector();
         Vector linhas = new Vector();
         try {
             solicitacoes = solicitacaoDao.obterSolicitacoesAprovadas(nome);
@@ -164,7 +162,6 @@ public class ControladoraSolicitacao {
     public Solicitacao atualizarSolicitacao(Vector linha) {
         Solicitacao s = new Solicitacao();
         int i;
-        Usuario u = new Usuario();
         for (i = 0; i < linha.size() - 2; i++) {
             Material m = new Material();
             m.setCodigo(Integer.parseInt(((Vector) linha.get(i)).get(0).toString()));
@@ -172,7 +169,7 @@ public class ControladoraSolicitacao {
             s.getQuantidade().add(Double.parseDouble(((Vector) linha.get(i)).get(1).toString()));
         }
         s.getResponsavel().setCodigo(Integer.parseInt(linha.get(i).toString()));
-        s.getResponsavel().getSetor().setCodigo(Integer.parseInt(linha.get(i+1).toString()));
+        s.getResponsavel().getSetor().setCodigo(Integer.parseInt(linha.get(i + 1).toString()));
         return s;
     }
 }

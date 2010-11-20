@@ -11,11 +11,17 @@ import java.util.Vector;
 
 public class CargoJDBCDao implements CargoDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public CargoJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
+
 
     public int inserirCargo(Cargo cargo) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             conexao.setAutoCommit(false);
             String chefia;
             if (cargo.isChefia()) {
@@ -37,7 +43,7 @@ public class CargoJDBCDao implements CargoDao {
     }
 
     private int obterIdCargo(Cargo cargo) throws SQLException {
-        conexao = FabricaConexao.obterConexao("JDBC");
+        conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
         String sql = "SELECT cod_cargo FROM cargo WHERE nome_cargo ='" + cargo.getNome() + "'";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet res = ps.executeQuery();
@@ -50,7 +56,7 @@ public class CargoJDBCDao implements CargoDao {
     public void alterarCargo(Cargo cargo) throws SQLException {
         try {
             String chefia;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             conexao.setAutoCommit(false);
             if (cargo.isChefia()) {
                 chefia = "s";
@@ -79,7 +85,7 @@ public class CargoJDBCDao implements CargoDao {
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" +
                     "VALUES (?,?,?,?,?,?);";
@@ -115,7 +121,7 @@ public class CargoJDBCDao implements CargoDao {
 
     public Vector<Cargo> obterCargos(String nome, String status) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             String sql;
             PreparedStatement ps;
             if (status.equals("Ativo")) {

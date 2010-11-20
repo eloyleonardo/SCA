@@ -12,12 +12,15 @@ import util.ActionFechar;
 public class FrmFormularioMaterial extends javax.swing.JDialog {
 
     protected ControladoraMaterial controladora;
-    protected ControladoraNd controladoraNd = new ControladoraNd();
-    protected ControladoraSubitem controladoraSubitem = new ControladoraSubitem();
-    protected ControladoraUnidade controladoraUnidade = new ControladoraUnidade();
+    protected ControladoraNd controladoraNd;
+    protected ControladoraSubitem controladoraSubitem;
+    protected ControladoraUnidade controladoraUnidade;
 
-    public FrmFormularioMaterial() {
+    public FrmFormularioMaterial(String servidor) {
         initComponents();
+        controladoraUnidade = new ControladoraUnidade(servidor);
+        controladoraSubitem = new ControladoraSubitem(servidor);
+        controladoraNd = new ControladoraNd(servidor);
         adicionarMap();
         this.setLocationRelativeTo(null);
     }

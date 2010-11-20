@@ -1,21 +1,45 @@
 package boundary;
 
 import control.ControladoraUsuario;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Formatter;
+import java.util.Scanner;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class FrmLogin extends javax.swing.JFrame {
 
-    ControladoraUsuario controladora;
+    private ControladoraUsuario controladora;
 
     public FrmLogin() {
         initComponents();
+        this.tfServidor.setText(lerArquivo());
         this.setLocationRelativeTo(null);
-        this.controladora = new ControladoraUsuario();
+    }
+
+    private String lerArquivo() {
+        try {
+            File f = new File(System.getProperty("user.home") + "/sca.bin");
+            Scanner s = new Scanner(f);
+            return s.next();
+        } catch (FileNotFoundException ex) {
+        }
+        return "";
+    }
+
+    private void gravarDados() {
+        try {
+            Formatter f = new Formatter(System.getProperty("user.home") + "/sca.bin");
+            f.format("%s", this.tfServidor.getText());
+            f.close();
+        } catch (FileNotFoundException ex) {
+        }
     }
 
     @SuppressWarnings("unchecked")
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -25,6 +49,8 @@ public class FrmLogin extends javax.swing.JFrame {
         tfSenha = new javax.swing.JPasswordField();
         btEntrar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        tfServidor = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SCA-Login de Usuario");
@@ -48,27 +74,32 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Servidor:");
+
+        tfServidor.setToolTipText("<html>Indique o servidor de banco de dados,<br/> deixe vazio para usar a máquina local !</html>");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfLogin))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btSair)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btEntrar))
-                            .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tfLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                            .addComponent(tfSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                            .addComponent(tfServidor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btSair)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btEntrar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,6 +114,10 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(tfServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSair)
                     .addComponent(btEntrar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -95,9 +130,12 @@ public class FrmLogin extends javax.swing.JFrame {
         this.tfLogin.setText("almoxarife");
 //        this.tfLogin.setText("verson");
         this.tfSenha.setText("1234");
+        String servidor = this.tfServidor.getText();
+        gravarDados();
+        this.controladora = new ControladoraUsuario(servidor);
         Vector usuario = this.controladora.logar(this.tfLogin.getText(), new String(this.tfSenha.getPassword()));
         if (usuario.size() == 13 && (!usuario.get(0).equals("0"))) {
-            JFrame janela = new FrmPrincipal(usuario);
+            JFrame janela = new FrmPrincipal(usuario, servidor);
             this.dispose();
             janela.setVisible(true);
         } else {
@@ -113,7 +151,9 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JButton btSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField tfLogin;
     private javax.swing.JPasswordField tfSenha;
+    private javax.swing.JTextField tfServidor;
     // End of variables declaration//GEN-END:variables
 }

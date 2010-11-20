@@ -12,11 +12,12 @@ import util.ActionFechar;
 
 public class FrmPrincipalSetor extends javax.swing.JFrame {
 
-    ControladoraSetor controladora = new ControladoraSetor();
+    ControladoraSetor controladora;
     Vector responsavel;
 
-    public FrmPrincipalSetor(Vector responsavel) {
+    public FrmPrincipalSetor(Vector responsavel,String servidor) {
         initComponents();
+        controladora = new ControladoraSetor(servidor);
         this.setLocationRelativeTo(null);
         preencherTabela();
         this.responsavel = responsavel;

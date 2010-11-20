@@ -16,7 +16,8 @@ public class FrmAlterarUsuario extends FrmFormularioUsuario {
     String setorInserido;
     String permissao = new String();
 
-    public FrmAlterarUsuario(ControladoraUsuario controladora, Vector linha) {
+    public FrmAlterarUsuario(ControladoraUsuario controladora, Vector linha,String servidor) {
+        super(servidor);
         this.linhaSelecionada = linha;
         this.setTitle("Alterar Dados do Usuário");
         linhasCargo = controladoraCargo.obterLinhas("", "Ativo");

@@ -11,11 +11,16 @@ import java.util.Vector;
 
 public class UfJDBCDao implements UfDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public UfJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public void inserirUf(Uf uf) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO UF(sigla_uf,descricao_uf,estado) VALUES (?, ?,?);";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -34,7 +39,7 @@ public class UfJDBCDao implements UfDao {
 
     public void alterarUf(Uf uf) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = " UPDATE uf SET " +
                     " sigla_uf = ?, " +
@@ -59,7 +64,7 @@ public class UfJDBCDao implements UfDao {
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" +
                     "VALUES (?,?,?,?,?,?);";
@@ -95,7 +100,7 @@ public class UfJDBCDao implements UfDao {
 
     public Vector<Uf> obterUfs(String nome, String status) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             if (status.equals("Ativo")) {
@@ -131,7 +136,7 @@ public class UfJDBCDao implements UfDao {
 
     public Uf obterUf(String nome) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT * FROM uf WHERE sigla_uf = '" + nome + "';";

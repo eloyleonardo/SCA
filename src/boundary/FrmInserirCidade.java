@@ -15,8 +15,8 @@ public class FrmInserirCidade extends FrmFormularioCidade implements ActionListe
     private Vector linhasUf = new Vector();
     private String ufInserida;
 
-    public FrmInserirCidade(ControladoraClasse controladora) {
-        super();
+    public FrmInserirCidade(ControladoraClasse controladora, String servidor) {
+        super(servidor);
         this.setTitle("[SCA] - Inserir Cidade");
         this.controladora = controladora;
         btOk.addActionListener(this);

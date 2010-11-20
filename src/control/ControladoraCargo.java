@@ -15,8 +15,8 @@ public class ControladoraCargo implements ControladoraClasse {
     private Vector<Cargo> cargosInativos;
     private CargoDao cargoDao;
 
-    public ControladoraCargo() {
-        this.cargoDao = new CargoJDBCDao();
+    public ControladoraCargo(String servidor) {
+        this.cargoDao = new CargoJDBCDao(servidor);
         cargosAtivos = new Vector<Cargo>();
         cargosInativos = new Vector<Cargo>();
     }

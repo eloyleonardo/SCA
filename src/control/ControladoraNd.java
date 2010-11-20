@@ -11,8 +11,8 @@ public class ControladoraNd {
     private Vector<Nd> Nds;
     private NdDao nddao;
 
-    public ControladoraNd() {
-        this.nddao = new NdJDBCDao();
+    public ControladoraNd(String servidor) {
+        this.nddao = new NdJDBCDao(servidor);
     }
 
     public Vector obterLinhasND() {

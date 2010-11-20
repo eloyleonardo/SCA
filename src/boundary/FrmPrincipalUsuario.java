@@ -1,7 +1,5 @@
 package boundary;
 
-
-
 import control.ControladoraUsuario;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -16,14 +14,16 @@ import util.ActionFechar;
 public class FrmPrincipalUsuario extends javax.swing.JFrame {
 
     protected ControladoraUsuario controladora;
-    Vector usuario;
+    private Vector usuario;
+    private String servidor;
 
-    public FrmPrincipalUsuario(Vector usuario) {
+    public FrmPrincipalUsuario(Vector usuario, String servidor) {
         initComponents();
+        this.servidor = servidor;
         this.adicionarMap();
         this.usuario = usuario;
         this.setTitle("Menu de usuários");
-        this.controladora = new ControladoraUsuario();
+        this.controladora = new ControladoraUsuario(servidor);
         this.preencherTabelaUsuarios();
         this.setResizable(false);
     }
@@ -205,7 +205,7 @@ public class FrmPrincipalUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirActionPerformed
-        JDialog janela = new FrmInserirUsuario(controladora);
+        JDialog janela = new FrmInserirUsuario(controladora, this.servidor);
         janela.setModal(true);
         janela.setVisible(true);
         this.limparTabelaUsuarios();
@@ -234,7 +234,7 @@ public class FrmPrincipalUsuario extends javax.swing.JFrame {
             for (int i = 0; i < quant; i++) {
                 linha.add(i, this.jTable1.getModel().getValueAt(linha_selecionada, i));
             }
-            JDialog janela = new FrmAlterarUsuario(this.controladora, linha);
+            JDialog janela = new FrmAlterarUsuario(this.controladora, linha,this.servidor);
             janela.setModal(true);
             janela.setVisible(true);
             this.limparTabelaUsuarios();
@@ -251,7 +251,7 @@ public class FrmPrincipalUsuario extends javax.swing.JFrame {
             this.controladora.setMarcador(linha_selecionada);
             Vector linha = new Vector(quant);
             linha = criarLinhaSelecao();
-            JDialog janela = new FrmAtivarUsuario(linha, usuario, controladora);
+            JDialog janela = new FrmAtivarUsuario(linha, usuario, controladora,this.servidor);
             janela.setModal(true);
             janela.setVisible(true);
             limparTabelaUsuarios();
@@ -268,7 +268,7 @@ public class FrmPrincipalUsuario extends javax.swing.JFrame {
             this.controladora.setMarcador(linha_selecionada);
             Vector linha = new Vector(quant);
             linha = criarLinhaSelecao();
-            JDialog janela = new FrmDesativarUsuario(linha, usuario, controladora);
+            JDialog janela = new FrmDesativarUsuario(linha, usuario, controladora,this.servidor);
             janela.setModal(true);
             janela.setVisible(true);
             limparTabelaUsuarios();

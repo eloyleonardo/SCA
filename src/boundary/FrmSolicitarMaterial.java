@@ -18,20 +18,21 @@ import util.ActionFechar;
 
 public class FrmSolicitarMaterial extends javax.swing.JFrame {
 
-    ControladoraMaterial controladoraMaterial;
-    ControladoraSolicitacao controladoraSolicitacao;
-    Vector responsavel;
-    Date data = new Date();
-    ControladoraSetor controladoraSetor;
+    private ControladoraMaterial controladoraMaterial;
+    private ControladoraSolicitacao controladoraSolicitacao;
+    private Vector responsavel;
+    private Date data = new Date();
+    private String servidor;
+    private ControladoraSetor controladoraSetor;
 
-    public FrmSolicitarMaterial(Vector usuario) {
-        controladoraSolicitacao = new ControladoraSolicitacao();
-        controladoraSetor = new ControladoraSetor();
+    public FrmSolicitarMaterial(Vector usuario, String servidor) {
+        controladoraSolicitacao = new ControladoraSolicitacao(servidor);
+        controladoraSetor = new ControladoraSetor(servidor);
         this.responsavel = usuario;
         SimpleDateFormat formatarDate = new SimpleDateFormat("yyyy-MM-dd");
         initComponents();
         this.adicionarMap();
-        controladoraMaterial = new ControladoraMaterial();
+        controladoraMaterial = new ControladoraMaterial(servidor);
         this.setVisible(true);
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -306,7 +307,7 @@ public class FrmSolicitarMaterial extends javax.swing.JFrame {
     }//GEN-LAST:event_jbAdicionarActionPerformed
 
     private void btConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmarActionPerformed
-        ControladoraSolicitacao controSol = new ControladoraSolicitacao();
+        ControladoraSolicitacao controSol = new ControladoraSolicitacao(servidor);
         Vector linha = this.criarLinhaSolicitacao();
         Vector linhasSetor = controladoraSetor.obterLinhas("", "Ativo");
         String setorUsuario = "";
@@ -333,7 +334,7 @@ public class FrmSolicitarMaterial extends javax.swing.JFrame {
 
     private void preencherTabela() {
         Vector linhas;
-        linhas = controladoraMaterial.obterLinhas(this.tfPesquisar.getText(),"Ativo");
+        linhas = controladoraMaterial.obterLinhas(this.tfPesquisar.getText(), "Ativo");
         DefaultTableModel modelo = (DefaultTableModel) this.tbMateriais.getModel();
         int numLinhas = linhas.size();
         for (int i = 0; i < numLinhas; i++) {

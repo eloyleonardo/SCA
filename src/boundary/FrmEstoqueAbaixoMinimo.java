@@ -18,9 +18,9 @@ public class FrmEstoqueAbaixoMinimo extends javax.swing.JFrame {
     private ControladoraMaterial controladoraMaterial;
     private Vector materiais;
 
-    public FrmEstoqueAbaixoMinimo() {
+    public FrmEstoqueAbaixoMinimo(String servidor) {
         initComponents();
-        this.controladoraMaterial = new ControladoraMaterial();
+        this.controladoraMaterial = new ControladoraMaterial(servidor);
         preencherTabela();
         this.tbMateriais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         adicionarMap();

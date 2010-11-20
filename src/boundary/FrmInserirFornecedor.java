@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 
 public class FrmInserirFornecedor extends FrmFormularioFornecedor implements ActionListener {
 
-    public FrmInserirFornecedor(ControladoraFornecedor controladora) {
-        super();
+    public FrmInserirFornecedor(ControladoraFornecedor controladora, String servidor) {
+        super(servidor);
         this.controladora = controladora;
         this.setTitle("SCA-Inserir Fornecedor");
         this.btOk.addActionListener(this);

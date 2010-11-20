@@ -18,7 +18,8 @@ public class FrmAlterarMaterial extends FrmFormularioMaterial implements ActionL
     private String status;
     private int ID;
 
-    public FrmAlterarMaterial(ControladoraMaterial controladora, Vector linhaSelecionada, String status) {
+    public FrmAlterarMaterial(ControladoraMaterial controladora, Vector linhaSelecionada, String status,String servidor) {
+        super(servidor);
         this.controladora = controladora;
         this.linhaSelecionada = linhaSelecionada;
         this.status = status;

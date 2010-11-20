@@ -1,7 +1,5 @@
 package boundary;
 
-
-
 import control.ControladoraSaida;
 import control.ControladoraRelatorios;
 import java.awt.event.KeyEvent;
@@ -18,10 +16,10 @@ public class FrmVisuzalizarSaida extends javax.swing.JFrame {
     private ControladoraSaida controladoraSaida;
     private ControladoraRelatorios controladoraRelatorio;
 
-    public FrmVisuzalizarSaida() {
+    public FrmVisuzalizarSaida(String servidor) {
         initComponents();
-        this.controladoraSaida = new ControladoraSaida();
-        this.controladoraRelatorio = new ControladoraRelatorios();
+        this.controladoraSaida = new ControladoraSaida(servidor);
+        this.controladoraRelatorio = new ControladoraRelatorios(servidor);
         adicionarMap();
     }
 

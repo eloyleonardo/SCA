@@ -12,11 +12,12 @@ import util.ActionFechar;
 
 public class FrmPrincipalUnidade extends javax.swing.JFrame {
 
-    ControladoraUnidade controladora = new ControladoraUnidade();
+    ControladoraUnidade controladora;
     Vector responsavel;
 
-    public FrmPrincipalUnidade(Vector responsavel) {
+    public FrmPrincipalUnidade(Vector responsavel, String servidor) {
         initComponents();
+        controladora = new ControladoraUnidade(servidor);
         this.setLocationRelativeTo(null);
         preencherTabela();
         this.responsavel = responsavel;

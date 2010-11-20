@@ -1,8 +1,5 @@
 package boundary;
 
-
-
-
 import control.ControladoraEntradaMaterial;
 import control.ControladoraRelatorios;
 import java.awt.event.KeyEvent;
@@ -16,13 +13,14 @@ import javax.swing.table.DefaultTableModel;
 import util.ActionFechar;
 
 public class FrmVisuzalizarEntrada extends javax.swing.JFrame {
+
     private ControladoraEntradaMaterial controladoraEntrada;
     private ControladoraRelatorios controladoraRelatorio;
 
-    public FrmVisuzalizarEntrada() {
+    public FrmVisuzalizarEntrada(String servidor) {
         initComponents();
-        this.controladoraEntrada = new ControladoraEntradaMaterial();
-        this.controladoraRelatorio = new ControladoraRelatorios();
+        this.controladoraEntrada = new ControladoraEntradaMaterial(servidor);
+        this.controladoraRelatorio = new ControladoraRelatorios(servidor);
         this.setLocationRelativeTo(null);
         adicionarMap();
     }
@@ -34,7 +32,7 @@ public class FrmVisuzalizarEntrada extends javax.swing.JFrame {
             DefaultTableModel modelo = (DefaultTableModel) this.tbEntrada.getModel();
             int numLinhas = linhas.size();
             for (int i = 0; i < numLinhas; i++) {
-                modelo.insertRow(modelo.getRowCount(), (Vector)linhas.get(i));
+                modelo.insertRow(modelo.getRowCount(), (Vector) linhas.get(i));
             }
 
         } catch (SQLException ex) {
@@ -56,7 +54,7 @@ public class FrmVisuzalizarEntrada extends javax.swing.JFrame {
             DefaultTableModel modelo = (DefaultTableModel) this.tbLote.getModel();
             int numLinhas = linhas.size();
             for (int i = 0; i < numLinhas; i++) {
-                modelo.insertRow(modelo.getRowCount(), (Vector)linhas.get(i));
+                modelo.insertRow(modelo.getRowCount(), (Vector) linhas.get(i));
             }
 
         } catch (SQLException ex) {
@@ -71,6 +69,7 @@ public class FrmVisuzalizarEntrada extends javax.swing.JFrame {
             modelo.removeRow(0);
         }
     }
+
     private void limparTabelaMaterial() {
         DefaultTableModel modelo = (DefaultTableModel) this.tbEntrada.getModel();
         int numLinhas = this.tbEntrada.getRowCount();
@@ -267,26 +266,24 @@ public class FrmVisuzalizarEntrada extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     private void btPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btPesquisarMouseClicked
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         String dataInicio = formato.format(this.jcDataInicio.getDate());
         String dataFim = formato.format(this.jcDataFinal.getDate());
 
-        if((this.jcDataInicio.getDate() == null) || (this.jcDataFinal.getDate() == null)){
+        if ((this.jcDataInicio.getDate() == null) || (this.jcDataFinal.getDate() == null)) {
             JOptionPane.showMessageDialog(null, "Preencha as Data Inicial e Final!", "Atenção", JOptionPane.WARNING_MESSAGE);
-        }else if((this.jcDataInicio.getDate().after(this.jcDataFinal.getDate()))){
+        } else if ((this.jcDataInicio.getDate().after(this.jcDataFinal.getDate()))) {
             JOptionPane.showMessageDialog(null, "A data Inicial deve ser anterior a data Final!", "Atenção", JOptionPane.WARNING_MESSAGE);
-        }else if(dataInicio.equals(dataFim)){
+        } else if (dataInicio.equals(dataFim)) {
             JOptionPane.showMessageDialog(null, "A data Inicial não pode ser igual a data Final!", "Atenção", JOptionPane.WARNING_MESSAGE);
-        }
-        else{
+        } else {
             limparTabelaMaterial();
             preencherTabelaMaterial();
         }
-        
+
     }//GEN-LAST:event_btPesquisarMouseClicked
 
     private void tbEntradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEntradaMouseClicked
@@ -300,10 +297,9 @@ public class FrmVisuzalizarEntrada extends javax.swing.JFrame {
 
     private void btImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btImprimirMouseClicked
         int numLinha = this.tbEntrada.getSelectedRow();
-        if(numLinha != -1){
+        if (numLinha != -1) {
             this.controladoraRelatorio.getDEM(Integer.parseInt(this.tbEntrada.getModel().getValueAt(numLinha, 0).toString()));
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(null, "Você deve selecionar um DEM!", "Atenção", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btImprimirMouseClicked
@@ -334,5 +330,4 @@ public class FrmVisuzalizarEntrada extends javax.swing.JFrame {
     private javax.swing.JTable tbEntrada;
     private javax.swing.JTable tbLote;
     // End of variables declaration//GEN-END:variables
-
 }

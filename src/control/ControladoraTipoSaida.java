@@ -12,8 +12,8 @@ public class ControladoraTipoSaida {
     private TipoSaidaDao tipoSaidaDao;
     private Vector<TipoSaida> tiposSaida;
 
-    public ControladoraTipoSaida() {
-        this.tipoSaidaDao = new TipoSaidaJDBCDao();
+    public ControladoraTipoSaida(String servidor) {
+        this.tipoSaidaDao = new TipoSaidaJDBCDao(servidor);
     }
 
     public Vector<TipoSaida> obterTiposSaida() throws SQLException {

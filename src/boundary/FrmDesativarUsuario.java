@@ -16,12 +16,14 @@ public class FrmDesativarUsuario extends FrmAlterarStatus implements ActionListe
     private Vector linhasSetor = new Vector();
     private String cargoInserido;
     private String setorInserido;
-    private ControladoraCargo controladoraCargo = new ControladoraCargo();
-    private ControladoraSetor controladoraSetor = new ControladoraSetor();
+    private ControladoraCargo controladoraCargo;
+    private ControladoraSetor controladoraSetor;
 
-    public FrmDesativarUsuario(Vector linha, Vector responsavel, ControladoraUsuario controladora) {
+    public FrmDesativarUsuario(Vector linha, Vector responsavel, ControladoraUsuario controladora,String servidor) {
         super();
         this.linha = linha;
+        controladoraSetor = new ControladoraSetor(servidor);
+        controladoraCargo = new ControladoraCargo(servidor);
         this.responsavel = responsavel;
         this.controladora = controladora;
         this.setTitle("SCA - Desativar Usuário");

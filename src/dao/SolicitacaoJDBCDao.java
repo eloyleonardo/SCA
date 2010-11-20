@@ -17,12 +17,17 @@ import java.util.Vector;
 
 public class SolicitacaoJDBCDao implements SolicitacaoDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public SolicitacaoJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public void inserirSolicitacao(Solicitacao solicitacao) throws SQLException {
         int numeroReq;
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO solicitacao (cod_usuario,data_solicitacao,cod_setor,estado) values (?,?,?,?)";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -69,7 +74,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
 
     public Vector obterMateriaisPorSolicitacao(int cod) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT ma.cod_material, ma.descricao_material, its.quantidade_aprovada, estoque AS total, ma.quant_minima " +
@@ -99,7 +104,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
 
     public Vector<Solicitacao> obteSolicitacoes(Setor setor) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT r.cod_solicitacao, " +
@@ -138,7 +143,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
 
     private ArrayList<Material> obterMateriais(int id, ArrayList qnt) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT m.cod_material," +
@@ -189,7 +194,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             conexao.setAutoCommit(false);
             PreparedStatement ps;
             String sql = "UPDATE solicitacao " +
@@ -216,7 +221,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
 
     public void rejeitarSolicitacao(Solicitacao solicitacao) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             PreparedStatement ps;
             String sql = "UPDATE solicitacao " +
                     "SET estado = 'rj' " +
@@ -230,7 +235,7 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
 
     public Vector<Solicitacao> obterSolicitacoesAprovadas(String nome) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             String sql;
             PreparedStatement ps;
             if (nome.equals("")) {

@@ -16,12 +16,13 @@ import util.WebServiceCep;
 
 public abstract class FrmFormularioFornecedor extends javax.swing.JDialog {
 
-    protected ControladoraFornecedor controladora = new ControladoraFornecedor();
+    protected ControladoraFornecedor controladora;
     private Vector ufs = new Vector();
     private Vector tes = new Vector();
     private Vector cidades = new Vector();
 
-    public FrmFormularioFornecedor() {
+    public FrmFormularioFornecedor(String servidor) {
+        controladora = new ControladoraFornecedor(servidor);
         initComponents();
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         this.setModal(true);

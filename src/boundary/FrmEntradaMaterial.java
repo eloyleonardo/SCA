@@ -34,17 +34,17 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     private int codigo_Entrada;
     private int itemEntrada;
 
-    public FrmEntradaMaterial(Vector usuario) {
+    public FrmEntradaMaterial(Vector usuario,String servidor) {
         super();
         this.usuario = usuario;
         initComponents();
         Vector controle;
         this.setLocationRelativeTo(null);
 
-        this.controladoraEntrada = new ControladoraEntradaMaterial();
-        this.controladoraFornecedor = new ControladoraFornecedor();
-        this.controladoraMaterial = new ControladoraMaterial();
-        this.controladoraRelatorio = new ControladoraRelatorios();
+        this.controladoraEntrada = new ControladoraEntradaMaterial(servidor);
+        this.controladoraFornecedor = new ControladoraFornecedor(servidor);
+        this.controladoraMaterial = new ControladoraMaterial(servidor);
+        this.controladoraRelatorio = new ControladoraRelatorios(servidor);
 
         this.data = new SimpleDateFormat("dd/MM/yyyy");
         this.lbData.setText(this.data.format(new Date()));

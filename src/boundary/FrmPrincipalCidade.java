@@ -12,12 +12,14 @@ import util.ActionFechar;
 
 public class FrmPrincipalCidade extends javax.swing.JFrame {
 
-    Vector responsavel;
-    ControladoraCidade controladora;
+    private Vector responsavel;
+    private ControladoraCidade controladora;
+    private String servidor;
 
-    public FrmPrincipalCidade(Vector usuario) {
+    public FrmPrincipalCidade(Vector usuario, String servidor) {
         initComponents();
-        this.controladora = new ControladoraCidade();
+        this.servidor = servidor;
+        this.controladora = new ControladoraCidade(servidor);
         this.setLocationRelativeTo(null);
         preencherTabela();
         this.responsavel = usuario;
@@ -204,7 +206,7 @@ public class FrmPrincipalCidade extends javax.swing.JFrame {
 }//GEN-LAST:event_cbStatusItemStateChanged
 
     private void btInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirActionPerformed
-        JDialog janela = new FrmInserirCidade(controladora);
+        JDialog janela = new FrmInserirCidade(controladora,servidor);
         janela.setModal(true);
         janela.setVisible(true);
         if (cbStatus.getSelectedItem().equals("Ativo")) {
@@ -218,7 +220,7 @@ public class FrmPrincipalCidade extends javax.swing.JFrame {
         if (linhaSelecionada < 0) {
             JOptionPane.showMessageDialog(null, "Você deve selecionar uma Uf !", "Atenção", JOptionPane.WARNING_MESSAGE);
         } else {
-            JDialog janela = new FrmAlterarCidade(controladora, criarLinhaSelecao(), cbStatus.getSelectedItem().toString());
+            JDialog janela = new FrmAlterarCidade(controladora, criarLinhaSelecao(), cbStatus.getSelectedItem().toString(),servidor);
             janela.setModal(true);
             janela.setVisible(true);
             limparTabela();

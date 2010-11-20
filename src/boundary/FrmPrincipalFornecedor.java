@@ -14,15 +14,16 @@ import util.ActionFechar;
 
 public class FrmPrincipalFornecedor extends javax.swing.JFrame implements WindowListener {
 
-    ControladoraFornecedor controladora;
-    Vector responsavel;
+    private ControladoraFornecedor controladora;
+    private Vector responsavel;
+    private String servidor;
 
-    public FrmPrincipalFornecedor(Vector responsavel) {
+    public FrmPrincipalFornecedor(Vector responsavel, String servidor) {
         initComponents();
         this.adicionarMap();
         this.responsavel = responsavel;
         this.setLocationRelativeTo(null);
-        this.controladora = new ControladoraFornecedor();
+        this.controladora = new ControladoraFornecedor(servidor);
         this.btAtivar.setEnabled(false);
         preencherTabela();
     }
@@ -241,7 +242,7 @@ public class FrmPrincipalFornecedor extends javax.swing.JFrame implements Window
     }//GEN-LAST:event_cbSatusItemStateChanged
 
     private void btInserirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btInserirMouseClicked
-        JDialog janela = new FrmInserirFornecedor(this.controladora);
+        JDialog janela = new FrmInserirFornecedor(this.controladora, servidor);
         janela.setVisible(true);
         this.limparTabela();
         this.preencherTabela();
@@ -252,7 +253,7 @@ public class FrmPrincipalFornecedor extends javax.swing.JFrame implements Window
         if (linhaSelecionada < 0) {
             JOptionPane.showMessageDialog(null, "Você deve selecionar um Fornecedor !", "Atenção", JOptionPane.WARNING_MESSAGE);
         } else {
-            JDialog janela = new FrmAlterarFornecedor(controladora, criarLinhaSelecao(), cbSatus.getSelectedItem().toString());
+            JDialog janela = new FrmAlterarFornecedor(controladora, criarLinhaSelecao(), cbSatus.getSelectedItem().toString(), servidor);
             janela.setModal(true);
             janela.setVisible(true);
             limparTabela();

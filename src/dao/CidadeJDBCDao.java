@@ -11,11 +11,16 @@ import java.util.Vector;
 
 public class CidadeJDBCDao implements CidadeDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public CidadeJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public void inserirCidade(Cidade cidade) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO cidade(nome_cidade,sigla_uf,estado) VALUES (?,?,?);";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -34,7 +39,7 @@ public class CidadeJDBCDao implements CidadeDao {
 
     public void alterarCidade(Cidade cidade) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = " UPDATE cidade SET " + " sigla_uf = '" + cidade.getUf().getSigla() + "', " + " nome_cidade = '" + cidade.getNome() + "'," + " estado = '" + cidade.getStatus() + "'" + " WHERE cod_cidade = " + cidade.getCodigo();
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -50,7 +55,7 @@ public class CidadeJDBCDao implements CidadeDao {
 
     public Vector<Cidade> obterCidades(String nome, String status) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             if (status.equals("Ativo")) {
@@ -90,7 +95,7 @@ public class CidadeJDBCDao implements CidadeDao {
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" + "VALUES (?,?,?,?,?,?);";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -120,9 +125,9 @@ public class CidadeJDBCDao implements CidadeDao {
     }
 
     public Vector<Cidade> obterCidades(Uf uf) throws SQLException {
-        UfDao ufDao = new UfJDBCDao();
+        UfDao ufDao = new UfJDBCDao(this.servidor);
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT * FROM cidade WHERE sigla_uf = '" + uf.getSigla() + "';";

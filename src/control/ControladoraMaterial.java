@@ -23,8 +23,8 @@ public class ControladoraMaterial implements ControladoraClasse {
         this.marcador = marcador;
     }
 
-    public ControladoraMaterial() {
-        this.materialDao = new MaterialJDBCDao();
+    public ControladoraMaterial(String servidor) {
+        this.materialDao = new MaterialJDBCDao(servidor);
     }
 
     public void alterarStatus(String motivo, Usuario responsavel, String acao, int cod) {

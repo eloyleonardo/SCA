@@ -22,8 +22,8 @@ public class ControladoraUsuario implements ControladoraClasse {
         this.marcador = marcador;
     }
 
-    public ControladoraUsuario() {
-        this.usuarioDao = new UsuarioJDBCDao();
+    public ControladoraUsuario(String servidor) {
+        this.usuarioDao = new UsuarioJDBCDao(servidor);
     }
 
     private Vector criarLinhaUsuario(Usuario usuario) {
@@ -57,8 +57,7 @@ public class ControladoraUsuario implements ControladoraClasse {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n"
-                    + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
         return linhas;
@@ -81,8 +80,7 @@ public class ControladoraUsuario implements ControladoraClasse {
         try {
             usuarioDao.inserirUsuario(usuario, chefia);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n"
-                    + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -95,8 +93,7 @@ public class ControladoraUsuario implements ControladoraClasse {
             usuarioDao.alterarUsuario(usuario, tornarFuncionario, chefia);
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n"
-                    + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -108,8 +105,7 @@ public class ControladoraUsuario implements ControladoraClasse {
             usuarioDao.alterarStatusUsuario(usuario, motivo, r, acao);
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n"
-                    + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -127,30 +123,28 @@ public class ControladoraUsuario implements ControladoraClasse {
     }
 
     public Vector logar(String nome, String senha) {
-        UsuarioDao usuarioDao = new UsuarioJDBCDao();
         Vector linha = new Vector();
         try {
             Usuario u = usuarioDao.logar(nome, senha);
             if (u != null) {
-                linha.addElement(""+u.getCodigo());
-                linha.addElement(""+u.getNome());
-                linha.addElement(""+u.getPermissao());
-                linha.addElement(""+u.getDocumento());
-                linha.addElement(""+u.getLogin());
-                linha.addElement(""+u.getSenha());
-                linha.addElement(""+u.getCargo().getCodigo());
-                linha.addElement(""+u.getCargo().getNome());
-                linha.addElement(""+u.getCargo().getStatus());
-                linha.addElement(""+u.getCargo().isChefia());
-                linha.addElement(""+u.getSetor().getCodigo());
-                linha.addElement(""+u.getSetor().getNome());
-                linha.addElement(""+u.getSetor().getDescricao());
+                linha.addElement("" + u.getCodigo());
+                linha.addElement("" + u.getNome());
+                linha.addElement("" + u.getPermissao());
+                linha.addElement("" + u.getDocumento());
+                linha.addElement("" + u.getLogin());
+                linha.addElement("" + u.getSenha());
+                linha.addElement("" + u.getCargo().getCodigo());
+                linha.addElement("" + u.getCargo().getNome());
+                linha.addElement("" + u.getCargo().getStatus());
+                linha.addElement("" + u.getCargo().isChefia());
+                linha.addElement("" + u.getSetor().getCodigo());
+                linha.addElement("" + u.getSetor().getNome());
+                linha.addElement("" + u.getSetor().getDescricao());
             } else {
                 return null;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n"
-                    + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao acesso o banco de dados,\n" + "por favor contate o Suporte", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         return linha;
 

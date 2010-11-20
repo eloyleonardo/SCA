@@ -11,11 +11,16 @@ import java.util.Vector;
 
 public class UnidadeJDBCDao implements UnidadeDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public UnidadeJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public int inserirUnidade(Unidade unidade) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO unidade (descricao_unidade,estado) VALUES (?,?)";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -33,7 +38,7 @@ public class UnidadeJDBCDao implements UnidadeDao {
     }
 
     private int obterIdUnidade(Unidade unidade) throws SQLException {
-        conexao = FabricaConexao.obterConexao("JDBC");
+        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
         String sql = "SELECT cod_unidade FROM unidade WHERE descricao_unidade ='" + unidade.getNome() + "'";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet res = ps.executeQuery();
@@ -45,7 +50,7 @@ public class UnidadeJDBCDao implements UnidadeDao {
 
     public void alterarUnidade(Unidade unidade) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = " UPDATE unidade SET " +
                     " cod_unidade = ?, " +
@@ -69,7 +74,7 @@ public class UnidadeJDBCDao implements UnidadeDao {
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" +
                     "VALUES (?,?,?,?,?,?);";
@@ -105,7 +110,7 @@ public class UnidadeJDBCDao implements UnidadeDao {
 
     public Vector<Unidade> obterUnidades(String nome, String status) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             if (status.equals("Ativo")) {

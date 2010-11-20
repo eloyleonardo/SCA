@@ -15,8 +15,8 @@ public class ControladoraUnidade implements ControladoraClasse {
     private Vector<Unidade> unidadesInativas;
     private UnidadeDao unidadeDao;
 
-    public ControladoraUnidade() {
-        this.unidadeDao = new UnidadeJDBCDao();
+    public ControladoraUnidade(String servidor) {
+        this.unidadeDao = new UnidadeJDBCDao(servidor);
         unidadesAtivas = new Vector<Unidade>();
         unidadesInativas = new Vector<Unidade>();
     }

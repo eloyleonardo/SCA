@@ -14,12 +14,12 @@ public abstract class FrmFormularioCidade extends javax.swing.JDialog {
     protected ControladoraClasse controladora;
     protected ControladoraClasse controladoraUf;
 
-    public FrmFormularioCidade() {
+    public FrmFormularioCidade(String servidor) {
         initComponents();
         this.setLocationRelativeTo(null);
         adicionarMap();
-        this.controladora = new ControladoraCidade();
-        this.controladoraUf = new ControladoraUf();
+        this.controladora = new ControladoraCidade(servidor);
+        this.controladoraUf = new ControladoraUf(servidor);
     }
 
 

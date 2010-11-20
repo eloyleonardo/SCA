@@ -11,11 +11,16 @@ import java.util.Vector;
 
 public class SetorJDBCDao implements SetorDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public SetorJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public int inserirSetor(Setor setor) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO setor (nome_setor,estado) VALUES ('" + setor.getNome() + "','a')";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -31,7 +36,7 @@ public class SetorJDBCDao implements SetorDao {
     }
 
     private int obterIdSetor(Setor setor) throws SQLException {
-        conexao = FabricaConexao.obterConexao("JDBC");
+        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
         String sql = "SELECT cod_setor FROM setor WHERE nome_setor ='" + setor.getNome() + "'";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet res = ps.executeQuery();
@@ -43,7 +48,7 @@ public class SetorJDBCDao implements SetorDao {
 
     public void alterarSetor(Setor setor) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = " UPDATE setor SET " +
                     " cod_setor = ?, " +
@@ -67,7 +72,7 @@ public class SetorJDBCDao implements SetorDao {
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" +
                     "VALUES (?,?,?,?,?,?);";
@@ -103,7 +108,7 @@ public class SetorJDBCDao implements SetorDao {
 
     public Vector<Setor> obterSetores(String nome, String status) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             if (status.equals("Ativo")) {

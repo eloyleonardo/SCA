@@ -14,8 +14,8 @@ public class FrmAlterarCidade extends FrmFormularioCidade implements ActionListe
     String UfAlterada;
     String status;
 
-    public FrmAlterarCidade(ControladoraClasse controladora, Vector linha, String status) {
-        super();
+    public FrmAlterarCidade(ControladoraClasse controladora, Vector linha, String status,String servidor) {
+        super(servidor);
         this.linhaSelecionada = linha;
         this.setTitle("[SCA] - Alterar Cidade");
         this.status = status;

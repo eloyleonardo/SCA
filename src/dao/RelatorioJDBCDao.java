@@ -14,6 +14,11 @@ import net.sf.jasperreports.view.JasperViewer;
 public class RelatorioJDBCDao implements RelatorioDao {
 
     private Connection conexao;
+    private String servidor;
+
+    public RelatorioJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     private void gerarRelatorio(HashMap parametro, String arquivo) throws JRException {
         JasperPrint jp = JasperFillManager.fillReport(arquivo, parametro, conexao);
@@ -27,7 +32,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
     public void getBoletim(Date dataInicio, Date dataFim) throws SQLException, JRException {
         Date dataInicioAno = new Date(dataInicio.getYear(), 0, 1);
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String arquivo = getLocal();
             arquivo += "Boletim/RptBoletim.jasper";
             HashMap parametro = new HashMap();
@@ -49,7 +54,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
         Date dataInicioMes = new Date(dataInicio.getYear(), dataInicio.getMonth() - 1, 1);
         Date dataInicioSistema = new Date("01/01/1970");
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String arquivo = getLocal();
             arquivo += "RMM/RptRMM.jasper";
             HashMap parametro = new HashMap();
@@ -72,7 +77,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
 
     public void getDEM(Entrada dem) throws SQLException, JRException {
         try {
-            this.conexao = FabricaConexao.obterConexao("JDBC");
+            this.conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String arquivo = getLocal();
             arquivo += "DEM/DEM.jasper";
             HashMap parametro = new HashMap();
@@ -88,7 +93,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
 
     public void getRCM(Date dataI, Date dataF, int codigoSetor) throws SQLException, JRException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String arquivo = getLocal();
             arquivo += "Consumo/RptRCM.jasper";
             HashMap parametro = new HashMap();
@@ -106,7 +111,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
 
     public void getRME() throws SQLException, JRException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String arquivo = getLocal();
             arquivo += "Estoque/RptEstoque.jasper";
             gerarRelatorio(new HashMap(), arquivo);
@@ -120,7 +125,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
 
     public void getLog(String classe) throws SQLException, JRException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String arquivo = getLocal();
             arquivo += "Logs/RptLOG" + classe + ".jasper";
             gerarRelatorio(new HashMap(), arquivo);
@@ -134,7 +139,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
 
     public void getDsm(Saida saida) throws SQLException, JRException {
         try {
-            this.conexao = FabricaConexao.obterConexao("JDBC");
+            this.conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String arquivo = getLocal();
             arquivo += "DSM/DSM.jasper";
             HashMap parametro = new HashMap();

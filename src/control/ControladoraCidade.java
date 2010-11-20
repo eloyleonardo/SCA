@@ -1,21 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package control;
 
 import dao.CidadeDao;
 import dao.CidadeJDBCDao;
 import domain.Cidade;
-import domain.Usuario;
 import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author PC
- */
 public class ControladoraCidade implements ControladoraClasse {
 
     private Vector<Cidade> cidadesAtivas;
@@ -23,8 +14,8 @@ public class ControladoraCidade implements ControladoraClasse {
     private CidadeDao cidadeDao;
     private int marcador;
 
-    public ControladoraCidade() {
-        this.cidadeDao = new CidadeJDBCDao();
+    public ControladoraCidade(String servidor) {
+        this.cidadeDao = new CidadeJDBCDao(servidor);
         cidadesAtivas = new Vector<Cidade>();
         cidadesInativas = new Vector<Cidade>();
     }

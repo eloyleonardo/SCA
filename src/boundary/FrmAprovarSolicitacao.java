@@ -10,11 +10,12 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrmAprovarSolicitacao extends javax.swing.JFrame {
 
-    ControladoraSolicitacao controladora = new ControladoraSolicitacao();
+    ControladoraSolicitacao controladora;
     Vector usuario;
 
-    public FrmAprovarSolicitacao(Vector usuario) {
+    public FrmAprovarSolicitacao(Vector usuario,String servidor) {
         initComponents();
+        controladora = new ControladoraSolicitacao(servidor);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.usuario = usuario;

@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
@@ -79,7 +79,7 @@
                               <Component id="jcDataFinal" min="-2" pref="114" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btPesquisar" min="-2" max="-2" attributes="1"/>
-                              <EmptySpace pref="140" max="-2" attributes="0"/>
+                              <EmptySpace pref="142" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

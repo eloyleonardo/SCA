@@ -15,15 +15,15 @@ public class ControladoraSetor implements ControladoraClasse {
     private Vector<Setor> setoresInativos;
     private SetorDao setorDao;
 
-    public ControladoraSetor() {
-        this.setorDao = new SetorJDBCDao();
+    public ControladoraSetor(String servidor) {
+        this.setorDao = new SetorJDBCDao(servidor);
         setoresAtivos = new Vector<Setor>();
         setoresInativos = new Vector<Setor>();
     }
 
     public int obterCodSetor(String nome) {
-        for(int i=0;i<setoresAtivos.size();i++){
-            if(setoresAtivos.get(i).getNome().equals(nome)){
+        for (int i = 0; i < setoresAtivos.size(); i++) {
+            if (setoresAtivos.get(i).getNome().equals(nome)) {
                 return setoresAtivos.get(i).getCodigo();
             }
         }

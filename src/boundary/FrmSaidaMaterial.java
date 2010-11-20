@@ -16,15 +16,19 @@ import util.ActionFechar;
 public class FrmSaidaMaterial extends javax.swing.JFrame {
 
     private int codSaida = 0;
-    private ControladoraSolicitacao controladora = new ControladoraSolicitacao();
-    private ControladoraSetor controladoraSetor = new ControladoraSetor();
-    private ControladoraSaida controladoraSaida = new ControladoraSaida();
+    private ControladoraSolicitacao controladora;
+    private ControladoraSetor controladoraSetor;
+    private ControladoraSaida controladoraSaida;
+    private String servidor;
     private Vector linhasSetor;
     private int req;
     private Vector usuario;
 
-    public FrmSaidaMaterial(Vector usuario) throws SQLException {
+    public FrmSaidaMaterial(Vector usuario, String servidor) throws SQLException {
         initComponents();
+        controladoraSaida = new ControladoraSaida(servidor);
+        controladoraSetor = new ControladoraSetor(servidor);
+        controladora = new ControladoraSolicitacao(servidor);
         this.usuario = usuario;
         this.setTitle("[SCA] - Saída de materiais");
         this.setResizable(false);
@@ -253,9 +257,9 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
     }//GEN-LAST:event_btCancelarMouseClicked
 
     private void btImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btImprimirMouseClicked
-        ControladoraRelatorios controladoraRelatorio = new ControladoraRelatorios();
+        ControladoraRelatorios controladoraRelatorio = new ControladoraRelatorios(servidor);
         controladoraRelatorio.getDsm(codSaida);
-        
+
     }//GEN-LAST:event_btImprimirMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

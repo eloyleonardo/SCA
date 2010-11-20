@@ -10,10 +10,15 @@ import java.util.Vector;
 public class TipoSaidaJDBCDao implements TipoSaidaDao {
 
     private Connection conexao;
+    private String servidor;
+
+    public TipoSaidaJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public Vector<TipoSaida> obterTiposSaida() throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT cod_tipo_saida,nome_tipo_saida FROM tipo_saida";

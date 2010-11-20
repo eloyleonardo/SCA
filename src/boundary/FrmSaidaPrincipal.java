@@ -10,10 +10,12 @@ import util.ActionFechar;
 
 public class FrmSaidaPrincipal extends javax.swing.JFrame {
 
-    Vector usuario;
+    private Vector usuario;
+    private String servidor;
 
-    public FrmSaidaPrincipal(Vector usuario) {
+    public FrmSaidaPrincipal(Vector usuario, String servidor) {
         initComponents();
+        this.servidor = servidor;
         this.usuario = usuario;
         this.adicionarMap();
         this.setLocationRelativeTo(null);
@@ -139,7 +141,7 @@ public class FrmSaidaPrincipal extends javax.swing.JFrame {
 
     private void btSolicitacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSolicitacaoActionPerformed
         try {
-            JFrame janela = new FrmSaidaMaterial(usuario);
+            JFrame janela = new FrmSaidaMaterial(usuario, servidor);
             janela.setVisible(true);
             this.dispose();
         } catch (SQLException ex) {
@@ -147,7 +149,7 @@ public class FrmSaidaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btSolicitacaoActionPerformed
 
     private void btOutrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOutrosActionPerformed
-        JFrame janela = new FrmSaidaMaterialOutros(usuario);
+        JFrame janela = new FrmSaidaMaterialOutros(usuario, servidor);
         janela.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btOutrosActionPerformed

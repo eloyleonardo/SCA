@@ -16,20 +16,21 @@ import util.ActionFechar;
 
 public class FrmSaidaMaterialOutros extends javax.swing.JFrame {
 
-    ControladoraSolicitacao controladoraSolicitacao;
-    ControladoraTipoSaida controladoraTipoSaida;
-    ControladoraMaterial controladoraMaterial;
-    ControladoraSaida controladoraSaida;
-    Vector usuario;
-    Vector linhasTipoSaida = new Vector();
+    private ControladoraSolicitacao controladoraSolicitacao;
+    private ControladoraTipoSaida controladoraTipoSaida;
+    private ControladoraMaterial controladoraMaterial;
+    private ControladoraSaida controladoraSaida;
+    private Vector usuario;
+    private String servidor;
+    private Vector linhasTipoSaida = new Vector();
 
-    public FrmSaidaMaterialOutros(Vector usuario) {
+    public FrmSaidaMaterialOutros(Vector usuario, String servidor) {
         this.usuario = usuario;
         initComponents();
-        controladoraSaida = new ControladoraSaida();
-        controladoraMaterial = new ControladoraMaterial();
-        controladoraTipoSaida = new ControladoraTipoSaida();
-        controladoraSolicitacao = new ControladoraSolicitacao();
+        controladoraSaida = new ControladoraSaida(servidor);
+        controladoraMaterial = new ControladoraMaterial(servidor);
+        controladoraTipoSaida = new ControladoraTipoSaida(servidor);
+        controladoraSolicitacao = new ControladoraSolicitacao(servidor);
         this.lbResponsavel.setText("Responsável: " + usuario.get(1));
         this.lbData.setText("Data: " + new Date());
         this.adicionarMap();
@@ -48,18 +49,18 @@ public class FrmSaidaMaterialOutros extends javax.swing.JFrame {
 
     private void preencherTabela() {
         Vector linhas;
-        linhas = controladoraMaterial.obterLinhas(this.tfPesquisar.getText(),"Ativo");
+        linhas = controladoraMaterial.obterLinhas(this.tfPesquisar.getText(), "Ativo");
         DefaultTableModel modelo = (DefaultTableModel) this.jtMateriais.getModel();
         int numLinhas = linhas.size();
         for (int i = 0; i < numLinhas; i++) {
             Vector linha = new Vector();
             String s;
-            if(((Vector)linhas.get(i)).get(4).toString().length()==1){
-                s="0"+((Vector)linhas.get(i)).get(4).toString();
-            }else{
-                s = ((Vector)linhas.get(i)).get(4).toString();
+            if (((Vector) linhas.get(i)).get(4).toString().length() == 1) {
+                s = "0" + ((Vector) linhas.get(i)).get(4).toString();
+            } else {
+                s = ((Vector) linhas.get(i)).get(4).toString();
             }
-            String siafi = ((Vector)linhas.get(i)).get(3).toString() + s;
+            String siafi = ((Vector) linhas.get(i)).get(3).toString() + s;
             linha.add(((Vector) linhas.get(i)).get(0));
             linha.add(((Vector) linhas.get(i)).get(1));
             linha.add(siafi);
@@ -340,7 +341,7 @@ public class FrmSaidaMaterialOutros extends javax.swing.JFrame {
     }//GEN-LAST:event_btPesquisarActionPerformed
 
     private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
-        ControladoraRelatorios controladoraRelatorios = new ControladoraRelatorios();
+        ControladoraRelatorios controladoraRelatorios = new ControladoraRelatorios(servidor);
         if (cbTipoSaida.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Escolha o tipo de saida!!", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
         } else {

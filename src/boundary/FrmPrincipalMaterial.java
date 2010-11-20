@@ -14,11 +14,13 @@ import util.ActionFechar;
 
 public class FrmPrincipalMaterial extends javax.swing.JFrame {
 
-    ControladoraMaterial controladora;
-    Vector responsavel;
+    private ControladoraMaterial controladora;
+    private Vector responsavel;
+    private String servidor;
 
-    public FrmPrincipalMaterial(Vector usuario) {
-        controladora = new ControladoraMaterial();
+    public FrmPrincipalMaterial(Vector usuario, String servidor) {
+        controladora = new ControladoraMaterial(servidor);
+        this.servidor = servidor;
         initComponents();
         preencherTabela();
         this.responsavel = usuario;
@@ -222,7 +224,7 @@ public class FrmPrincipalMaterial extends javax.swing.JFrame {
 }//GEN-LAST:event_tfPesquisarActionPerformed
 
     private void bt_inserirMatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_inserirMatMouseClicked
-        JDialog janela = new FrmInserirMaterial(controladora);
+        JDialog janela = new FrmInserirMaterial(controladora,this.servidor);
         janela.setModal(true);
         janela.setVisible(true);
         limparTabela();
@@ -238,7 +240,7 @@ public class FrmPrincipalMaterial extends javax.swing.JFrame {
         if (linhaSelecionada < 0) {
             JOptionPane.showMessageDialog(null, "Você deve selecionar um Material !", "Atenção", JOptionPane.WARNING_MESSAGE);
         } else {
-            JDialog janela = new FrmAlterarMaterial(controladora, criarLinhaSelecao(), cbAtivoInativo.getSelectedItem().toString());
+            JDialog janela = new FrmAlterarMaterial(controladora, criarLinhaSelecao(), cbAtivoInativo.getSelectedItem().toString(),this.servidor);
             janela.setModal(true);
             janela.setVisible(true);
             limparTabela();
@@ -260,7 +262,7 @@ public class FrmPrincipalMaterial extends javax.swing.JFrame {
             this.controladora.setMarcador(linha_selecionada);
             Vector linha = new Vector(quant);
             linha = criarLinhaSelecao();
-            JDialog janela = new FrmAtivarMaterial(controladora, responsavel, linha);
+            JDialog janela = new FrmAtivarMaterial(controladora, responsavel, linha,this.servidor);
             janela.setModal(true);
             janela.setVisible(true);
             limparTabela();
@@ -289,7 +291,7 @@ public class FrmPrincipalMaterial extends javax.swing.JFrame {
             this.controladora.setMarcador(linha_selecionada);
             Vector linha = new Vector(quant);
             linha = criarLinhaSelecao();
-            JDialog janela = new FrmDesativarMaterial(controladora, responsavel, linha);
+            JDialog janela = new FrmDesativarMaterial(controladora, responsavel, linha,this.servidor);
             janela.setModal(true);
             janela.setVisible(true);
             limparTabela();

@@ -13,11 +13,16 @@ import javax.swing.JOptionPane;
 
 public class SaidaJDBCDao implements SaidaDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public SaidaJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public void inserirSaida(int codUsuario, int codSaida, int codSolicitacao) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO dsm (data_saida,cod_solicitacao,cod_tipo_saida,cod_usuario) values (?,?,?,?)";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -41,7 +46,7 @@ public class SaidaJDBCDao implements SaidaDao {
         int num = 0;
         String sql;
         PreparedStatement ps;
-        conexao = FabricaConexao.obterConexao("JDBC");
+        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
         conexao.setAutoCommit(false);
         sql = "select cod_dsm from dsm order by cod_dsm desc LIMIT 1";
         ps = conexao.prepareStatement(sql);
@@ -55,11 +60,11 @@ public class SaidaJDBCDao implements SaidaDao {
     }
 
     public void registrarSaida(Saida saida, int numLinhas) throws SQLException {
-        MaterialDao materialDao = new MaterialJDBCDao();
+        MaterialDao materialDao = new MaterialJDBCDao(this.servidor);
         String qntAtendida = saida.getQuantidadeAtendida().toString().substring(1, saida.getQuantidadeAtendida().toString().length() - 1);
         double soma = 0;
         int n = 0;
-        conexao = FabricaConexao.obterConexao("JDBC");
+        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
         String sql;
         PreparedStatement ps;
         Vector linhaRecebida = materialDao.carregarLotesMaterial(saida.getMaterial().get(0).getCodigo());
@@ -69,7 +74,7 @@ public class SaidaJDBCDao implements SaidaDao {
                 try {
                     sql = "INSERT INTO saida_material(cod_dsm,cod_lote,qnt_saida,data_saida) " +
                             "VALUES (?,?,?,?)";
-                    conexao = FabricaConexao.obterConexao("JDBC");
+                    conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
                     conexao.setAutoCommit(false);
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, saida.getCodigo());
@@ -101,7 +106,7 @@ public class SaidaJDBCDao implements SaidaDao {
                 try {
                     sql = "INSERT INTO saida_material(cod_dsm,cod_lote,qnt_saida,data_saida) " +
                             "VALUES (?,?,?,?)";
-                    conexao = FabricaConexao.obterConexao("JDBC");
+                    conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
                     conexao.setAutoCommit(false);
                     ps = conexao.prepareStatement(sql);
                     ps.setInt(1, saida.getCodigo());
@@ -124,7 +129,7 @@ public class SaidaJDBCDao implements SaidaDao {
             sql = "UPDATE item_solicitacao SET quantidade_atendida = " + Double.parseDouble(qntAtendida) +
                     " WHERE cod_solicitacao = " + saida.getRequisicao().getCodigo() +
                     " AND cod_material = " + saida.getMaterial().get(0).getCodigo();
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             // conexao.setAutoCommit(false);
             ps = conexao.prepareStatement(sql);
             ps.executeUpdate();
@@ -136,9 +141,8 @@ public class SaidaJDBCDao implements SaidaDao {
     }
 
     public void registrarSaidaOutrosMotivos(Saida saida) throws SQLException {
-        //Vector linhaSaida = linha;
-        MaterialDao materialDao = new MaterialJDBCDao();
-        conexao = FabricaConexao.obterConexao("JDBC");
+        MaterialDao materialDao = new MaterialJDBCDao(this.servidor);
+        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
         String sql;
         PreparedStatement ps;
         for (int i = 0; i < saida.getMaterial().size(); i++) {
@@ -181,7 +185,7 @@ public class SaidaJDBCDao implements SaidaDao {
                     try {
                         sql = "INSERT INTO saida_material(cod_dsm,cod_lote,qnt_saida,data_saida,observacao) " +
                                 "VALUES (?,?,?,?,?)";
-                        conexao = FabricaConexao.obterConexao("JDBC");
+                        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
                         conexao.setAutoCommit(false);
                         ps = conexao.prepareStatement(sql);
                         ps.setInt(1, saida.getCodigo());
@@ -206,7 +210,7 @@ public class SaidaJDBCDao implements SaidaDao {
                     try {
                         sql = "INSERT INTO saida_material(cod_dsm,cod_lote,qnt_saida,data_saida,observacao) " +
                                 "VALUES (?,?,?,?,?)";
-                        conexao = FabricaConexao.obterConexao("JDBC");
+                        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
                         conexao.setAutoCommit(false);
                         ps = conexao.prepareStatement(sql);
                         ps.setInt(1, saida.getCodigo());
@@ -238,7 +242,7 @@ public class SaidaJDBCDao implements SaidaDao {
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataFinalSql = (java.sql.Date) dataUtil;
 
-            this.conexao = FabricaConexao.obterConexao("JDBC");
+            this.conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT d.cod_dsm, u.nome_usuario, ts.nome_tipo_saida,d.data_saida " +

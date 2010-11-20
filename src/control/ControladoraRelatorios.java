@@ -13,8 +13,8 @@ public class ControladoraRelatorios {
 
     private RelatorioDao dao;
 
-    public ControladoraRelatorios() {
-        this.dao = new RelatorioJDBCDao();
+    public ControladoraRelatorios(String servidor) {
+        this.dao = new RelatorioJDBCDao(servidor);
     }
 
     public void getBoletim(Date dataInicio, Date dataFim) {

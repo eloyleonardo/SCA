@@ -1,6 +1,5 @@
 package dao;
 
-import domain.Material;
 import domain.SubItem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,12 +9,17 @@ import java.util.Vector;
 
 public class SubitemJDBCDao implements SubitemDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public SubitemJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public Vector<SubItem> obterSubitens() throws SQLException {
         Vector<SubItem> subitens = new Vector<SubItem>();
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC",this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT * from subitem";

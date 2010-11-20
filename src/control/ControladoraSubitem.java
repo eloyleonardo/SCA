@@ -11,8 +11,8 @@ public class ControladoraSubitem {
     private Vector<SubItem> subitens;
     private SubitemDao subitemdao;
 
-    public ControladoraSubitem() {
-        this.subitemdao = new SubitemJDBCDao();
+    public ControladoraSubitem(String servidor) {
+        this.subitemdao = new SubitemJDBCDao(servidor);
     }
 
     public Vector obterLinhasSubitem() {

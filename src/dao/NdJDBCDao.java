@@ -1,6 +1,6 @@
 package dao;
 
-import domain.*;
+import domain.Nd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,12 +9,17 @@ import java.util.Vector;
 
 public class NdJDBCDao implements NdDao {
 
-    Connection conexao = null;
+    private Connection conexao = null;
+    private String servidor;
+
+    public NdJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public Vector<Nd> obterNds() throws SQLException {
         Vector<Nd> Nds = new Vector<Nd>();
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             sql = "SELECT * from nd";

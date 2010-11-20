@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
@@ -38,21 +38,21 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="1"/>
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel3" pref="94" max="32767" attributes="1"/>
+                                  <Component id="jLabel3" pref="98" max="32767" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="pfSenha" alignment="1" pref="176" max="32767" attributes="0"/>
-                          <Component id="tfDocumento" alignment="0" pref="176" max="32767" attributes="0"/>
+                          <Component id="pfSenha" alignment="1" pref="180" max="32767" attributes="0"/>
+                          <Component id="tfDocumento" alignment="0" pref="180" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="cbCargo" alignment="1" pref="176" max="32767" attributes="1"/>
-                                  <Component id="tfNome" alignment="1" pref="176" max="32767" attributes="1"/>
-                                  <Component id="cbSetor" alignment="1" pref="176" max="32767" attributes="1"/>
-                                  <Component id="tfLogin" alignment="0" pref="176" max="32767" attributes="1"/>
+                                  <Component id="cbCargo" alignment="1" pref="180" max="32767" attributes="1"/>
+                                  <Component id="tfNome" alignment="1" pref="180" max="32767" attributes="1"/>
+                                  <Component id="cbSetor" alignment="1" pref="180" max="32767" attributes="1"/>
+                                  <Component id="tfLogin" alignment="0" pref="180" max="32767" attributes="1"/>
                               </Group>
                           </Group>
                       </Group>

@@ -15,10 +15,15 @@ import java.util.Vector;
 public class FornecedorJDBCDao implements FornecedorDao {
 
     private Connection conexao;
+    private String servidor;
+
+    public FornecedorJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
 
     public void inserirFornecedor(Fornecedor fornecedor) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO fornecedor (id_fornecedor,cod_cidade,cod_tipo_endereco,nome_fornecedor,nome_fantasia,endereco,complemento,bairro,estado,telefone1,telefone2,fax,email,cep)" + "VALUES ('" + fornecedor.getId() + "'," + fornecedor.getCidade().getCodigo() + "," + fornecedor.getTipoEndereco().getCodigo() + ",'" + fornecedor.getNome() + "','" + fornecedor.getNomeFantasia() + "','" + fornecedor.getEndereco() + "','" + fornecedor.getComplemento() + "','" + fornecedor.getBairro() + "','a','" + fornecedor.getTelefone1() + "','" + fornecedor.getTelefone2() + "','" + fornecedor.getFax() + "','" + fornecedor.getEmail() + "','" + fornecedor.getCep() + "');";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -34,7 +39,7 @@ public class FornecedorJDBCDao implements FornecedorDao {
 
     public void alterarFornecedor(Fornecedor fornecedor) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "UPDATE fornecedor SET " + "id_fornecedor     = '" + fornecedor.getId() + "'," + "cod_cidade        = " + fornecedor.getCidade().getCodigo() + "," + "cod_tipo_endereco = " + fornecedor.getTipoEndereco().getCodigo() + "," + "nome_fornecedor   = '" + fornecedor.getNome() + "'," + "nome_fantasia     = '" + fornecedor.getNomeFantasia() + "'," + "endereco          = '" + fornecedor.getEndereco() + "'," + "complemento       = '" + fornecedor.getComplemento() + "'," + "bairro            = '" + fornecedor.getBairro() + "'," + "estado            = '" + fornecedor.getStatus() + "'," + "telefone1         = '" + fornecedor.getTelefone1() + "'," + "telefone2         = '" + fornecedor.getTelefone2() + "'," + "fax               = '" + fornecedor.getFax() + "'," + "email             = '" + fornecedor.getEmail() + "'," + "cep               = '" + fornecedor.getCep() + "'" + "WHERE id_fornecedor = '" + fornecedor.getId() + "';";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -53,7 +58,7 @@ public class FornecedorJDBCDao implements FornecedorDao {
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
             String sql = "INSERT INTO log_atividade (tabela_modificada,elemento_modificado,cod_usuario,data_modificacao,motivo,acao)" + "VALUES (?,?,?,?,?,?);";
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -84,7 +89,7 @@ public class FornecedorJDBCDao implements FornecedorDao {
 
     public Vector<Fornecedor> obterFornecedores(String nome, String status) throws SQLException {
         try {
-            conexao = FabricaConexao.obterConexao("JDBC");
+            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             String sql;
             PreparedStatement ps;
             if (status.equals("Ativo")) {
