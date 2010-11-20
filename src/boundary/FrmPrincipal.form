@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
@@ -215,21 +215,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-<<<<<<< HEAD
-=======
-        <Menu class="javax.swing.JMenu" name="jMenu5">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Ajuda"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem20">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Sobre"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
->>>>>>> origin/master
         <Menu class="javax.swing.JMenu" name="jmSair">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sair"/>
@@ -257,11 +242,7 @@
     </Menu>
   </NonVisualComponents>
   <Properties>
-<<<<<<< HEAD
     <Property name="defaultCloseOperation" type="int" value="2"/>
-=======
-    <Property name="defaultCloseOperation" type="int" value="0"/>
->>>>>>> origin/master
     <Property name="title" type="java.lang.String" value="SCA - M&#xf3;dulo Principal Almoxarifado"/>
   </Properties>
   <SyntheticProperties>
@@ -320,7 +301,7 @@
                   <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton7" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="933" max="32767" attributes="0"/>
+                  <EmptySpace pref="1079" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

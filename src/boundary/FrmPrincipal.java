@@ -248,7 +248,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7)
-                .addContainerGap(933, Short.MAX_VALUE))
+                .addContainerGap(1079, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -462,6 +462,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         jmSolicitacoes.add(jMenuItem15);
 
         jMenuBar1.add(jmSolicitacoes);
+
         jmSair.setText("Sair");
 
         jmiFechar.setText("Fechar");
