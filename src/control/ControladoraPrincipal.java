@@ -15,12 +15,6 @@ public class ControladoraPrincipal {
         UIManager.put("OptionPane.okButtonText", "OK");
         UIManager.put("OptionPane.yesButtonText", "Sim");
 
-//        System.setProperty("http.proxyHost", "172.16.48.1");
-//        System.setProperty("http.proxyPort", "3128");
-//        System.setProperty("java.net.socks.username", "alunp-info7");
-//        System.setProperty("java.net.socks.password", "a12345!");
-
-
         JFrame janela = new FrmLogin();
         janela.setVisible(true);
     }

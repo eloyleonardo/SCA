@@ -17,7 +17,18 @@ public class WebServiceCep {
     private int resultado = 0;
     private String resultadoTxt = "";
 
-    public WebServiceCep(String cep) {
+    public WebServiceCep(String cep,boolean proxy) {
+        if(proxy){
+            System.setProperty("http.proxyHost", "172.16.48.1");
+            System.setProperty("http.proxyPort", "3128");
+            System.setProperty("java.net.socks.username", "aluno-info7");
+            System.setProperty("java.net.socks.password", "a12345!");
+        }else{
+            System.setProperty("http.proxyHost", "");
+            System.setProperty("http.proxyPort", "");
+            System.setProperty("java.net.socks.username", "");
+            System.setProperty("java.net.socks.password", "");
+        }
         try {
             URL url = new URL("http://cep.republicavirtual.com.br/web_cep.php?cep=" + cep + "&formato=xml");
             SAXReader leitor = new SAXReader();

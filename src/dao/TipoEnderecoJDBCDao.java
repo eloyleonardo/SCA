@@ -12,6 +12,10 @@ public class TipoEnderecoJDBCDao implements TipoEnderecoDao {
     private Connection conexao = null;
     private String servidor;
 
+    public TipoEnderecoJDBCDao(String servidor) {
+        this.servidor = servidor;
+    }
+
     @Override
     public Vector<TipoEndereco> obterTiposEndereco() throws SQLException {
         try {

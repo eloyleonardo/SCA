@@ -41,6 +41,7 @@ public class FrmSolicitarMaterial extends javax.swing.JFrame {
         this.lbData.setText("Data: " + formatarDate.format(data));
         this.lbSetor.setText("Setor: " + responsavel.get(11));
         this.setLocationRelativeTo(null);
+        this.servidor = servidor;
     }
 
     private void adicionarMap() {

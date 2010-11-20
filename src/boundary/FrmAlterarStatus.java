@@ -47,6 +47,7 @@ public class FrmAlterarStatus extends javax.swing.JDialog {
 
         taMotivo.setColumns(20);
         taMotivo.setRows(5);
+        taMotivo.setWrapStyleWord(true);
         jScrollPane1.setViewportView(taMotivo);
 
         jLabel3.setText("Motivo:");

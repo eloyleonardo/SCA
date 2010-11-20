@@ -26,6 +26,7 @@ public class FrmPrincipalUsuario extends javax.swing.JFrame {
         this.controladora = new ControladoraUsuario(servidor);
         this.preencherTabelaUsuarios();
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
 
     private void adicionarMap() {

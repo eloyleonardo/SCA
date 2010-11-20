@@ -25,6 +25,7 @@ public class FrmPrincipalFornecedor extends javax.swing.JFrame implements Window
         this.setLocationRelativeTo(null);
         this.controladora = new ControladoraFornecedor(servidor);
         this.btAtivar.setEnabled(false);
+        this.servidor = servidor;
         preencherTabela();
     }
 
