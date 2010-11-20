@@ -143,6 +143,7 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
                 btImprimirMouseClicked(evt);
             }
         });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -263,6 +264,7 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
         controladoraRelatorio.getDsm(codSaida);
         
     }//GEN-LAST:event_btImprimirMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btConfirmar;

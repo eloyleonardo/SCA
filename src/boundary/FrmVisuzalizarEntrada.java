@@ -1,5 +1,8 @@
 package boundary;
 
+
+
+
 import control.ControladoraEntradaMaterial;
 import control.ControladoraRelatorios;
 import java.awt.event.KeyEvent;
@@ -233,7 +236,7 @@ public class FrmVisuzalizarEntrada extends javax.swing.JFrame {
                                 .addComponent(jcDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btPesquisar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
