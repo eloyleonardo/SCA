@@ -462,7 +462,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         jmSolicitacoes.add(jMenuItem15);
 
         jMenuBar1.add(jmSolicitacoes);
-
         jmSair.setText("Sair");
 
         jmiFechar.setText("Fechar");

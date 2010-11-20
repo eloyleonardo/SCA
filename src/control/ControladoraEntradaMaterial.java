@@ -257,5 +257,4 @@ public class ControladoraEntradaMaterial {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
 }

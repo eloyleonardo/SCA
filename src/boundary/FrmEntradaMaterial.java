@@ -95,7 +95,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
 
     private Vector attLinha(Vector linha) {
         Vector linhaFinal = new Vector();
-        String siafi = linha.get(3).toString()+linha.get(4).toString();
+        String siafi = linha.get(4).toString() + linha.get(3).toString();
 
         linhaFinal.add(linha.get(0));
         linhaFinal.add(linha.get(1));

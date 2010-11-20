@@ -188,11 +188,9 @@ public class SolicitacaoJDBCDao implements SolicitacaoDao {
 
     public void aprovarSolicitacao(Solicitacao solicitacao) throws SQLException {
         try {
-
             Date dataUtil = new Date();
             dataUtil = new java.sql.Date(dataUtil.getTime());
             java.sql.Date dataSql = (java.sql.Date) dataUtil;
-            
             conexao = FabricaConexao.obterConexao("JDBC");
             conexao.setAutoCommit(false);
             PreparedStatement ps;

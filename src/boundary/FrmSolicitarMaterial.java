@@ -333,7 +333,6 @@ public class FrmSolicitarMaterial extends javax.swing.JFrame {
 
     private void preencherTabela() {
         Vector linhas;
-
         linhas = controladoraMaterial.obterLinhas(this.tfPesquisar.getText(),"Ativo");
         DefaultTableModel modelo = (DefaultTableModel) this.tbMateriais.getModel();
         int numLinhas = linhas.size();
