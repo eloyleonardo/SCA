@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
@@ -147,9 +147,6 @@
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jmSaida">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Sa&#xed;da"/>
-          </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem18">
               <Properties>
@@ -301,7 +298,7 @@
                   <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton7" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="1079" max="32767" attributes="0"/>
+                  <EmptySpace pref="933" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

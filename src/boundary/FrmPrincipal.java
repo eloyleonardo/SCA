@@ -694,7 +694,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
 
     private void setarPermissoes() {
         this.tirarTodasPermissoes();
-        if (usuario.get(2) != null) {
+        if (!usuario.get(2).equals("null")) {
             char[] permissoes = usuario.get(2).toString().toCharArray();
             for (int i = 0; i < permissoes.length; i++) {
                 if (permissoes[i] == 'a') {
