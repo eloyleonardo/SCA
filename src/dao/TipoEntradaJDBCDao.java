@@ -15,15 +15,15 @@ public class TipoEntradaJDBCDao implements TipoEntradaDao {
     public Vector<TipoEntrada> obterTipoEntrada() throws SQLException {
         try {
             this.conexao = FabricaConexao.obterConexao("JDBC");
-            String sql = "SELECT td.cod_tipo               AS codigo, " +
-                    "td.nome_tipo              AS nome, " +
-                    "td.sigla_tipo_documento   AS sigla_tipo_doc, " +
-                    "tdoc.nome_tipo_documento  AS tipo_doc " +
-                    "FROM tipo_dem td, " +
-                    "tipo_documento tdoc " +
-                    "WHERE td.estado               = 'A' OR " +
-//                    "td.estado               = 'a' AND " +
-                    "td.sigla_tipo_documento = tdoc.sigla_tipo_documento ORDER BY cod_tipo";
+            String sql =  "SELECT td.cod_tipo AS codigo, "+
+                             "td.nome_tipo              AS nome, "+
+                             " td.sigla_tipo_documento   AS sigla_tipo_doc, "+
+                             " tdoc.nome_tipo_documento  AS tipo_doc "+
+                             " FROM tipo_dem td, "+
+                             " tipo_documento tdoc "+
+                             " WHERE td.estado = 'A' AND "+
+                                   " td.sigla_tipo_documento = tdoc.sigla_tipo_documento "+
+                             "ORDER BY cod_tipo";
 
             PreparedStatement ps = this.conexao.prepareStatement(sql);
             ResultSet res = ps.executeQuery();

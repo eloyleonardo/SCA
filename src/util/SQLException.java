@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class SQLException extends java.sql.SQLException {
 
-    String mensagem = "Erro de acesso a banco,\n por favor contate o Suporte !";
+    String mensagem = "Erro "+this.getErrorCode()+" de acesso a banco,\n por favor contate o Suporte !";
     String titulo = "Erro";
 
     public void exibirMensagem() {

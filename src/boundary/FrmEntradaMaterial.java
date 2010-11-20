@@ -250,9 +250,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     private boolean validarData() {
         try {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            String dataTeste = formato.format(this.jcDataNota.getDate());
         } catch (Exception ex) {
-            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Você deve digitar uma Data valida(DD/MM/AAAA) para a Entrada!", "Atenção", JOptionPane.OK_OPTION);
             return false;
         }
