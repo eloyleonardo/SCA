@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DEM.jrxml" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Fri Nov 12 14:09:42 BRST 2010"/>
@@ -372,30 +372,69 @@
 		</band>
 	</pageFooter>
 	<lastPageFooter>
-		<band height="50">
+		<band height="84">
 			<line>
-				<reportElement x="1" y="33" width="251" height="1"/>
+				<reportElement x="1" y="66" width="251" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="1" y="34" width="251" height="16"/>
+				<reportElement x="1" y="67" width="251" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Servidor Responsável]]></text>
 			</staticText>
 			<line>
-				<reportElement x="288" y="32" width="251" height="1"/>
+				<reportElement x="288" y="67" width="251" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="381" y="33" width="77" height="16"/>
-				<textElement>
+				<reportElement x="288" y="68" width="251" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Responsável]]></text>
 			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="553" height="25" forecolor="#D0B48E" backcolor="#7FC41C"/>
+				<textField evaluationTime="Report">
+					<reportElement x="504" y="0" width="45" height="23" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["   DE   " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="431" y="0" width="73" height="23" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["PÁGINA   "+$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="152" y="2" width="197" height="22" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="1" width="72" height="24" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[GERADO POR   ]]></text>
+				</staticText>
+				<image>
+					<reportElement x="74" y="2" width="54" height="23"/>
+					<imageExpression class="java.lang.String"><![CDATA["..\\Img\\sca.jpg"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="129" y="2" width="23" height="22" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[EM]]></text>
+				</staticText>
+			</frame>
 		</band>
 	</lastPageFooter>
-	<summary>
-		<band/>
-	</summary>
 </jasperReport>
