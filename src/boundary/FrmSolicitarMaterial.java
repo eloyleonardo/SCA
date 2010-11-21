@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -26,11 +27,12 @@ public class FrmSolicitarMaterial extends javax.swing.JFrame {
     private ControladoraSetor controladoraSetor;
 
     public FrmSolicitarMaterial(Vector usuario, String servidor) {
+        initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         controladoraSolicitacao = new ControladoraSolicitacao(servidor);
         controladoraSetor = new ControladoraSetor(servidor);
         this.responsavel = usuario;
         SimpleDateFormat formatarDate = new SimpleDateFormat("yyyy-MM-dd");
-        initComponents();
         this.adicionarMap();
         controladoraMaterial = new ControladoraMaterial(servidor);
         this.setVisible(true);

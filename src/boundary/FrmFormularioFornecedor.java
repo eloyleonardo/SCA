@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -22,8 +23,9 @@ public abstract class FrmFormularioFornecedor extends javax.swing.JDialog {
     private Vector cidades = new Vector();
 
     public FrmFormularioFornecedor(String servidor) {
-        controladora = new ControladoraFornecedor(servidor);
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
+        controladora = new ControladoraFornecedor(servidor);
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         this.setModal(true);
         this.adicionarMap();
@@ -157,7 +159,7 @@ public abstract class FrmFormularioFornecedor extends javax.swing.JDialog {
             cep += txt.substring(3, 6);
             cep += txt.substring(7, 10);
 
-            WebServiceCep cepWebService = new WebServiceCep(cep,cbProxy.isSelected());
+            WebServiceCep cepWebService = new WebServiceCep(cep, cbProxy.isSelected());
 
             if (cepWebService.getResultado() == 1) {
                 this.tfBairro.setText(cepWebService.getBairro());

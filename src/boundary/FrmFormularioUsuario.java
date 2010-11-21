@@ -6,6 +6,7 @@ import control.ControladoraUsuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -19,6 +20,7 @@ public abstract class FrmFormularioUsuario extends JDialog implements ActionList
 
     public FrmFormularioUsuario(String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.adicionarMap();
         this.controladora = new ControladoraUsuario(servidor);
         this.controladoraCargo = new ControladoraCargo(servidor);

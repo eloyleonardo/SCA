@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -36,6 +37,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
 
     public FrmEntradaMaterial(Vector usuario,String servidor) {
         super();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.usuario = usuario;
         initComponents();
         Vector controle;

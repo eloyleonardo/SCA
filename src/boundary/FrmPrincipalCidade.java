@@ -3,6 +3,7 @@ package boundary;
 import control.ControladoraCidade;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ public class FrmPrincipalCidade extends javax.swing.JFrame {
 
     public FrmPrincipalCidade(Vector usuario, String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.servidor = servidor;
         this.controladora = new ControladoraCidade(servidor);
         this.setLocationRelativeTo(null);
@@ -206,7 +208,7 @@ public class FrmPrincipalCidade extends javax.swing.JFrame {
 }//GEN-LAST:event_cbStatusItemStateChanged
 
     private void btInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirActionPerformed
-        JDialog janela = new FrmInserirCidade(controladora,servidor);
+        JDialog janela = new FrmInserirCidade(controladora, servidor);
         janela.setModal(true);
         janela.setVisible(true);
         if (cbStatus.getSelectedItem().equals("Ativo")) {
@@ -220,7 +222,7 @@ public class FrmPrincipalCidade extends javax.swing.JFrame {
         if (linhaSelecionada < 0) {
             JOptionPane.showMessageDialog(null, "Você deve selecionar uma Uf !", "Atenção", JOptionPane.WARNING_MESSAGE);
         } else {
-            JDialog janela = new FrmAlterarCidade(controladora, criarLinhaSelecao(), cbStatus.getSelectedItem().toString(),servidor);
+            JDialog janela = new FrmAlterarCidade(controladora, criarLinhaSelecao(), cbStatus.getSelectedItem().toString(), servidor);
             janela.setModal(true);
             janela.setVisible(true);
             limparTabela();

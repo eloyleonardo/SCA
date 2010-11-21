@@ -3,6 +3,7 @@ package boundary;
 import control.ControladoraUnidade;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,6 +18,7 @@ public class FrmPrincipalUnidade extends javax.swing.JFrame {
 
     public FrmPrincipalUnidade(Vector responsavel, String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         controladora = new ControladoraUnidade(servidor);
         this.setLocationRelativeTo(null);
         preencherTabela();

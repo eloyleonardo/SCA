@@ -18,7 +18,7 @@ public class FrmLogin extends javax.swing.JFrame {
         initComponents();
         this.tfServidor.setText(lerArquivo());
         this.setLocationRelativeTo(null);
-        this.setIconImage(new ImageIcon("C:/Users/Adm/Desktop/SCA-Logo CDR13.png").getImage());
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
     }
 
     private String lerArquivo() {

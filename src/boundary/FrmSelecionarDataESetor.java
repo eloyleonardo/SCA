@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -22,6 +23,7 @@ public class FrmSelecionarDataESetor extends javax.swing.JDialog {
 
     public FrmSelecionarDataESetor(String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.setLocationRelativeTo(null);
         this.adicionarMap();
         this.setModal(true);

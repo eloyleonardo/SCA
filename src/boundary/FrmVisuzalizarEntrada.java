@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -19,6 +20,7 @@ public class FrmVisuzalizarEntrada extends javax.swing.JFrame {
 
     public FrmVisuzalizarEntrada(String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.controladoraEntrada = new ControladoraEntradaMaterial(servidor);
         this.controladoraRelatorio = new ControladoraRelatorios(servidor);
         this.setLocationRelativeTo(null);

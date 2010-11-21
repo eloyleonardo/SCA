@@ -5,6 +5,7 @@ import control.ControladoraNd;
 import control.ControladoraSubitem;
 import control.ControladoraUnidade;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import util.ActionFechar;
@@ -18,6 +19,7 @@ public class FrmFormularioMaterial extends javax.swing.JDialog {
 
     public FrmFormularioMaterial(String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         controladoraUnidade = new ControladoraUnidade(servidor);
         controladoraSubitem = new ControladoraSubitem(servidor);
         controladoraNd = new ControladoraNd(servidor);

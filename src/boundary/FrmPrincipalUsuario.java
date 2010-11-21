@@ -4,6 +4,7 @@ import control.ControladoraUsuario;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,6 +20,7 @@ public class FrmPrincipalUsuario extends javax.swing.JFrame {
 
     public FrmPrincipalUsuario(Vector usuario, String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.servidor = servidor;
         this.adicionarMap();
         this.usuario = usuario;

@@ -8,6 +8,7 @@ import control.ControladoraTipoSaida;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -25,8 +26,9 @@ public class FrmSaidaMaterialOutros extends javax.swing.JFrame {
     private Vector linhasTipoSaida = new Vector();
 
     public FrmSaidaMaterialOutros(Vector usuario, String servidor) {
-        this.usuario = usuario;
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
+        this.usuario = usuario;
         controladoraSaida = new ControladoraSaida(servidor);
         controladoraMaterial = new ControladoraMaterial(servidor);
         controladoraTipoSaida = new ControladoraTipoSaida(servidor);

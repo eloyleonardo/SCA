@@ -3,6 +3,7 @@ package boundary;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -15,6 +16,7 @@ public class FrmSaidaPrincipal extends javax.swing.JFrame {
 
     public FrmSaidaPrincipal(Vector usuario, String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.servidor = servidor;
         this.usuario = usuario;
         this.adicionarMap();

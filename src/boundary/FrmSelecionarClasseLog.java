@@ -3,6 +3,7 @@ package boundary;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import util.ActionFechar;
@@ -16,6 +17,7 @@ public class FrmSelecionarClasseLog extends javax.swing.JDialog {
 
     public FrmSelecionarClasseLog() {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.setLocationRelativeTo(null);
         this.adicionarMap();
         this.setModal(true);

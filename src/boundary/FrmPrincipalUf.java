@@ -4,6 +4,7 @@ import control.ControladoraClasse;
 import control.ControladoraUf;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ public class FrmPrincipalUf extends javax.swing.JFrame {
 
     public FrmPrincipalUf(Vector responsavel,String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         controladora = new ControladoraUf(servidor);
         this.setLocationRelativeTo(null);
         preencherTabela();

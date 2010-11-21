@@ -5,6 +5,7 @@ import control.ControladoraMaterial;
 
 import java.awt.event.KeyEvent;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,9 +20,10 @@ public class FrmPrincipalMaterial extends javax.swing.JFrame {
     private String servidor;
 
     public FrmPrincipalMaterial(Vector usuario, String servidor) {
+        initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         controladora = new ControladoraMaterial(servidor);
         this.servidor = servidor;
-        initComponents();
         preencherTabela();
         this.responsavel = usuario;
         this.btAtivarMat.setEnabled(false);

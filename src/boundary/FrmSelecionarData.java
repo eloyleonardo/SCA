@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -18,6 +19,7 @@ public class FrmSelecionarData extends javax.swing.JDialog {
 
     public FrmSelecionarData() {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.adicionarMap();
         this.setLocationRelativeTo(null);
         this.setModal(true);

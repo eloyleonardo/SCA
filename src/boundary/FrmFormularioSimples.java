@@ -2,6 +2,7 @@ package boundary;
 
 import control.ControladoraClasse;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import util.ActionFechar;
@@ -12,6 +13,7 @@ public abstract class FrmFormularioSimples extends javax.swing.JDialog {
 
     public FrmFormularioSimples() {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.setLocationRelativeTo(null);
         adicionarMap();
 

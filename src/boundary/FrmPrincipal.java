@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import util.ObterDadosEvent;
@@ -22,6 +23,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
 
     public FrmPrincipal(Vector usuario, String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.servidor = servidor;
         this.usuario = usuario;
         this.setarPermissoes();

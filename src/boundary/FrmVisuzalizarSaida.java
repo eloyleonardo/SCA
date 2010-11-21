@@ -5,6 +5,7 @@ import control.ControladoraRelatorios;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -18,9 +19,11 @@ public class FrmVisuzalizarSaida extends javax.swing.JFrame {
 
     public FrmVisuzalizarSaida(String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.controladoraSaida = new ControladoraSaida(servidor);
         this.controladoraRelatorio = new ControladoraRelatorios(servidor);
         adicionarMap();
+        this.setLocationRelativeTo(null);
     }
 
     private void preencherTabelaMaterial() {

@@ -7,6 +7,7 @@ import util.ActionFechar;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -20,6 +21,7 @@ public class FrmEstoqueAbaixoMinimo extends javax.swing.JFrame {
 
     public FrmEstoqueAbaixoMinimo(String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.controladoraMaterial = new ControladoraMaterial(servidor);
         preencherTabela();
         this.tbMateriais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

@@ -4,6 +4,7 @@ import control.ControladoraClasse;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import util.ActionFechar;
@@ -14,6 +15,7 @@ public class FrmAlterarStatus extends javax.swing.JDialog {
 
     public FrmAlterarStatus() {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.setLocationRelativeTo(null);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         lbData.setText("Data: " + sdf.format(new Date()));

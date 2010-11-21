@@ -7,6 +7,7 @@ import control.ControladoraSolicitacao;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -26,6 +27,7 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
 
     public FrmSaidaMaterial(Vector usuario, String servidor) throws SQLException {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         controladoraSaida = new ControladoraSaida(servidor);
         controladoraSetor = new ControladoraSetor(servidor);
         controladora = new ControladoraSolicitacao(servidor);

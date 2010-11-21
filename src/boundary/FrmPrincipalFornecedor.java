@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,6 +21,7 @@ public class FrmPrincipalFornecedor extends javax.swing.JFrame implements Window
 
     public FrmPrincipalFornecedor(Vector responsavel, String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.adicionarMap();
         this.responsavel = responsavel;
         this.setLocationRelativeTo(null);

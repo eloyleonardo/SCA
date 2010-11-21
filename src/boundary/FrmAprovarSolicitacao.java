@@ -3,6 +3,7 @@ package boundary;
 import control.ControladoraSolicitacao;
 import java.awt.Cursor;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -13,8 +14,9 @@ public class FrmAprovarSolicitacao extends javax.swing.JFrame {
     ControladoraSolicitacao controladora;
     Vector usuario;
 
-    public FrmAprovarSolicitacao(Vector usuario,String servidor) {
+    public FrmAprovarSolicitacao(Vector usuario, String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         controladora = new ControladoraSolicitacao(servidor);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -198,7 +200,13 @@ public class FrmAprovarSolicitacao extends javax.swing.JFrame {
         DefaultTableModel dtIs = (DefaultTableModel) this.tbItensSolicitacao.getModel();
         Vector qnt = new Vector();
         for (int i = 0; i < dtIs.getRowCount(); i++) {
-            qnt.add(dtIs.getValueAt(i, 5));
+            if(Double.valueOf(dtIs.getValueAt(i, 5).toString())>Double.valueOf(dtIs.getValueAt(i, 4).toString())){
+                this.setCursor(Cursor.getDefaultCursor());
+                JOptionPane.showMessageDialog(null, "O você esta aprovando uma quantidade maior do que a requisitada para o material "+dtIs.getValueAt(i, 2).toString()+"!","Erro",JOptionPane.ERROR_MESSAGE);
+                return;
+            }else{
+                qnt.add(dtIs.getValueAt(i, 5));
+            }
         }
         if (controladora.aprovarSolicitacao(linha, qnt)) {
             JOptionPane.showMessageDialog(null, "Solicitação Aprovada com sucesso !", "Sucesso", JOptionPane.INFORMATION_MESSAGE);

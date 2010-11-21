@@ -5,6 +5,7 @@ import control.ControladoraCidade;
 import control.ControladoraClasse;
 import control.ControladoraUf;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import util.ActionFechar;
@@ -16,6 +17,7 @@ public abstract class FrmFormularioCidade extends javax.swing.JDialog {
 
     public FrmFormularioCidade(String servidor) {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.setLocationRelativeTo(null);
         adicionarMap();
         this.controladora = new ControladoraCidade(servidor);
