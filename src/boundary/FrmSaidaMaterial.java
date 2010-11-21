@@ -7,6 +7,8 @@ import control.ControladoraSolicitacao;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,7 +27,7 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
     private int req;
     private Vector usuario;
 
-    public FrmSaidaMaterial(Vector usuario, String servidor) throws SQLException {
+    public FrmSaidaMaterial(Vector usuario, String servidor) {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         controladoraSaida = new ControladoraSaida(servidor);
@@ -230,10 +232,7 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
             limparTabelaSolicitacoes();
             this.btImprimir.setEnabled(true);
             this.cbSetor.setSelectedIndex(0);
-            try {
-                preencherTabela("");
-            } catch (SQLException ex) {
-            }
+            preencherTabela("");
         }
     }//GEN-LAST:event_btConfirmarActionPerformed
 
@@ -247,11 +246,7 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
                 nome = cbSetor.getSelectedItem().toString();
             }
         }
-        try {
-            preencherTabela(nome);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        preencherTabela(nome);
     }//GEN-LAST:event_cbSetorItemStateChanged
 
     private void btCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCancelarMouseClicked
@@ -277,36 +272,49 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
     private javax.swing.JTable jtSolicitacao;
     // End of variables declaration//GEN-END:variables
 
-    private void preencherTabela(String nome) throws SQLException {
+    private void preencherTabela(String nome) {
         limparTabelaSolicitacoes();
-        Vector linhas;
+        Vector linhas = null;
         int i;
-        linhas = controladora.obterSolicitacoesAprovadas(nome);
+        try {
+            linhas = controladora.obterSolicitacoesAprovadas(nome);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao obter as solicitações!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
         DefaultTableModel modelo = (DefaultTableModel) this.jtSolicitacao.getModel();
         int numLinhas = linhas.size();
-        for (i = 0; i < numLinhas; i++) {
+        for (i = 0; i <
+                numLinhas; i++) {
             Vector linha = new Vector();
             Vector v;
-            v = (Vector) linhas.get(i);
+
+            v =
+                    (Vector) linhas.get(i);
             linha.add((v.get(0)));
             linha.add((v.get(3)));
             linha.add((v.get(2)));
             linha.add((v.get(4)));
             modelo.insertRow(modelo.getRowCount(), linha);
         }
+
     }
 
     private void preencherTabelaMateriais() throws SQLException {
         limparTabelaMateriais();
         int i;
         Vector linhas;
+
         DefaultTableModel modelo2 = (DefaultTableModel) this.jtSaida.getModel();
         DefaultTableModel modelo = (DefaultTableModel) this.jtSolicitacao.getModel();
         int numReq = Integer.parseInt(this.jtSolicitacao.getModel().getValueAt(this.jtSolicitacao.getSelectedRow(), 0).toString());
-        req = Integer.parseInt(this.jtSolicitacao.getModel().getValueAt(this.jtSolicitacao.getSelectedRow(), 0).toString());
-        linhas = controladora.obterMateriaisPorSolicitacao(numReq);
+        req =
+                Integer.parseInt(this.jtSolicitacao.getModel().getValueAt(this.jtSolicitacao.getSelectedRow(), 0).toString());
+        linhas =
+                controladora.obterMateriaisPorSolicitacao(numReq);
         int numLinhas = linhas.size();
-        for (i = 0; i < numLinhas; i++) {
+        for (i = 0; i <
+                numLinhas; i++) {
             Vector linhaTabela = new Vector();
             linhaTabela.add(modelo2.getRowCount() + 1);
             linhaTabela.add(((Vector) linhas.get(i)).get(0));
@@ -316,22 +324,26 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
             linhaTabela.add(((Vector) linhas.get(i)).get(4));
             modelo2.insertRow(modelo2.getRowCount(), (Vector) linhaTabela);
         }
+
     }
 
     private void limparTabelaMateriais() {
         int i;
         DefaultTableModel modelo = (DefaultTableModel) this.jtSaida.getModel();
         int numLinhas = jtSaida.getRowCount();
-        for (i = 0; i < numLinhas; i++) {
+        for (i = 0; i <
+                numLinhas; i++) {
             modelo.removeRow(0);
         }
+
     }
 
     private void limparTabelaSolicitacoes() {
         int i;
         DefaultTableModel modelo = (DefaultTableModel) this.jtSolicitacao.getModel();
         int numLinhas = jtSolicitacao.getRowCount();
-        for (i = 0; i < numLinhas; i++) {
+        for (i = 0; i <
+                numLinhas; i++) {
             modelo.removeRow(0);
         }
     }

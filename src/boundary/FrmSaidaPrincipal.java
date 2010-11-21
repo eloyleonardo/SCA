@@ -142,12 +142,9 @@ public class FrmSaidaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSolicitacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSolicitacaoActionPerformed
-        try {
-            JFrame janela = new FrmSaidaMaterial(usuario, servidor);
-            janela.setVisible(true);
-            this.dispose();
-        } catch (SQLException ex) {
-        }
+        JFrame janela = new FrmSaidaMaterial(usuario, servidor);
+        janela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btSolicitacaoActionPerformed
 
     private void btOutrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOutrosActionPerformed
