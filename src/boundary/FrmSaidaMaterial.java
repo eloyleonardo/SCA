@@ -92,14 +92,14 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Item", "Código", "Descrição", "Qnt. Estoque", "Estoque Minimo", "Qnt. Entregue"
+                "Nº do item", "Código Material", "Descrição Material", "Quant. aprovada", "Qnt. Em Estoque", "Estoque Minimo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -111,8 +111,6 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jtSaida);
-        jtSaida.getColumnModel().getColumn(0).setMinWidth(50);
-        jtSaida.getColumnModel().getColumn(0).setMaxWidth(50);
 
         btExibir.setText("Exibir Itens da Solicitação");
         btExibir.addActionListener(new java.awt.event.ActionListener() {
