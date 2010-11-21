@@ -166,6 +166,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         jmSolicitacoes = new javax.swing.JMenu();
         jmiAprovarSolicitacao = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jmSair = new javax.swing.JMenu();
         jmiFechar = new javax.swing.JMenuItem();
         jmiSair = new javax.swing.JMenuItem();
@@ -251,7 +253,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7)
-                .addContainerGap(1079, Short.MAX_VALUE))
+                .addContainerGap(933, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,8 +408,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
 
         jMenuBar1.add(jmEntrada);
 
-        jmSaida.setText("Saída");
-
         jMenuItem18.setText("Realizar");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -465,6 +465,18 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         jmSolicitacoes.add(jMenuItem15);
 
         jMenuBar1.add(jmSolicitacoes);
+
+        jMenu2.setText("Ajuda");
+
+        jMenuItem5.setText("Sobre");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu2);
 
         jmSair.setText("Sair");
 
@@ -636,6 +648,12 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
         j.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        JFrame j = new FrmAbout();
+        j.addWindowListener(this);
+        j.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBoletim;
     private javax.swing.JButton btCadastrarFornecedor;
@@ -646,6 +664,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem11;
@@ -659,6 +678,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
