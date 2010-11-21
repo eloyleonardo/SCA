@@ -40,6 +40,23 @@ public class FrmLogin extends javax.swing.JFrame {
         }
     }
 
+    private void logar() {
+        this.tfLogin.setText("almoxarife");
+//        this.tfLogin.setText("verson");
+        this.tfSenha.setText("1234");
+        String servidor = this.tfServidor.getText();
+        gravarDados();
+        this.controladora = new ControladoraUsuario(servidor);
+        Vector usuario = this.controladora.logar(this.tfLogin.getText(), new String(this.tfSenha.getPassword()));
+        if (usuario.size() == 13 && (!usuario.get(0).equals("0"))) {
+            JFrame janela = new FrmPrincipal(usuario, servidor);
+            this.dispose();
+            janela.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos !", "Erro ao Logar", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     @SuppressWarnings("unchecked")
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -62,6 +79,12 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jLabel2.setText("Senha:");
 
+        tfSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfSenhaActionPerformed(evt);
+            }
+        });
+
         btEntrar.setText("Entrar");
         btEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -79,6 +102,11 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setText("Servidor:");
 
         tfServidor.setToolTipText("<html>Indique o servidor de banco de dados,<br/> deixe vazio para usar a máquina local !</html>");
+        tfServidor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfServidorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,25 +157,21 @@ public class FrmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btEntrarMouseClicked
-        this.tfLogin.setText("almoxarife");
-//        this.tfLogin.setText("verson");
-        this.tfSenha.setText("1234");
-        String servidor = this.tfServidor.getText();
-        gravarDados();
-        this.controladora = new ControladoraUsuario(servidor);
-        Vector usuario = this.controladora.logar(this.tfLogin.getText(), new String(this.tfSenha.getPassword()));
-        if (usuario.size() == 13 && (!usuario.get(0).equals("0"))) {
-            JFrame janela = new FrmPrincipal(usuario, servidor);
-            this.dispose();
-            janela.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos !", "Erro ao Logar", JOptionPane.ERROR_MESSAGE);
-        }
+        this.logar();
 }//GEN-LAST:event_btEntrarMouseClicked
 
     private void btSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSairMouseClicked
         System.exit(0);
     }//GEN-LAST:event_btSairMouseClicked
+
+    private void tfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSenhaActionPerformed
+        logar();
+    }//GEN-LAST:event_tfSenhaActionPerformed
+
+    private void tfServidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfServidorActionPerformed
+        this.logar();
+    }//GEN-LAST:event_tfServidorActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEntrar;
     private javax.swing.JButton btSair;

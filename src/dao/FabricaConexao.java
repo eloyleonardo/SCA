@@ -18,7 +18,7 @@ public class FabricaConexao {
                 } catch (ClassNotFoundException e) {
                     JOptionPane.showMessageDialog(null, "Driver JDBC-ODBC não encontrado");
                 }
-                Connection conexao = DriverManager.getConnection("jdbc:postgresql://"+servidor+":5432/sca", "postgres", "Postgre2010");
+                Connection conexao = DriverManager.getConnection("jdbc:postgresql://"+servidor+":5432/sca", "sca", "Postgre2010");
                 return conexao;
             } else {
                 return null;

@@ -92,6 +92,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="tfSenha">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfSenhaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btEntrar">
       <Properties>
@@ -118,6 +121,9 @@
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Indique o servidor de banco de dados,&lt;br/&gt; deixe vazio para usar a m&#xe1;quina local !&lt;/html&gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfServidorActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
