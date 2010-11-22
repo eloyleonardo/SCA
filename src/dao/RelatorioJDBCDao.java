@@ -26,7 +26,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
     }
 
     private String getLocal() {
-        return System.getProperty("user.dir") + "/report/";
+        return System.getProperty("user.dir") + "/SCA/report/";
     }
 
     public void getBoletim(Date dataInicio, Date dataFim) throws SQLException, JRException {

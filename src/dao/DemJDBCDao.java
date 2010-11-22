@@ -39,8 +39,12 @@ public class DemJDBCDao implements DemDao {
             ps.executeUpdate();
 
             int codigo = demm.getCodigo() + 1;
-            sql = "INSERT INTO dem(codigo_dem,cod_usuario,id_documento,id_fornecedor,cod_tipo,numero_ne,data_dem,valor_nota)" + "VALUES(" + codigo + ",'" + dem.getReponsavel().getCodigo() + "','" + dem.getNumNota() + "'," + dem.getFornecedor().getId() + "," + dem.getTipoEntrada().getCodigo() + "," + dem.getNumNE() + ",now()," + dem.getValorNota() + ")";
-
+            if(dem.getNumNE().equals("")){
+                sql = "INSERT INTO dem(codigo_dem,cod_usuario,id_documento,id_fornecedor,cod_tipo,data_dem,valor_nota)" + "VALUES(" + codigo + ",'" + dem.getReponsavel().getCodigo() + "','" + dem.getNumNota() + "'," + dem.getFornecedor().getId() + "," + dem.getTipoEntrada().getCodigo() + ",now()," + dem.getValorNota() + ")";
+            }
+            else{
+                sql = "INSERT INTO dem(codigo_dem,cod_usuario,id_documento,id_fornecedor,cod_tipo,numero_ne,data_dem,valor_nota)" + "VALUES(" + codigo + ",'" + dem.getReponsavel().getCodigo() + "','" + dem.getNumNota() + "'," + dem.getFornecedor().getId() + "," + dem.getTipoEntrada().getCodigo() + "," + dem.getNumNE() + ",now()," + dem.getValorNota() + ")";
+            }
             ps = conexao2.prepareStatement(sql);
             ps.executeUpdate();
 

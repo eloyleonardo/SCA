@@ -41,9 +41,9 @@ public class FrmLogin extends javax.swing.JFrame {
     }
 
     private void logar() {
-        this.tfLogin.setText("almoxarife");
+//        this.tfLogin.setText("almoxarife");
 //        this.tfLogin.setText("verson");
-        this.tfSenha.setText("1234");
+//        this.tfSenha.setText("1234");
         String servidor = this.tfServidor.getText();
         gravarDados();
         this.controladora = new ControladoraUsuario(servidor);

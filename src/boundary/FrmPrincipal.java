@@ -745,7 +745,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
                     this.btRmm.setEnabled(true);
                 }
             }
-        } else if (Boolean.parseBoolean(usuario.get(9).toString())) {
+        }
+        if (Boolean.parseBoolean(usuario.get(9).toString())) {
             this.jmiAprovarSolicitacao.setEnabled(true);
         }
     }

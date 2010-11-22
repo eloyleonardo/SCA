@@ -35,7 +35,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     private int codigo_Entrada;
     private int itemEntrada;
 
-    public FrmEntradaMaterial(Vector usuario,String servidor) {
+    public FrmEntradaMaterial(Vector usuario, String servidor) {
         super();
         this.setIconImage(new ImageIcon(getClass().getResource("/img/SCA-Logo_4.png")).getImage());
         this.usuario = usuario;
@@ -149,6 +149,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
             this.entrada.add(this.data.format(this.jcDataNota.getDate()));
             this.entrada.add(this.tfValorNota.getText().toString());
             this.entrada.add(this.tfNumeroEmpenho.getText().toString());
+
             this.entrada.add(Integer.parseInt(this.usuario.get(0).toString()));
 
             this.entrada.add(tipoAtual.get(3));
@@ -213,7 +214,15 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     }
 
     private boolean validarCampos() {
-        if (validarNota() && validarData() && validarValorNota() && validarNotaEmpenho() && validarTabela() && validarDataTabela()) {
+
+        if (validarNota() && validarData() && validarValorNota() && validarTabela() && validarDataTabela()) {
+            if(this.cbTipoDem.getSelectedItem().toString().equals("Aquisição")){
+                if (validarNotaEmpenho()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
             return true;
         } else {
             return false;
@@ -221,7 +230,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
     }
 
     private boolean validarNota() {
-        if (!(this.tfNumeroNota.getText().equals("")) && (!this.cbTipoDem.getSelectedItem().equals("Doação"))) {
+        if (!(this.tfNumeroNota.getText().equals(""))) {
             return true;
         } else {
             Vector nomeDoc = (Vector) this.tiposEntrada.get(this.cbTipoDem.getSelectedIndex());
@@ -268,7 +277,7 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
             try {
                 String[] data = linhaAtual.get(4).toString().split("/");
 
-                dataLinha = new Date(data[2]+"/"+data[1]+"/"+data[0]);
+                dataLinha = new Date(data[2] + "/" + data[1] + "/" + data[0]);
                 if (dataAtual.after(dataLinha)) {
                     JOptionPane.showMessageDialog(null, "Digite uma Data que seja após o dia de hoje para o material: " + linhaAtual.get(1) + "!", "Atenção", JOptionPane.OK_OPTION);
                     return false;
@@ -698,6 +707,11 @@ public class FrmEntradaMaterial extends javax.swing.JFrame {
         this.lbNumeroDoc.setText("Número da " + nomeDoc.get(2) + " :");
         this.lbValorDoc.setText("Valor total da " + nomeDoc.get(2) + " R$:");
         this.lbDataDoc.setText("Data da " + nomeDoc.get(2) + " :");
+        this.tfNumeroEmpenho.setEditable(false);
+        if(this.cbTipoDem.getSelectedItem().toString().equals("Aquisição")){
+            this.tfNumeroEmpenho.setEditable(true);
+        }
+
     }//GEN-LAST:event_cbTipoDemItemStateChanged
 
     private void tfValorNotaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfValorNotaFocusLost
