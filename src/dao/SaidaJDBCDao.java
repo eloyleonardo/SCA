@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Vector;
-import javax.swing.JOptionPane;
 
 public class SaidaJDBCDao implements SaidaDao {
 
@@ -38,7 +37,7 @@ public class SaidaJDBCDao implements SaidaDao {
         } catch (SQLException ex) {
             conexao.rollback();
             conexao.close();
-            throw new SQLException(ex.getCause());
+            throw new SQLException();
         }
     }
 
@@ -59,84 +58,83 @@ public class SaidaJDBCDao implements SaidaDao {
         return num;
     }
 
-    public void registrarSaida(Saida saida, int numLinhas) throws SQLException {
+    public void registrarSaida(Saida saida) throws SQLException {
         MaterialDao materialDao = new MaterialJDBCDao(this.servidor);
-        String qntAtendida = saida.getQuantidadeAtendida().toString().substring(1, saida.getQuantidadeAtendida().toString().length() - 1);
-        double soma = 0;
         int n = 0;
         conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
         String sql;
         PreparedStatement ps;
-        Vector linhaRecebida = materialDao.carregarLotesMaterial(saida.getMaterial().get(0).getCodigo());
-        boolean saidaOk = false;
-        while (saidaOk == false) {
-            if (soma + Integer.parseInt(((Vector) linhaRecebida.get(n)).get(1).toString()) >= saida.getQuantidadeAtendida().get(0)) {
-                try {
-                    sql = "INSERT INTO saida_material(cod_dsm,cod_lote,qnt_saida,data_saida) " +
-                            "VALUES (?,?,?,?)";
-                    conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
-                    conexao.setAutoCommit(false);
-                    ps = conexao.prepareStatement(sql);
-                    ps.setInt(1, saida.getCodigo());
-                    ps.setInt(2, Integer.parseInt(((Vector) linhaRecebida.get(n)).get(0).toString()));
-                    ps.setDouble(3, saida.getQuantidadeAtendida().get(0) - soma);
-                    Date dataUtil = new Date();
-                    java.sql.Date data = new java.sql.Date(dataUtil.getTime());
-                    ps.setDate(4, data);
-                    ps.executeUpdate();
-                    conexao.commit();
-                    soma = soma + (saida.getQuantidadeAtendida().get(0) - soma);
-                    materialDao.alterarEstoqueMaterial(saida.getMaterial().get(0).getCodigo(), saida.getQuantidadeAtendida().get(0));
-                    if (saida.getMaterial().get(0).getEstoqueAtual() - saida.getQuantidadeAtendida().get(0) < saida.getMaterial().get(0).getQntMinima()) {
-                        materialDao.MaterialAbaixo(saida.getMaterial().get(0).getCodigo());
-                    }
-                    if (numLinhas == 1) {
+        for (int i = 0; i < saida.getMaterial().size(); i++) {
+            double soma = 0;
+            String qntAtendida = saida.getQuantidadeAtendida().get(i).toString();
+            Vector linhaRecebida = materialDao.carregarLotesMaterial(saida.getMaterial().get(i).getCodigo());
+            boolean saidaOk = false;
+            while (saidaOk == false) {
+                if (soma + Integer.parseInt(((Vector) linhaRecebida.get(n)).get(1).toString()) >= saida.getQuantidadeAtendida().get(i)) {
+                    try {
+                        sql = "INSERT INTO saida_material(cod_dsm,cod_lote,qnt_saida,data_saida) " +
+                                "VALUES (?,?,?,?)";
+                        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
+                        conexao.setAutoCommit(false);
+                        ps = conexao.prepareStatement(sql);
+                        ps.setInt(1, saida.getCodigo());
+                        ps.setInt(2, Integer.parseInt(((Vector) linhaRecebida.get(n)).get(0).toString()));
+                        ps.setDouble(3, saida.getQuantidadeAtendida().get(i) - soma);
+                        Date dataUtil = new Date();
+                        java.sql.Date data = new java.sql.Date(dataUtil.getTime());
+                        ps.setDate(4, data);
+                        ps.executeUpdate();
+                        conexao.commit();
+                        soma = soma + (saida.getQuantidadeAtendida().get(i) - soma);
+                        materialDao.alterarEstoqueMaterial(saida.getMaterial().get(i).getCodigo(), saida.getQuantidadeAtendida().get(i));
+                        if (saida.getMaterial().get(i).getEstoqueAtual() - saida.getQuantidadeAtendida().get(i) < saida.getMaterial().get(i).getQntMinima()) {
+                            materialDao.MaterialAbaixo(saida.getMaterial().get(i).getCodigo());
+                        }
                         sql = "UPDATE solicitacao SET estado = 'sa' WHERE cod_solicitacao = " + saida.getRequisicao().getCodigo();
                         ps = conexao.prepareStatement(sql);
                         ps.executeUpdate();
                         conexao.commit();
                         conexao.close();
+                    } catch (SQLException ex) {
+                        throw new SQLException(ex.getCause());
                     }
-                    JOptionPane.showMessageDialog(null, "Saída Registrada!!", "Saída Registrada!!", JOptionPane.INFORMATION_MESSAGE);
-                } catch (SQLException ex) {
-                    throw new SQLException(ex.getCause());
+                    saidaOk = true;
+                } else {
+                    try {
+                        sql = "INSERT INTO saida_material(cod_dsm,cod_lote,qnt_saida,data_saida) " +
+                                "VALUES (?,?,?,?)";
+                        conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
+                        conexao.setAutoCommit(false);
+                        ps = conexao.prepareStatement(sql);
+                        ps.setInt(1, saida.getCodigo());
+                        ps.setInt(2, Integer.parseInt(((Vector) linhaRecebida.get(n)).get(0).toString()));
+                        ps.setDouble(3, Double.parseDouble(((Vector) linhaRecebida.get(n)).get(1).toString()));
+                        Date dataUtil = new Date();
+                        java.sql.Date data = new java.sql.Date(dataUtil.getTime());
+                        ps.setDate(4, data);
+                        ps.executeUpdate();
+                        conexao.commit();
+                        conexao.close();
+                        soma = soma + Double.parseDouble(((Vector) linhaRecebida.get(n)).get(1).toString());
+                    } catch (SQLException ex) {
+                        throw new SQLException(ex.getCause());
+                    }
+                    n++;
                 }
-                saidaOk = true;
-            } else {
-                try {
-                    sql = "INSERT INTO saida_material(cod_dsm,cod_lote,qnt_saida,data_saida) " +
-                            "VALUES (?,?,?,?)";
-                    conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
-                    conexao.setAutoCommit(false);
-                    ps = conexao.prepareStatement(sql);
-                    ps.setInt(1, saida.getCodigo());
-                    ps.setInt(2, Integer.parseInt(((Vector) linhaRecebida.get(n)).get(0).toString()));
-                    ps.setDouble(3, Double.parseDouble(((Vector) linhaRecebida.get(n)).get(1).toString()));
-                    Date dataUtil = new Date();
-                    java.sql.Date data = new java.sql.Date(dataUtil.getTime());
-                    ps.setDate(4, data);
-                    ps.executeUpdate();
-                    conexao.commit();
-                    conexao.close();
-                    soma = soma + Double.parseDouble(((Vector) linhaRecebida.get(n)).get(1).toString());
-                } catch (SQLException ex) {
-                    throw new SQLException(ex.getCause());
-                }
-                n++;
             }
-        }
-        try {
-            sql = "UPDATE item_solicitacao SET quantidade_atendida = " + Double.parseDouble(qntAtendida) +
-                    " WHERE cod_solicitacao = " + saida.getRequisicao().getCodigo() +
-                    " AND cod_material = " + saida.getMaterial().get(0).getCodigo();
-            conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
-            // conexao.setAutoCommit(false);
-            ps = conexao.prepareStatement(sql);
-            ps.executeUpdate();
-            conexao.commit();
-            conexao.close();
-        } catch (SQLException ex) {
-            throw new SQLException(ex.getCause());
+            try {
+                sql = "UPDATE item_solicitacao SET quantidade_atendida = " + Double.parseDouble(qntAtendida) +
+                        " WHERE cod_solicitacao = " + saida.getRequisicao().getCodigo() +
+                        " AND cod_material = " + saida.getMaterial().get(0).getCodigo();
+                conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
+                // conexao.setAutoCommit(false);
+                ps = conexao.prepareStatement(sql);
+                ps.executeUpdate();
+                conexao.commit();
+                conexao.close();
+            } catch (SQLException ex) {
+                throw new SQLException(ex.getCause());
+            }
         }
     }
 

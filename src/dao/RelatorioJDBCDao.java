@@ -139,7 +139,7 @@ public class RelatorioJDBCDao implements RelatorioDao {
 
     public void getDsm(Saida saida) throws SQLException, JRException {
         try {
-            this.conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
+            this.conexao = FabricaConexao.obterConexao("JDBC", "localhost");
             String arquivo = getLocal();
             arquivo += "DSM/DSM.jasper";
             HashMap parametro = new HashMap();

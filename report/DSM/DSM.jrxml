@@ -82,7 +82,7 @@
 					</textElement>
 					<text><![CDATA[Data Saída:]]></text>
 				</staticText>
-				<textField>
+				<textField pattern="dd/MM/yyyy">
 					<reportElement x="77" y="0" width="100" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12"/>
@@ -159,7 +159,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[Valor Unitario]]></text>
+				<text><![CDATA[Valor Total]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="89" y="1" width="249" height="17" forecolor="#FFFFFF" backcolor="#7FC41C"/>

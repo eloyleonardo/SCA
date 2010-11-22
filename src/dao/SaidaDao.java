@@ -11,7 +11,7 @@ public interface SaidaDao {
 
     public int obterUltimaDsm() throws SQLException;
 
-    public void registrarSaida(Saida saida, int numLinhas) throws SQLException;
+    public void registrarSaida(Saida saida) throws SQLException;
 
     public void registrarSaidaOutrosMotivos(Saida saida) throws SQLException;
 

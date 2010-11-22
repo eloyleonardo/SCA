@@ -37,7 +37,7 @@ public class FrmSaidaMaterialOutros extends javax.swing.JFrame {
         this.lbData.setText("Data: " + new Date());
         this.adicionarMap();
         linhasTipoSaida = controladoraTipoSaida.obterLinhasTipoSaida();
-        for (int i = 0; i < linhasTipoSaida.size(); i++) {
+        for (int i = 1; i < linhasTipoSaida.size(); i++) {
             cbTipoSaida.addItem(((Vector) linhasTipoSaida.get(i)).get(1));
         }
         preencherTabela();
@@ -365,7 +365,7 @@ public class FrmSaidaMaterialOutros extends javax.swing.JFrame {
             if (saidaOk == true) {
                 int codTipoSaida = obterCodTipoSaida();
                 String obs = this.taObs.getText();
-                controladoraSaida.inserirNovaDSM(Integer.parseInt(usuario.get(0).toString()), codTipoSaida, 0);
+                controladoraSaida.inserirNovaDSM(Integer.parseInt(usuario.get(0).toString()), codTipoSaida,1);
                 int codSaida = controladoraSaida.obterUltimaSaidaInserida();
                 linhaSaida.add(codTipoSaida);
                 linhaSaida.add(codSaida);
@@ -428,8 +428,8 @@ public class FrmSaidaMaterialOutros extends javax.swing.JFrame {
         for (int i = 0; i < linhasTipoSaida.size(); i++) {
             if (cbTipoSaida.getSelectedItem().toString().equals(((Vector) linhasTipoSaida.get(i)).get(1).toString())) {
                 codTipoSaida = Integer.parseInt(((Vector) linhasTipoSaida.get(i)).get(0).toString());
+                return codTipoSaida;
             }
-            return codTipoSaida;
         }
         return 0;
     }

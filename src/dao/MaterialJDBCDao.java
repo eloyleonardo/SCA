@@ -224,7 +224,7 @@ public class MaterialJDBCDao implements MaterialDao {
         try {
             conexao = FabricaConexao.obterConexao("JDBC", this.servidor);
             conexao.setAutoCommit(false);
-            String sql = "INSERT INTO estoque_baixo (cod_material) values (?)";
+            String sql = "INSERT INTO material_estoque_baixo (cod_material) values (?)";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, codMaterial);
             ps.executeUpdate();

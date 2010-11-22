@@ -7,8 +7,6 @@ import control.ControladoraSolicitacao;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,7 +16,6 @@ import util.ActionFechar;
 
 public class FrmSaidaMaterial extends javax.swing.JFrame {
 
-    private int codSaida = 0;
     private ControladoraSolicitacao controladora;
     private ControladoraSetor controladoraSetor;
     private ControladoraSaida controladoraSaida;
@@ -44,7 +41,6 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
         cbSetor.setSelectedIndex(0);
         preencherTabela("");
         this.setLocationRelativeTo(null);
-        this.btImprimir.setEnabled(false);
         this.adicionarMap();
     }
 
@@ -66,7 +62,6 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
         cbSetor = new javax.swing.JComboBox();
         btCancelar = new javax.swing.JButton();
         btConfirmar = new javax.swing.JButton();
-        btImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SCA - Saída Material Por Solicitação");
@@ -144,13 +139,6 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
             }
         });
 
-        btImprimir.setText("Imprimir DSM");
-        btImprimir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btImprimirMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,9 +160,7 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)))
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(188, 188, 188)
-                            .addComponent(btImprimir)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGap(289, 289, 289)
                             .addComponent(btCancelar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -196,8 +182,7 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btConfirmar)
-                    .addComponent(btCancelar)
-                    .addComponent(btImprimir))
+                    .addComponent(btCancelar))
                 .addContainerGap())
         );
 
@@ -212,28 +197,36 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
     }//GEN-LAST:event_btExibirActionPerformed
 
     private void btConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmarActionPerformed
-        Vector linha = new Vector();
-        linha.add(this.jtSaida.getModel().getValueAt(this.jtSaida.getSelectedRow(), 1));
-        linha.add(this.jtSaida.getModel().getValueAt(this.jtSaida.getSelectedRow(), 4));
-        linha.add(this.jtSaida.getModel().getValueAt(this.jtSaida.getSelectedRow(), 5));
-        if (Double.parseDouble(this.jtSaida.getModel().getValueAt(this.jtSaida.getSelectedRow(), 3).toString()) > Double.parseDouble(this.jtSaida.getModel().getValueAt(this.jtSaida.getSelectedRow(), 4).toString())) {
-            JOptionPane.showMessageDialog(null, "O número da quantidade deve ser menor que o número no estoque!!", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            if (codSaida == 0) {
-                controladoraSaida.inserirNovaDSM(Integer.parseInt(usuario.get(0).toString()), 1, Integer.parseInt(jtSolicitacao.getValueAt(jtSolicitacao.getSelectedRow(), 0).toString()));
-                codSaida = controladoraSaida.obterUltimaSaidaInserida();
+        ControladoraRelatorios controladoraRelatorios = new ControladoraRelatorios(servidor);
+        int codSaida;
+        DefaultTableModel modelo = (DefaultTableModel) this.jtSaida.getModel();
+        Vector linhaSaida = new Vector();
+        boolean saidaOk = true;
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            Vector linha = new Vector();
+            linha.add(this.jtSaida.getModel().getValueAt(i, 1));
+            linha.add(this.jtSaida.getModel().getValueAt(i, 4));
+            linha.add(this.jtSaida.getModel().getValueAt(i, 5));
+            linha.add(this.jtSaida.getModel().getValueAt(i, 3));
+            if (Double.parseDouble(this.jtSaida.getModel().getValueAt(i, 5).toString()) > Double.parseDouble(this.jtSaida.getModel().getValueAt(i, 4).toString())) {
+                saidaOk = false;
+            } else {
+                linhaSaida.addElement(linha);
             }
-            linha.add(req);
-            linha.add(codSaida);
-            linha.add(this.jtSaida.getModel().getValueAt(this.jtSaida.getSelectedRow(), 3));
-            int numLinhas = jtSaida.getModel().getRowCount();
-            controladoraSaida.registrarSaidaMaterial(linha, numLinhas);
-            limparTabelaMateriais();
-            limparTabelaSolicitacoes();
-            this.btImprimir.setEnabled(true);
-            this.cbSetor.setSelectedIndex(0);
-            preencherTabela("");
         }
+        if (saidaOk == true) {
+            controladoraSaida.inserirNovaDSM(Integer.parseInt(usuario.get(0).toString()), 1, Integer.parseInt(jtSolicitacao.getValueAt(jtSolicitacao.getSelectedRow(), 0).toString()));
+            codSaida = controladoraSaida.obterUltimaSaidaInserida();
+            linhaSaida.add(req);
+            linhaSaida.add(codSaida);
+            controladoraSaida.registrarSaidaMaterial(linhaSaida);
+            JOptionPane.showMessageDialog(null, "Saída Registrada!!", "Saída Registrada!!", JOptionPane.INFORMATION_MESSAGE);
+            controladoraRelatorios.getDsm(codSaida);
+        }
+        limparTabelaMateriais();
+        limparTabelaSolicitacoes();
+        this.cbSetor.setSelectedIndex(0);
+        preencherTabela("");
     }//GEN-LAST:event_btConfirmarActionPerformed
 
     private void cbSetorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSetorItemStateChanged
@@ -252,18 +245,10 @@ public class FrmSaidaMaterial extends javax.swing.JFrame {
     private void btCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCancelarMouseClicked
         this.dispose();
     }//GEN-LAST:event_btCancelarMouseClicked
-
-    private void btImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btImprimirMouseClicked
-        ControladoraRelatorios controladoraRelatorio = new ControladoraRelatorios(servidor);
-        controladoraRelatorio.getDsm(codSaida);
-
-    }//GEN-LAST:event_btImprimirMouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btConfirmar;
     private javax.swing.JButton btExibir;
-    private javax.swing.JButton btImprimir;
     private javax.swing.JComboBox cbSetor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

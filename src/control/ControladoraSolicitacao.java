@@ -73,7 +73,7 @@ public class ControladoraSolicitacao {
         return linhas;
     }
 
-    public Vector obterMateriaisPorSolicitacao(int cod) throws SQLException {
+    public Vector obterMateriaisPorSolicitacao(int cod)  {
         Vector materiaisDaSolicitacao = new Vector();
         try {
             materiaisDaSolicitacao = solicitacaoDao.obterMateriaisPorSolicitacao(cod);

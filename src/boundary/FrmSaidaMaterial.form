@@ -44,9 +44,7 @@
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="1">
-                          <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
-                          <Component id="btImprimir" min="-2" max="-2" attributes="1"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="289" max="-2" attributes="0"/>
                           <Component id="btCancelar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btConfirmar" max="32767" attributes="1"/>
@@ -75,7 +73,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btConfirmar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btImprimir" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -230,14 +227,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btConfirmarActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btImprimir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Imprimir DSM"/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btImprimirMouseClicked"/>
       </Events>
     </Component>
   </SubComponents>

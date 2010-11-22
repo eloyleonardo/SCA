@@ -33,14 +33,17 @@ public class ControladoraSaida {
     }
 
     private void atualizarSaida(Saida saida, Vector linha) {
-        Material material = new Material();
-        material.setCodigo(Integer.parseInt(linha.get(0).toString()));
-        material.setEstoqueAtual(Double.parseDouble(linha.get(1).toString()));
-        material.setQntMinima(Double.parseDouble(linha.get(2).toString()));
-        saida.getMaterial().add(material);
-        saida.getRequisicao().setCodigo(Integer.parseInt(linha.get(3).toString()));
-        saida.setCodigo(Integer.parseInt(linha.get(4).toString()));
-        saida.getQuantidadeAtendida().add((Double.parseDouble(linha.get(5).toString())));
+        int i;
+        for (i = 0; i < linha.size() - 2; i++) {
+            Material material = new Material();
+            material.setCodigo(Integer.parseInt(((Vector) linha.get(i)).get(0).toString()));
+            material.setEstoqueAtual(Double.parseDouble(((Vector) linha.get(i)).get(1).toString()));
+            material.setQntMinima(Double.parseDouble(((Vector) linha.get(i)).get(2).toString()));
+            saida.getQuantidadeAtendida().add((Double.parseDouble(((Vector) linha.get(i)).get(3).toString())));
+            saida.getMaterial().add(material);
+        }
+        saida.getRequisicao().setCodigo(Integer.parseInt(linha.get(i).toString()));
+        saida.setCodigo(Integer.parseInt(linha.get(i + 1).toString()));
     }
 
     private void atualizarSaidaOutrosMotivos(Saida saida, Vector linha) {
@@ -70,11 +73,11 @@ public class ControladoraSaida {
         return codSaida;
     }
 
-    public void registrarSaidaMaterial(Vector linha, int numLinhas) {
+    public void registrarSaidaMaterial(Vector linha) {
         Saida saida = new Saida();
         atualizarSaida(saida, linha);
         try {
-            saidaDao.registrarSaida(saida, numLinhas);
+            saidaDao.registrarSaida(saida);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
