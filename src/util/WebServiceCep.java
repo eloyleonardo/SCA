@@ -21,7 +21,11 @@ public class WebServiceCep {
         if(proxy){
             System.setProperty("http.proxyHost", "172.16.48.1");
             System.setProperty("http.proxyPort", "3128");
-            System.setProperty("java.net.socks.username", "aluno-info7");
+            String s = "";
+            if(System.getProperties().getProperty("java.net.socks.username").equals("")){
+                s = JOptionPane.showInputDialog(null, "Informe o usuario do proxy:", "Autenticação", JOptionPane.QUESTION_MESSAGE);
+            }
+            System.setProperty("java.net.socks.username", s);
             System.setProperty("java.net.socks.password", "a12345!");
         }else{
             System.setProperty("http.proxyHost", "");

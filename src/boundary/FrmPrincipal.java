@@ -806,7 +806,24 @@ public class FrmPrincipal extends javax.swing.JFrame implements WindowListener, 
     }
 
     @Override
-    public void dispose() {
-        this.fechar();
+    protected void processWindowEvent(WindowEvent e) {
+        super.processWindowEvent(e);
+
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            switch (this.getDefaultCloseOperation()) {
+                case HIDE_ON_CLOSE:
+                    setVisible(false);
+                    break;
+                case DISPOSE_ON_CLOSE:
+                    dispose();
+                    break;
+                case DO_NOTHING_ON_CLOSE:
+                default:
+                    break;
+                case EXIT_ON_CLOSE:
+                    this.fechar();
+                    break;
+            }
+        }
     }
 }

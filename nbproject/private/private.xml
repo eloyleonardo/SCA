@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/C:/Documents%20and%20Settings/aluno-info7/Desktop/SCA/src/boundary/FrmAtivarMaterial.java</file>
+        <file>file:/C:/Documents%20and%20Settings/aluno-info7/Desktop/SCA/src/boundary/FrmDesativarMaterial.java</file>
+        <file>file:/C:/Documents%20and%20Settings/aluno-info7/Desktop/SCA/src/boundary/FrmInserirMaterial.java</file>
+        <file>file:/C:/Documents%20and%20Settings/aluno-info7/Desktop/SCA/src/control/ControladoraMaterial.java</file>
+        <file>file:/C:/Documents%20and%20Settings/aluno-info7/Desktop/SCA/src/dao/MaterialJDBCDao.java</file>
+        <file>file:/C:/Documents%20and%20Settings/aluno-info7/Desktop/SCA/src/dao/NdDao.java</file>
+        <file>file:/C:/Documents%20and%20Settings/aluno-info7/Desktop/SCA/src/dao/NdJDBCDao.java</file>
+        <file>file:/C:/Documents%20and%20Settings/aluno-info7/Desktop/SCA/src/domain/Material.java</file>
+    </open-files>
 </project-private>

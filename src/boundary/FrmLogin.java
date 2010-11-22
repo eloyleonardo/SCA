@@ -26,9 +26,9 @@ public class FrmLogin extends javax.swing.JFrame {
             File f = new File(System.getProperty("user.home") + "/sca.bin");
             Scanner s = new Scanner(f);
             return s.next();
-        } catch (FileNotFoundException ex) {
+        } catch (Exception ex) {
+            return "";
         }
-        return "";
     }
 
     private void gravarDados() {
